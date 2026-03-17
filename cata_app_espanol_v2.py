@@ -1132,7 +1132,7 @@ with tab3:
     frase_display = gap["frase"].replace("___", "**___**")
 
     st.markdown(f'<div class="quiz-box"><p style="font-size:1.05rem;color:#1e1b4b;">{frase_display}</p></div>', unsafe_allow_html=True)
-    st.caption(f"Verbo de referencia: *{gap['verbo']}*")
+   # st.caption(f"Verbo de referencia: *{gap['verbo']}*")
 
     gap_ans = st.text_input("Preposición:", placeholder="de / a / con / en / por",
                             key=f"gap_{st.session_state.gap_index}")

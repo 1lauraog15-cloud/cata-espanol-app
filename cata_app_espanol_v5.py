@@ -1,6 +1,3 @@
-streamlit
-aiohttp
-
 import random
 import textwrap
 import json

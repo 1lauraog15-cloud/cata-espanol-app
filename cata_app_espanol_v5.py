@@ -1,3 +1,4 @@
+
 import random
 import textwrap
 import json
@@ -2674,367 +2675,367 @@ if modulo == "📗 Verbos + Preposición":
     st.progress(progress_ratio)
     st.markdown("<br>", unsafe_allow_html=True)
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📚 Tarjetas",
-    "🧠 Quiz",
-    "✍️ Rellena el hueco",
-    "🔍 Detecta el error",
-    "🔀 Doble preposición",
-])
-
-# ────────────────────────────────
-#  TAB 1 — TARJETAS
-# ────────────────────────────────
-with tab1:
-    st.markdown('<div class="section-title">Explorador de tarjetas</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Estudia la estructura, preposición y ejemplos de cada verbo.</div>', unsafe_allow_html=True)
-
-    current_item = items[st.session_state.current_card_index]
-    nivel = current_item.get("nivel", "B2")
-    nivel_color = NIVEL_COLORS.get(nivel, "#6b7280")
-
-    st.markdown(f"""
-    <div class="card-box">
-        <div>
-            <span class="card-chip">{CATEGORY_LABELS[current_item['prep']]}</span>
-            <span class="nivel-badge" style="background:{nivel_color};">{nivel}</span>
-        </div>
-        <div class="card-title">{current_item['expresion']}</div>
-        <div class="card-line"><strong>Verbo base:</strong> {current_item['verbo']}</div>
-        <div class="card-line"><strong>Preposición:</strong> {current_item['prep']}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("**Ejemplos:**")
-    for ej in current_item["ejemplos"]:
-        st.markdown(f'<div class="example-block">{ej}</div>', unsafe_allow_html=True)
-
-    if "nota" in current_item:
-        st.markdown(f'<div class="nota-box">💡 <strong>Nota:</strong> {current_item["nota"]}</div>', unsafe_allow_html=True)
-
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
-        if st.button("← Anterior", use_container_width=True):
-            st.session_state.current_card_index = (st.session_state.current_card_index - 1) % len(items)
-            st.rerun()
-    with c2:
-        if st.button("Siguiente →", use_container_width=True):
-            st.session_state.current_card_index = (st.session_state.current_card_index + 1) % len(items)
-            st.rerun()
-    with c3:
-        if st.button("Aleatoria 🎲", use_container_width=True):
-            st.session_state.current_card_index = random.randrange(len(items))
-            st.rerun()
-    with c4:
-        if st.button("Mezclar 🔀", use_container_width=True):
-            shuffled = items[:]
-            random.shuffle(shuffled)
-            st.session_state.filtered_items = shuffled
-            st.session_state.current_card_index = 0
-            st.rerun()
-
-    st.caption(f"Tarjeta {st.session_state.current_card_index + 1} de {len(items)}")
-
-# ────────────────────────────────
-#  TAB 2 — QUIZ
-# ────────────────────────────────
-with tab2:
-    col_quiz, col_free = st.columns([1.1, 0.9], gap="large")
-
-    with col_quiz:
-        st.markdown('<div class="section-title">Quiz dinámico</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Los verbos con más fallos aparecen con mayor frecuencia.</div>', unsafe_allow_html=True)
-
-        if st.session_state.quiz_data is None:
-            new_quiz_question(items, weighted_items, st.session_state.study_mode)
-
-        quiz = st.session_state.quiz_data
-        if quiz and quiz["item"] in items:
-            st.markdown('<div class="quiz-box">', unsafe_allow_html=True)
-            st.markdown(quiz["question"])
-
-            user_answer = ""
-            if quiz["type"] in ["Elegir preposición", "Ejemplo correcto"]:
-                display_opts = []
-                for opt in quiz["options"]:
-                    display_opts.append("\n".join(textwrap.wrap(opt, width=54))
-                                       if quiz["type"] == "Ejemplo correcto" else opt)
-                sel = st.radio("Selecciona", display_opts, key=f"r_{quiz['question'][:30]}")
-                if quiz["type"] == "Ejemplo correcto":
-                    user_answer = dict(zip(display_opts, quiz["options"])).get(sel, sel)
-                else:
-                    user_answer = sel
-            else:
-                user_answer = st.text_input("Tu respuesta", placeholder="Ej: acordarse de",
-                                            key=f"i_{quiz['question'][:30]}")
-
-            q1, q2, q3 = st.columns(3)
-            with q1:
-                if st.button("Comprobar ✓", use_container_width=True):
-                    check_answer(user_answer)
-                    st.rerun()
-            with q2:
-                if st.button("Ver solución 👁", use_container_width=True):
-                    set_feedback("neutral", f"Solución: {quiz['answer']}\n\nEjemplo: {random.choice(quiz['item']['ejemplos'])}")
-                    st.rerun()
-            with q3:
-                if st.button("Nueva →", use_container_width=True):
-                    new_quiz_question(items, weighted_items, st.session_state.study_mode)
-                    set_feedback("neutral", "Nueva pregunta cargada.")
-                    st.rerun()
-
-            if st.button("Reiniciar marcador", use_container_width=True):
-                st.session_state.quiz_score = 0
-                st.session_state.quiz_total = 0
-                st.session_state.quiz_streak = 0
-                set_feedback("neutral", "Marcador reiniciado.")
-                st.rerun()
-
-            show_feedback()
-            st.markdown('</div>', unsafe_allow_html=True)
-
-    with col_free:
-        st.markdown('<div class="section-title">✍️ Escritura libre + IA</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Escribe tu propia frase y recibe feedback de Claude.</div>', unsafe_allow_html=True)
-
-        rand_item = random.choice(items)
-        if "free_write_item" not in st.session_state:
-            st.session_state.free_write_item = rand_item
-
-        fw_item = st.session_state.free_write_item
-        nivel_color_fw = NIVEL_COLORS.get(fw_item.get("nivel", "B2"), "#6b7280")
-
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "📚 Tarjetas",
+        "🧠 Quiz",
+        "✍️ Rellena el hueco",
+        "🔍 Detecta el error",
+        "🔀 Doble preposición",
+    ])
+    
+    # ────────────────────────────────
+    #  TAB 1 — TARJETAS
+    # ────────────────────────────────
+    with tab1:
+        st.markdown('<div class="section-title">Explorador de tarjetas</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Estudia la estructura, preposición y ejemplos de cada verbo.</div>', unsafe_allow_html=True)
+    
+        current_item = items[st.session_state.current_card_index]
+        nivel = current_item.get("nivel", "B2")
+        nivel_color = NIVEL_COLORS.get(nivel, "#6b7280")
+    
         st.markdown(f"""
-        <div class="quiz-box">
+        <div class="card-box">
             <div>
-                <span class="card-chip" style="background:#ede9fe;color:#4c1d95;">{fw_item['expresion']}</span>
-                <span class="nivel-badge" style="background:{nivel_color_fw};">{fw_item.get('nivel','B2')}</span>
+                <span class="card-chip">{CATEGORY_LABELS[current_item['prep']]}</span>
+                <span class="nivel-badge" style="background:{nivel_color};">{nivel}</span>
             </div>
-            <p style="color:#374151;font-size:0.92rem;margin-top:0.5rem;">
-                Escribe una frase original usando <strong>{fw_item['expresion']}</strong>.
-                Procura que sea natural y de nivel C2.
-            </p>
+            <div class="card-title">{current_item['expresion']}</div>
+            <div class="card-line"><strong>Verbo base:</strong> {current_item['verbo']}</div>
+            <div class="card-line"><strong>Preposición:</strong> {current_item['prep']}</div>
         </div>
         """, unsafe_allow_html=True)
-
-        user_frase = st.text_area("Tu frase:", height=80, key="free_frase",
-                                  placeholder=f"Ej: {random.choice(fw_item['ejemplos'])}")
-
-        fw1, fw2 = st.columns(2)
-        with fw1:
-            if st.button("Pedir feedback a IA 🤖", use_container_width=True):
-                if user_frase.strip():
-                    with st.spinner("Claude está evaluando tu frase…"):
-                        fb = call_claude_feedback(fw_item["expresion"], user_frase.strip())
-                    st.session_state.ai_feedback = fb
+    
+        st.markdown("**Ejemplos:**")
+        for ej in current_item["ejemplos"]:
+            st.markdown(f'<div class="example-block">{ej}</div>', unsafe_allow_html=True)
+    
+        if "nota" in current_item:
+            st.markdown(f'<div class="nota-box">💡 <strong>Nota:</strong> {current_item["nota"]}</div>', unsafe_allow_html=True)
+    
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            if st.button("← Anterior", use_container_width=True):
+                st.session_state.current_card_index = (st.session_state.current_card_index - 1) % len(items)
+                st.rerun()
+        with c2:
+            if st.button("Siguiente →", use_container_width=True):
+                st.session_state.current_card_index = (st.session_state.current_card_index + 1) % len(items)
+                st.rerun()
+        with c3:
+            if st.button("Aleatoria 🎲", use_container_width=True):
+                st.session_state.current_card_index = random.randrange(len(items))
+                st.rerun()
+        with c4:
+            if st.button("Mezclar 🔀", use_container_width=True):
+                shuffled = items[:]
+                random.shuffle(shuffled)
+                st.session_state.filtered_items = shuffled
+                st.session_state.current_card_index = 0
+                st.rerun()
+    
+        st.caption(f"Tarjeta {st.session_state.current_card_index + 1} de {len(items)}")
+    
+    # ────────────────────────────────
+    #  TAB 2 — QUIZ
+    # ────────────────────────────────
+    with tab2:
+        col_quiz, col_free = st.columns([1.1, 0.9], gap="large")
+    
+        with col_quiz:
+            st.markdown('<div class="section-title">Quiz dinámico</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-sub">Los verbos con más fallos aparecen con mayor frecuencia.</div>', unsafe_allow_html=True)
+    
+            if st.session_state.quiz_data is None:
+                new_quiz_question(items, weighted_items, st.session_state.study_mode)
+    
+            quiz = st.session_state.quiz_data
+            if quiz and quiz["item"] in items:
+                st.markdown('<div class="quiz-box">', unsafe_allow_html=True)
+                st.markdown(quiz["question"])
+    
+                user_answer = ""
+                if quiz["type"] in ["Elegir preposición", "Ejemplo correcto"]:
+                    display_opts = []
+                    for opt in quiz["options"]:
+                        display_opts.append("\n".join(textwrap.wrap(opt, width=54))
+                                           if quiz["type"] == "Ejemplo correcto" else opt)
+                    sel = st.radio("Selecciona", display_opts, key=f"r_{quiz['question'][:30]}")
+                    if quiz["type"] == "Ejemplo correcto":
+                        user_answer = dict(zip(display_opts, quiz["options"])).get(sel, sel)
+                    else:
+                        user_answer = sel
                 else:
-                    st.session_state.ai_feedback = "⚠️ Escribe una frase primero."
-                st.rerun()
-        with fw2:
-            if st.button("Cambiar verbo 🔄", use_container_width=True):
-                st.session_state.free_write_item = random.choice(items)
-                st.session_state.ai_feedback = None
-                st.rerun()
-
-        if st.session_state.ai_feedback:
-            st.markdown(f'<div class="feedback-ai">🤖 <strong>Feedback de IA:</strong>\n\n{st.session_state.ai_feedback}</div>',
-                        unsafe_allow_html=True)
-
-# ────────────────────────────────
-#  TAB 3 — RELLENA EL HUECO
-# ────────────────────────────────
-with tab3:
-    st.markdown('<div class="section-title">Rellena el hueco</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Escribe la preposición que falta en cada frase de nivel C1–C2.</div>', unsafe_allow_html=True)
-
-    if st.session_state.gap_index is None:
-        st.session_state.gap_index = random.randrange(len(GAP_EXERCISES))
-
-    gap = GAP_EXERCISES[st.session_state.gap_index]
-    frase_display = gap["frase"].replace("___", "**___**")
-
-    st.markdown(f'<div class="quiz-box"><p style="font-size:1.05rem;color:#1e1b4b;">{frase_display}</p></div>', unsafe_allow_html=True)
-    gap_ans = st.text_input("Preposición:", placeholder="de / a / con / en / por",
-                            key=f"gap_{st.session_state.gap_index}")
-
-    g1, g2, g3 = st.columns(3)
-    with g1:
-        if st.button("Comprobar ✓", key="gap_check", use_container_width=True):
-            if normalize(gap_ans) == normalize(gap["respuesta"]):
-                st.session_state.gap_feedback = ("ok", f"✅ Correcto: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
-            else:
-                st.session_state.gap_feedback = ("bad", f"❌ Respuesta correcta: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
-            st.rerun()
-    with g2:
-        if st.button("Solución 👁", key="gap_sol", use_container_width=True):
-            st.session_state.gap_feedback = ("neutral", f"Preposición: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
-            st.rerun()
-    with g3:
-        if st.button("Nueva frase →", key="gap_next", use_container_width=True):
-            st.session_state.gap_index = random.randrange(len(GAP_EXERCISES))
-            st.session_state.gap_feedback = None
-            st.rerun()
-
-    if st.session_state.gap_feedback:
-        kind, msg = st.session_state.gap_feedback
-        css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
-        st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
-
-# ────────────────────────────────
-#  TAB 4 — DETECTA EL ERROR
-# ────────────────────────────────
-with tab4:
-    st.markdown('<div class="section-title">Detecta el error</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Cada frase tiene una preposición incorrecta (marcada con *). Escribe la correcta.</div>', unsafe_allow_html=True)
-
-    if st.session_state.error_index is None:
-        st.session_state.error_index = random.randrange(len(ERROR_EXERCISES))
-
-    err = ERROR_EXERCISES[st.session_state.error_index]
-    frase_display_err = err["frase_incorrecta"].replace(
-        f"*{err['prep_incorrecta']}*",
-        f'<span style="background:#fee2e2;color:#991b1b;padding:0 4px;border-radius:4px;font-weight:700;">*{err["prep_incorrecta"]}*</span>'
-    )
-
-    st.markdown(f'<div class="quiz-box"><p style="font-size:1.05rem;color:#1e1b4b;">{frase_display_err}</p></div>', unsafe_allow_html=True)
-    err_ans = st.text_input("Preposición correcta:", placeholder="de / a / con / en / por",
-                            key=f"err_{st.session_state.error_index}")
-
-    e1, e2, e3 = st.columns(3)
-    with e1:
-        if st.button("Comprobar ✓", key="err_check", use_container_width=True):
-            if normalize(err_ans) == normalize(err["prep_correcta"]):
-                st.session_state.error_feedback = ("ok",
-                    f"✅ Correcto: **{err['prep_correcta']}**\n\n"
-                    f"Frase corregida: {err['frase_correcta']}\n\n"
-                    f"💡 {err['explicacion']}")
-            else:
-                st.session_state.error_feedback = ("bad",
-                    f"❌ La preposición correcta es: **{err['prep_correcta']}**\n\n"
-                    f"Frase corregida: {err['frase_correcta']}\n\n"
-                    f"💡 {err['explicacion']}")
-            st.rerun()
-    with e2:
-        if st.button("Solución 👁", key="err_sol", use_container_width=True):
-            st.session_state.error_feedback = ("neutral",
-                f"Correcta: **{err['prep_correcta']}**\n\n"
-                f"{err['frase_correcta']}\n\n💡 {err['explicacion']}")
-            st.rerun()
-    with e3:
-        if st.button("Nueva frase →", key="err_next", use_container_width=True):
-            st.session_state.error_index = random.randrange(len(ERROR_EXERCISES))
-            st.session_state.error_feedback = None
-            st.rerun()
-
-    if st.session_state.error_feedback:
-        kind, msg = st.session_state.error_feedback
-        css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
-        st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
-
-# ────────────────────────────────
-#  TAB 5 — DOBLE PREPOSICIÓN (ejercicio interactivo)
-# ────────────────────────────────
-with tab5:
-    if "dp_index" not in st.session_state:
-        st.session_state.dp_index = 0
-    if "dp_revealed" not in st.session_state:
-        st.session_state.dp_revealed = False
-    if "dp_quiz_ans" not in st.session_state:
-        st.session_state.dp_quiz_ans = None
-
-    st.markdown('<div class="section-title">Verbos con doble preposición</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Estos verbos cambian de significado según la preposición. Adivina cuántas preposiciones acepta cada uno y qué significa cada combinación.</div>', unsafe_allow_html=True)
-
-    dp = DOUBLE_PREP[st.session_state.dp_index]
-    preps_str = " / ".join(f"<strong>+{caso['prep']}</strong>" for caso in dp["casos"])
-
-    # Tarjeta principal — muestra el verbo y la pista
-    st.markdown(f"""
-    <div class="card-box" style="text-align:center;padding:2rem 1.5rem;">
-        <div class="card-title" style="font-size:2.2rem;margin-bottom:0.5rem;">{dp['verbo']}</div>
-        <div style="color:#6b7280;font-size:0.95rem;">
-            Este verbo acepta <strong>{len(dp['casos'])}</strong> preposición{"es" if len(dp["casos"])>1 else ""}.
-            ¿Sabes cuáles son y qué diferencia de significado hay?
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("")
-
-    if not st.session_state.dp_revealed:
-        if st.button("👁 Revelar preposiciones y significados", use_container_width=True, key="dp_reveal"):
-            st.session_state.dp_revealed = True
-            st.rerun()
-    else:
-        # Mostrar cada caso como tarjeta
-        for caso in dp["casos"]:
+                    user_answer = st.text_input("Tu respuesta", placeholder="Ej: acordarse de",
+                                                key=f"i_{quiz['question'][:30]}")
+    
+                q1, q2, q3 = st.columns(3)
+                with q1:
+                    if st.button("Comprobar ✓", use_container_width=True):
+                        check_answer(user_answer)
+                        st.rerun()
+                with q2:
+                    if st.button("Ver solución 👁", use_container_width=True):
+                        set_feedback("neutral", f"Solución: {quiz['answer']}\n\nEjemplo: {random.choice(quiz['item']['ejemplos'])}")
+                        st.rerun()
+                with q3:
+                    if st.button("Nueva →", use_container_width=True):
+                        new_quiz_question(items, weighted_items, st.session_state.study_mode)
+                        set_feedback("neutral", "Nueva pregunta cargada.")
+                        st.rerun()
+    
+                if st.button("Reiniciar marcador", use_container_width=True):
+                    st.session_state.quiz_score = 0
+                    st.session_state.quiz_total = 0
+                    st.session_state.quiz_streak = 0
+                    set_feedback("neutral", "Marcador reiniciado.")
+                    st.rerun()
+    
+                show_feedback()
+                st.markdown('</div>', unsafe_allow_html=True)
+    
+        with col_free:
+            st.markdown('<div class="section-title">✍️ Escritura libre + IA</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-sub">Escribe tu propia frase y recibe feedback de Claude.</div>', unsafe_allow_html=True)
+    
+            rand_item = random.choice(items)
+            if "free_write_item" not in st.session_state:
+                st.session_state.free_write_item = rand_item
+    
+            fw_item = st.session_state.free_write_item
+            nivel_color_fw = NIVEL_COLORS.get(fw_item.get("nivel", "B2"), "#6b7280")
+    
             st.markdown(f"""
-            <div style="background:#f5f3ff;border-left:4px solid #7c3aed;border-radius:0 14px 14px 0;
-                        padding:0.9rem 1.2rem;margin-bottom:0.7rem;">
-                <div style="margin-bottom:0.3rem;">
-                    <span class="dp-prep" style="font-size:1rem;">+ {caso['prep']}</span>
-                    <span style="color:#374151;margin-left:0.5rem;">→ {caso['significado']}</span>
+            <div class="quiz-box">
+                <div>
+                    <span class="card-chip" style="background:#ede9fe;color:#4c1d95;">{fw_item['expresion']}</span>
+                    <span class="nivel-badge" style="background:{nivel_color_fw};">{fw_item.get('nivel','B2')}</span>
                 </div>
-                <div style="font-style:italic;color:#5b21b6;font-size:0.93rem;">&ldquo;{caso['ejemplo']}&rdquo;</div>
+                <p style="color:#374151;font-size:0.92rem;margin-top:0.5rem;">
+                    Escribe una frase original usando <strong>{fw_item['expresion']}</strong>.
+                    Procura que sea natural y de nivel C2.
+                </p>
             </div>
             """, unsafe_allow_html=True)
-
-        # Mini-quiz: elige qué preposición corresponde a un ejemplo
-        st.markdown("---")
-        st.markdown("**Mini-quiz:** ¿Con qué preposición se usa en este contexto?")
-
-        # Tomar un ejemplo aleatorio de los casos (fijo por índice para no cambiar al rerenderizar)
-        caso_quiz = dp["casos"][st.session_state.dp_index % len(dp["casos"])]
-        frase_con_hueco = caso_quiz["ejemplo"].replace(
-            f" {caso_quiz['prep']} ", " **___** ", 1
-        )
-        st.markdown(f'<div class="quiz-box"><p style="font-size:1rem;color:#1e1b4b;">{frase_con_hueco}</p></div>', unsafe_allow_html=True)
-
-        opciones_dp = [caso["prep"] for caso in dp["casos"]]
-        random.shuffle(opciones_dp)
-        dp_sel = st.radio("Preposición:", opciones_dp, key=f"dp_radio_{st.session_state.dp_index}", horizontal=True)
-
-        dq1, dq2 = st.columns(2)
-        with dq1:
-            if st.button("Comprobar ✓", key="dp_check", use_container_width=True):
-                if dp_sel == caso_quiz["prep"]:
-                    st.session_state.dp_quiz_ans = ("ok", f"✅ Correcto. **+{caso_quiz['prep']}** → {caso_quiz['significado']}")
+    
+            user_frase = st.text_area("Tu frase:", height=80, key="free_frase",
+                                      placeholder=f"Ej: {random.choice(fw_item['ejemplos'])}")
+    
+            fw1, fw2 = st.columns(2)
+            with fw1:
+                if st.button("Pedir feedback a IA 🤖", use_container_width=True):
+                    if user_frase.strip():
+                        with st.spinner("Claude está evaluando tu frase…"):
+                            fb = call_claude_feedback(fw_item["expresion"], user_frase.strip())
+                        st.session_state.ai_feedback = fb
+                    else:
+                        st.session_state.ai_feedback = "⚠️ Escribe una frase primero."
+                    st.rerun()
+            with fw2:
+                if st.button("Cambiar verbo 🔄", use_container_width=True):
+                    st.session_state.free_write_item = random.choice(items)
+                    st.session_state.ai_feedback = None
+                    st.rerun()
+    
+            if st.session_state.ai_feedback:
+                st.markdown(f'<div class="feedback-ai">🤖 <strong>Feedback de IA:</strong>\n\n{st.session_state.ai_feedback}</div>',
+                            unsafe_allow_html=True)
+    
+    # ────────────────────────────────
+    #  TAB 3 — RELLENA EL HUECO
+    # ────────────────────────────────
+    with tab3:
+        st.markdown('<div class="section-title">Rellena el hueco</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Escribe la preposición que falta en cada frase de nivel C1–C2.</div>', unsafe_allow_html=True)
+    
+        if st.session_state.gap_index is None:
+            st.session_state.gap_index = random.randrange(len(GAP_EXERCISES))
+    
+        gap = GAP_EXERCISES[st.session_state.gap_index]
+        frase_display = gap["frase"].replace("___", "**___**")
+    
+        st.markdown(f'<div class="quiz-box"><p style="font-size:1.05rem;color:#1e1b4b;">{frase_display}</p></div>', unsafe_allow_html=True)
+        gap_ans = st.text_input("Preposición:", placeholder="de / a / con / en / por",
+                                key=f"gap_{st.session_state.gap_index}")
+    
+        g1, g2, g3 = st.columns(3)
+        with g1:
+            if st.button("Comprobar ✓", key="gap_check", use_container_width=True):
+                if normalize(gap_ans) == normalize(gap["respuesta"]):
+                    st.session_state.gap_feedback = ("ok", f"✅ Correcto: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
                 else:
-                    correct_caso = next(ca for ca in dp["casos"] if ca["prep"] == caso_quiz["prep"])
-                    st.session_state.dp_quiz_ans = ("bad",
-                        f"❌ En este contexto es **+{caso_quiz['prep']}** → {correct_caso['significado']}")
+                    st.session_state.gap_feedback = ("bad", f"❌ Respuesta correcta: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
                 st.rerun()
-        with dq2:
-            if st.button("Ver solución 👁", key="dp_sol", use_container_width=True):
-                st.session_state.dp_quiz_ans = ("neutral",
-                    f"**+{caso_quiz['prep']}** → {caso_quiz['significado']}")
+        with g2:
+            if st.button("Solución 👁", key="gap_sol", use_container_width=True):
+                st.session_state.gap_feedback = ("neutral", f"Preposición: **{gap['respuesta']}**\n\n💡 {gap['explicacion']}")
                 st.rerun()
-
-        if st.session_state.dp_quiz_ans:
-            kind, msg = st.session_state.dp_quiz_ans
+        with g3:
+            if st.button("Nueva frase →", key="gap_next", use_container_width=True):
+                st.session_state.gap_index = random.randrange(len(GAP_EXERCISES))
+                st.session_state.gap_feedback = None
+                st.rerun()
+    
+        if st.session_state.gap_feedback:
+            kind, msg = st.session_state.gap_feedback
             css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
             st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
-
-    # Navegación
-    st.markdown("")
-    nav1, nav2, nav3 = st.columns(3)
-    with nav1:
-        if st.button("← Anterior", use_container_width=True, key="dp_prev"):
-            st.session_state.dp_index = (st.session_state.dp_index - 1) % len(DOUBLE_PREP)
+    
+    # ────────────────────────────────
+    #  TAB 4 — DETECTA EL ERROR
+    # ────────────────────────────────
+    with tab4:
+        st.markdown('<div class="section-title">Detecta el error</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Cada frase tiene una preposición incorrecta (marcada con *). Escribe la correcta.</div>', unsafe_allow_html=True)
+    
+        if st.session_state.error_index is None:
+            st.session_state.error_index = random.randrange(len(ERROR_EXERCISES))
+    
+        err = ERROR_EXERCISES[st.session_state.error_index]
+        frase_display_err = err["frase_incorrecta"].replace(
+            f"*{err['prep_incorrecta']}*",
+            f'<span style="background:#fee2e2;color:#991b1b;padding:0 4px;border-radius:4px;font-weight:700;">*{err["prep_incorrecta"]}*</span>'
+        )
+    
+        st.markdown(f'<div class="quiz-box"><p style="font-size:1.05rem;color:#1e1b4b;">{frase_display_err}</p></div>', unsafe_allow_html=True)
+        err_ans = st.text_input("Preposición correcta:", placeholder="de / a / con / en / por",
+                                key=f"err_{st.session_state.error_index}")
+    
+        e1, e2, e3 = st.columns(3)
+        with e1:
+            if st.button("Comprobar ✓", key="err_check", use_container_width=True):
+                if normalize(err_ans) == normalize(err["prep_correcta"]):
+                    st.session_state.error_feedback = ("ok",
+                        f"✅ Correcto: **{err['prep_correcta']}**\n\n"
+                        f"Frase corregida: {err['frase_correcta']}\n\n"
+                        f"💡 {err['explicacion']}")
+                else:
+                    st.session_state.error_feedback = ("bad",
+                        f"❌ La preposición correcta es: **{err['prep_correcta']}**\n\n"
+                        f"Frase corregida: {err['frase_correcta']}\n\n"
+                        f"💡 {err['explicacion']}")
+                st.rerun()
+        with e2:
+            if st.button("Solución 👁", key="err_sol", use_container_width=True):
+                st.session_state.error_feedback = ("neutral",
+                    f"Correcta: **{err['prep_correcta']}**\n\n"
+                    f"{err['frase_correcta']}\n\n💡 {err['explicacion']}")
+                st.rerun()
+        with e3:
+            if st.button("Nueva frase →", key="err_next", use_container_width=True):
+                st.session_state.error_index = random.randrange(len(ERROR_EXERCISES))
+                st.session_state.error_feedback = None
+                st.rerun()
+    
+        if st.session_state.error_feedback:
+            kind, msg = st.session_state.error_feedback
+            css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
+            st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+    
+    # ────────────────────────────────
+    #  TAB 5 — DOBLE PREPOSICIÓN (ejercicio interactivo)
+    # ────────────────────────────────
+    with tab5:
+        if "dp_index" not in st.session_state:
+            st.session_state.dp_index = 0
+        if "dp_revealed" not in st.session_state:
             st.session_state.dp_revealed = False
+        if "dp_quiz_ans" not in st.session_state:
             st.session_state.dp_quiz_ans = None
-            st.rerun()
-    with nav2:
-        st.markdown(f'<p style="text-align:center;color:#6b7280;margin-top:0.6rem;">{st.session_state.dp_index+1} / {len(DOUBLE_PREP)}</p>', unsafe_allow_html=True)
-    with nav3:
-        if st.button("Siguiente →", use_container_width=True, key="dp_next"):
-            st.session_state.dp_index = (st.session_state.dp_index + 1) % len(DOUBLE_PREP)
-            st.session_state.dp_revealed = False
-            st.session_state.dp_quiz_ans = None
-            st.rerun()
-
-
-# ─────────────────────────────────────────────
+    
+        st.markdown('<div class="section-title">Verbos con doble preposición</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Estos verbos cambian de significado según la preposición. Adivina cuántas preposiciones acepta cada uno y qué significa cada combinación.</div>', unsafe_allow_html=True)
+    
+        dp = DOUBLE_PREP[st.session_state.dp_index]
+        preps_str = " / ".join(f"<strong>+{caso['prep']}</strong>" for caso in dp["casos"])
+    
+        # Tarjeta principal — muestra el verbo y la pista
+        st.markdown(f"""
+        <div class="card-box" style="text-align:center;padding:2rem 1.5rem;">
+            <div class="card-title" style="font-size:2.2rem;margin-bottom:0.5rem;">{dp['verbo']}</div>
+            <div style="color:#6b7280;font-size:0.95rem;">
+                Este verbo acepta <strong>{len(dp['casos'])}</strong> preposición{"es" if len(dp["casos"])>1 else ""}.
+                ¿Sabes cuáles son y qué diferencia de significado hay?
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+        st.markdown("")
+    
+        if not st.session_state.dp_revealed:
+            if st.button("👁 Revelar preposiciones y significados", use_container_width=True, key="dp_reveal"):
+                st.session_state.dp_revealed = True
+                st.rerun()
+        else:
+            # Mostrar cada caso como tarjeta
+            for caso in dp["casos"]:
+                st.markdown(f"""
+                <div style="background:#f5f3ff;border-left:4px solid #7c3aed;border-radius:0 14px 14px 0;
+                            padding:0.9rem 1.2rem;margin-bottom:0.7rem;">
+                    <div style="margin-bottom:0.3rem;">
+                        <span class="dp-prep" style="font-size:1rem;">+ {caso['prep']}</span>
+                        <span style="color:#374151;margin-left:0.5rem;">→ {caso['significado']}</span>
+                    </div>
+                    <div style="font-style:italic;color:#5b21b6;font-size:0.93rem;">&ldquo;{caso['ejemplo']}&rdquo;</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            # Mini-quiz: elige qué preposición corresponde a un ejemplo
+            st.markdown("---")
+            st.markdown("**Mini-quiz:** ¿Con qué preposición se usa en este contexto?")
+    
+            # Tomar un ejemplo aleatorio de los casos (fijo por índice para no cambiar al rerenderizar)
+            caso_quiz = dp["casos"][st.session_state.dp_index % len(dp["casos"])]
+            frase_con_hueco = caso_quiz["ejemplo"].replace(
+                f" {caso_quiz['prep']} ", " **___** ", 1
+            )
+            st.markdown(f'<div class="quiz-box"><p style="font-size:1rem;color:#1e1b4b;">{frase_con_hueco}</p></div>', unsafe_allow_html=True)
+    
+            opciones_dp = [caso["prep"] for caso in dp["casos"]]
+            random.shuffle(opciones_dp)
+            dp_sel = st.radio("Preposición:", opciones_dp, key=f"dp_radio_{st.session_state.dp_index}", horizontal=True)
+    
+            dq1, dq2 = st.columns(2)
+            with dq1:
+                if st.button("Comprobar ✓", key="dp_check", use_container_width=True):
+                    if dp_sel == caso_quiz["prep"]:
+                        st.session_state.dp_quiz_ans = ("ok", f"✅ Correcto. **+{caso_quiz['prep']}** → {caso_quiz['significado']}")
+                    else:
+                        correct_caso = next(ca for ca in dp["casos"] if ca["prep"] == caso_quiz["prep"])
+                        st.session_state.dp_quiz_ans = ("bad",
+                            f"❌ En este contexto es **+{caso_quiz['prep']}** → {correct_caso['significado']}")
+                    st.rerun()
+            with dq2:
+                if st.button("Ver solución 👁", key="dp_sol", use_container_width=True):
+                    st.session_state.dp_quiz_ans = ("neutral",
+                        f"**+{caso_quiz['prep']}** → {caso_quiz['significado']}")
+                    st.rerun()
+    
+            if st.session_state.dp_quiz_ans:
+                kind, msg = st.session_state.dp_quiz_ans
+                css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
+                st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+    
+        # Navegación
+        st.markdown("")
+        nav1, nav2, nav3 = st.columns(3)
+        with nav1:
+            if st.button("← Anterior", use_container_width=True, key="dp_prev"):
+                st.session_state.dp_index = (st.session_state.dp_index - 1) % len(DOUBLE_PREP)
+                st.session_state.dp_revealed = False
+                st.session_state.dp_quiz_ans = None
+                st.rerun()
+        with nav2:
+            st.markdown(f'<p style="text-align:center;color:#6b7280;margin-top:0.6rem;">{st.session_state.dp_index+1} / {len(DOUBLE_PREP)}</p>', unsafe_allow_html=True)
+        with nav3:
+            if st.button("Siguiente →", use_container_width=True, key="dp_next"):
+                st.session_state.dp_index = (st.session_state.dp_index + 1) % len(DOUBLE_PREP)
+                st.session_state.dp_revealed = False
+                st.session_state.dp_quiz_ans = None
+                st.rerun()
+    
+    
+    # ─────────────────────────────────────────────
 if modulo == "🔗 Conectores":
     ctab1, ctab2, ctab3, ctab4, ctab5, ctab6, ctab7 = st.tabs([
         "📖 Tarjetas",
@@ -3053,7 +3054,11 @@ if modulo == "🔗 Conectores":
         st.markdown('<div class="section-title">Explorador de conectores</div>', unsafe_allow_html=True)
         st.markdown('<div class="section-sub">Estudia función, matiz y ejemplos en contexto real.</div>', unsafe_allow_html=True)
 
-        funcion_sel = st.selectbox("Filtra por categoría:", ["Todas"] + FUNCIONES, key="cn_funcion_sel")
+        funcion_sel = st.selectbox(
+            "Filtra por categoría:",
+            ["Todas"] + FUNCIONES_CONECTORES,
+            key="cn_funcion_sel",
+        )
         lista = CONECTORES if funcion_sel == "Todas" else [c for c in CONECTORES if c["funcion"] == funcion_sel]
 
         if lista:
@@ -3139,7 +3144,7 @@ if modulo == "🔗 Conectores":
                 st.rerun()
 
         if st.session_state.cnc_fb:
-            show_fb(*st.session_state.cnc_fb)
+            show_con_fb(*st.session_state.cnc_fb)
 
         if st.session_state.cnc_total:
             pct = int(st.session_state.cnc_score / st.session_state.cnc_total * 100)
@@ -3176,7 +3181,7 @@ if modulo == "🔗 Conectores":
         gg1, gg2, gg3 = st.columns(3)
         with gg1:
             if st.button("Comprobar ✓", key="cn_gap_check", use_container_width=True):
-                validas = gap["respuesta"]  # lista
+                validas = gap["respuesta"]
                 validas_str = " / ".join(f"**{v}**" for v in validas)
                 es_correcta = any(normalize(gap_sel) == normalize(v) for v in validas)
                 if es_correcta:
@@ -3202,7 +3207,7 @@ if modulo == "🔗 Conectores":
                 st.rerun()
 
         if st.session_state.cng_fb:
-            show_fb(*st.session_state.cng_fb)
+            show_con_fb(*st.session_state.cng_fb)
 
     # ══════════════════════════════
     #  TAB 4 — ORDENA EL TEXTO
@@ -3241,9 +3246,7 @@ if modulo == "🔗 Conectores":
                         st.session_state.cno_fb = ("ok", "✅ ¡Perfecto! El orden es correcto.")
                     else:
                         correct_str = ",".join(str(x + 1) for x in correct)
-                        partes_ord = "\n".join(
-                            f"{i+1}. {p}" for i, p in enumerate(texto["partes"])
-                        )
+                        partes_ord = "\n".join(f"{i+1}. {p}" for i, p in enumerate(texto["partes"]))
                         st.session_state.cno_fb = ("bad",
                             f"❌ El orden correcto es: **{correct_str}**\n\n{partes_ord}")
                 except Exception:
@@ -3263,7 +3266,7 @@ if modulo == "🔗 Conectores":
                 st.rerun()
 
         if st.session_state.cno_fb:
-            show_fb(*st.session_state.cno_fb)
+            show_con_fb(*st.session_state.cno_fb)
 
     # ══════════════════════════════
     #  TAB 5 — ESCRITURA LIBRE + IA
@@ -3292,7 +3295,7 @@ if modulo == "🔗 Conectores":
             """, unsafe_allow_html=True)
             st.markdown(f'<div class="con-example-block">{fc["ejemplos"][0]}</div>', unsafe_allow_html=True)
 
-            if st.button("Cambiar conector 🔄", use_container_width=True, key="free_change"):
+            if st.button("Cambiar conector 🔄", use_container_width=True, key="cn_free_change"):
                 st.session_state.cnf_item = random.choice(CONECTORES)
                 st.session_state.cnf_fb = None
                 st.rerun()
@@ -3305,10 +3308,10 @@ if modulo == "🔗 Conectores":
                 placeholder=f"Escribe aquí usando '{fc['conector']}'…",
             )
 
-            if st.button("Pedir feedback a Claude 🤖", use_container_width=True, key="free_ai"):
+            if st.button("Pedir feedback a Claude 🤖", use_container_width=True, key="cn_free_ai"):
                 if frase_libre.strip():
                     with st.spinner("Claude está evaluando tu uso del conector…"):
-                        fb = call_claude(fc["conector"], frase_libre.strip())
+                        fb = call_claude_conector(fc["conector"], frase_libre.strip())
                     st.session_state.cnf_fb = fb
                 else:
                     st.session_state.cnf_fb = "⚠️ Escribe una frase primero."
@@ -3327,31 +3330,28 @@ if modulo == "🔗 Conectores":
         st.markdown('<div class="section-title">Tabla de referencia</div>', unsafe_allow_html=True)
         st.markdown('<div class="section-sub">Todos los conectores organizados por función. Úsala para estudiar y consultar.</div>', unsafe_allow_html=True)
 
-        # Build grouped data
-        from collections import defaultdict
-        grouped = defaultdict(list)
+        from collections import defaultdict as _ddict
+        grouped = _ddict(list)
         for c in CONECTORES:
             grouped[c["funcion"]].append(c)
 
-        # Color per function (cycling palette)
         funcion_colors = {
-            "Contraste y concesión":    ("#fef3c7", "#78350f"),
-            "Causa y origen":           ("#dbeafe", "#1e3a8a"),
-            "Consecuencia y resultado": ("#dcfce7", "#14532d"),
-            "Adición y continuidad":    ("#ede9fe", "#4c1d95"),
-            "Hipótesis y condición":    ("#fce7f3", "#831843"),
-            "Estructuración y orden":   ("#e0f2fe", "#0c4a6e"),
-            "Reformulación y aclaración":("#f0fdf4","#166534"),
-            "Ejemplificación y digresión":("#fff7ed","#7c2d12"),
-            "Conclusión y cierre":      ("#f5f3ff", "#3b0764"),
-            "Énfasis y afirmación":     ("#fef9c3", "#713f12"),
+            "Contraste y concesión":       ("#fef3c7", "#78350f"),
+            "Causa y origen":              ("#dbeafe", "#1e3a8a"),
+            "Consecuencia y resultado":    ("#dcfce7", "#14532d"),
+            "Adición y continuidad":       ("#ede9fe", "#4c1d95"),
+            "Hipótesis y condición":       ("#fce7f3", "#831843"),
+            "Estructuración y orden":      ("#e0f2fe", "#0c4a6e"),
+            "Reformulación y aclaración":  ("#f0fdf4", "#166534"),
+            "Ejemplificación y digresión": ("#fff7ed", "#7c2d12"),
+            "Conclusión y cierre":         ("#f5f3ff", "#3b0764"),
+            "Énfasis y afirmación":        ("#fef9c3", "#713f12"),
         }
 
+        nivel_order = {"B2": 0, "C1": 1, "C2": 2}
         for funcion, items in grouped.items():
             bg, fg = funcion_colors.get(funcion, ("#f8fafc", "#1e293b"))
-            # Sort by nivel then conector
-            nivel_order = {"B2": 0, "C1": 1, "C2": 2}
-            items_sorted = sorted(items, key=lambda x: (nivel_order.get(x.get("nivel","B2"), 1), x["conector"]))
+            items_sorted = sorted(items, key=lambda x: (nivel_order.get(x.get("nivel", "B2"), 1), x["conector"]))
 
             rows_html = ""
             for item in items_sorted:
@@ -3378,8 +3378,7 @@ if modulo == "🔗 Conectores":
                 ({len(items)} conectores)</span>
               </div>
               <table style="width:100%;border-collapse:collapse;background:white;
-                            border:1px solid #e5e7eb;border-radius:0 0 12px 12px;
-                            overflow:hidden;">
+                            border:1px solid #e5e7eb;border-radius:0 0 12px 12px;overflow:hidden;">
                 <thead>
                   <tr style="background:#f8fafc;border-bottom:1px solid #e5e7eb;">
                     <th style="padding:0.4rem 0.8rem;text-align:left;color:#6b7280;
@@ -3394,23 +3393,22 @@ if modulo == "🔗 Conectores":
             """, unsafe_allow_html=True)
 
         st.markdown(
-            '<div style="color:#6b7280;font-size:0.82rem;margin-top:0.5rem;">'
+            '<div style="color:#6b7280;font-size:0.82rem;margin-top:0.5rem;">' +
             '🔵 B2 &nbsp;|&nbsp; 🟣 C1 &nbsp;|&nbsp; 🔴 C2</div>',
             unsafe_allow_html=True,
         )
-
 
     # ══════════════════════════════
     #  TAB 7 — TABLA PARA RELLENAR
     # ══════════════════════════════
     with ctab7:
         st.markdown('<div class="section-title">Tabla para rellenar</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Se muestra la función y el matiz. Escribe el conector que corresponde a cada descripción. Comprueba tus respuestas al final.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Se muestra la función y el matiz. Escribe el conector que corresponde a cada descripción.</div>', unsafe_allow_html=True)
 
-        # Build exercise: shuffle all connectors, present matiz → student writes conector
         if "tabla_ejercicio" not in st.session_state or not st.session_state.tabla_ejercicio:
-            ejercicio = [{"conector": c["conector"], "funcion": c["funcion"], "matiz": c["matiz"],
-                          "nivel": c.get("nivel", "C1")} for c in CONECTORES]
+            ejercicio = [{"conector": c["conector"], "funcion": c["funcion"],
+                          "matiz": c["matiz"], "nivel": c.get("nivel", "C1")}
+                         for c in CONECTORES]
             random.shuffle(ejercicio)
             st.session_state.tabla_ejercicio = ejercicio
             st.session_state.tabla_checked = False
@@ -3418,30 +3416,29 @@ if modulo == "🔗 Conectores":
 
         ejercicio = st.session_state.tabla_ejercicio
 
-        # Group by function for display
-        from collections import defaultdict as _dd
-        by_funcion = _dd(list)
+        from collections import defaultdict as _dd2
+        by_funcion = _dd2(list)
         for i, item in enumerate(ejercicio):
             by_funcion[item["funcion"]].append((i, item))
 
         funcion_colors2 = {
-            "Contraste y concesión":    "#fef3c7",
-            "Causa y origen":           "#dbeafe",
-            "Consecuencia y resultado": "#dcfce7",
-            "Adición y continuidad":    "#ede9fe",
-            "Hipótesis y condición":    "#fce7f3",
-            "Estructuración y orden":   "#e0f2fe",
-            "Reformulación y aclaración":"#f0fdf4",
-            "Ejemplificación y digresión":"#fff7ed",
-            "Conclusión y cierre":      "#f5f3ff",
-            "Énfasis y afirmación":     "#fef9c3",
+            "Contraste y concesión":       "#fef3c7",
+            "Causa y origen":              "#dbeafe",
+            "Consecuencia y resultado":    "#dcfce7",
+            "Adición y continuidad":       "#ede9fe",
+            "Hipótesis y condición":       "#fce7f3",
+            "Estructuración y orden":      "#e0f2fe",
+            "Reformulación y aclaración":  "#f0fdf4",
+            "Ejemplificación y digresión": "#fff7ed",
+            "Conclusión y cierre":         "#f5f3ff",
+            "Énfasis y afirmación":        "#fef9c3",
         }
 
         for funcion, items in by_funcion.items():
             bg = funcion_colors2.get(funcion, "#f8fafc")
             st.markdown(
-                f'<div style="background:{bg};border-radius:10px 10px 0 0;padding:0.5rem 1rem;'
-                f'font-weight:700;font-size:0.92rem;color:#1e293b;margin-top:1rem;">'
+                f'<div style="background:{bg};border-radius:10px 10px 0 0;padding:0.5rem 1rem;' +
+                f'font-weight:700;font-size:0.92rem;color:#1e293b;margin-top:1rem;">' +
                 f'{funcion}</div>',
                 unsafe_allow_html=True,
             )
@@ -3452,10 +3449,10 @@ if modulo == "🔗 Conectores":
 
                 with col_matiz:
                     st.markdown(
-                        f'<div style="padding:0.45rem 0;font-size:0.88rem;color:#374151;">'
-                        f'{item["matiz"]}'
-                        f'<span style="background:{nc};color:white;border-radius:4px;'
-                        f'padding:1px 6px;font-size:0.72rem;font-weight:700;margin-left:0.5rem;">'
+                        f'<div style="padding:0.45rem 0;font-size:0.88rem;color:#374151;">' +
+                        f'{item["matiz"]}' +
+                        f'<span style="background:{nc};color:white;border-radius:4px;' +
+                        f'padding:1px 6px;font-size:0.72rem;font-weight:700;margin-left:0.5rem;">' +
                         f'{nivel}</span></div>',
                         unsafe_allow_html=True,
                     )
@@ -3471,41 +3468,34 @@ if modulo == "🔗 Conectores":
 
                 with col_result:
                     if st.session_state.tabla_checked:
-                        user = " ".join(val.lower().strip().split())
-                        correct = " ".join(item["conector"].lower().strip().split())
-                        if user == correct:
+                        user_ans = " ".join(val.lower().strip().split())
+                        correct_ans = " ".join(item["conector"].lower().strip().split())
+                        if user_ans == correct_ans:
+                            st.markdown('<div style="color:#065f46;font-weight:700;padding-top:0.45rem;">✅</div>', unsafe_allow_html=True)
+                        elif user_ans:
                             st.markdown(
-                                f'<div style="color:#065f46;font-weight:700;padding-top:0.45rem;">✅</div>',
-                                unsafe_allow_html=True,
-                            )
-                        elif user:
-                            st.markdown(
-                                f'<div style="color:#991b1b;font-size:0.82rem;padding-top:0.3rem;">'
+                                f'<div style="color:#991b1b;font-size:0.82rem;padding-top:0.3rem;">' +
                                 f'❌ <strong>{item["conector"]}</strong></div>',
                                 unsafe_allow_html=True,
                             )
                         else:
                             st.markdown(
-                                f'<div style="color:#6b7280;font-size:0.82rem;padding-top:0.3rem;">'
+                                f'<div style="color:#6b7280;font-size:0.82rem;padding-top:0.3rem;">' +
                                 f'→ <strong>{item["conector"]}</strong></div>',
                                 unsafe_allow_html=True,
                             )
 
         st.markdown("<br>", unsafe_allow_html=True)
         b1, b2, b3 = st.columns(3)
-
         with b1:
             if st.button("Comprobar todo ✓", use_container_width=True, key="tabla_check_btn"):
                 st.session_state.tabla_checked = True
                 st.rerun()
-
         with b2:
             if st.button("Ver soluciones 👁", use_container_width=True, key="tabla_sol_btn"):
                 st.session_state.tabla_checked = True
-                # Clear answers so all show as "→ correct"
                 st.session_state.tabla_answers = {}
                 st.rerun()
-
         with b3:
             if st.button("Nueva tabla 🔀", use_container_width=True, key="tabla_new_btn"):
                 st.session_state.tabla_ejercicio = []
@@ -3524,11 +3514,10 @@ if modulo == "🔗 Conectores":
             pct = int(correct_count / total * 100) if total else 0
             color = "#065f46" if pct >= 80 else "#92400e" if pct >= 50 else "#991b1b"
             st.markdown(
-                f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;'
-                f'padding:0.9rem 1.2rem;margin-top:0.5rem;text-align:center;">'
-                f'<span style="font-size:1.3rem;font-weight:700;color:{color};">'
-                f'{correct_count}/{total}</span>'
-                f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">correctos ({pct} %)</span>'
+                f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;' +
+                f'padding:0.9rem 1.2rem;margin-top:0.5rem;text-align:center;">' +
+                f'<span style="font-size:1.3rem;font-weight:700;color:{color};">{correct_count}/{total}</span>' +
+                f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">correctos ({pct} %)</span>' +
                 f'</div>',
                 unsafe_allow_html=True,
             )

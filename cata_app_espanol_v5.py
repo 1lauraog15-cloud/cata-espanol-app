@@ -2200,6 +2200,704 @@ TEXTOS_ORDEN: List[Dict] = [
 
 FUNCIONES_CONECTORES = list(dict.fromkeys(c["funcion"] for c in CONECTORES))
 
+# ═══════════════════════════════════════════════════════════
+#  DATOS — GRAMÁTICA C1 (DELE Cervantes)
+#  Módulos: Subjuntivo, Perífrasis, Ser vs Estar
+# ═══════════════════════════════════════════════════════════
+
+GR_SUBJUNTIVO: List[Dict] = [
+    {"frase": "Es importante que todos los miembros ___ (estar) de acuerdo antes de presentar la propuesta.",
+     "respuesta": "estén", "tipo": "Expresiones impersonales",
+     "explicacion": "Las expresiones impersonales de valoración (es importante, es necesario, es fundamental...) exigen subjuntivo en la subordinada.",
+     "trampa": "Contrasta con 'es evidente que + indicativo', que afirma un hecho.",
+     "nivel": "C1"},
+    {"frase": "Me sorprende que todavía no ___ (publicarse) los resultados del estudio.",
+     "respuesta": "se hayan publicado", "tipo": "Verbos de emoción",
+     "explicacion": "Verbos de sentimiento (sorprender, alegrar, molestar, extrañar...) rigen subjuntivo cuando el sujeto de la subordinada es distinto al principal.",
+     "trampa": "El perfecto de subjuntivo (hayan publicado) expresa una acción anterior al momento presente.",
+     "nivel": "C1"},
+    {"frase": "No creo que la situación ___ (mejorar) sin una intervención decidida.",
+     "respuesta": "mejore", "tipo": "Verbos de opinión negados",
+     "explicacion": "Creer, pensar, opinar + negación → subjuntivo. Sin negación → indicativo: 'Creo que mejorará'.",
+     "trampa": "'Creo que mejorará' (indicativo) vs 'No creo que mejore' (subjuntivo).",
+     "nivel": "C1"},
+    {"frase": "Aunque ___ (llover) mañana, el acto se celebrará al aire libre según lo previsto.",
+     "respuesta": "llueva", "tipo": "Aunque + subjuntivo (hipótesis)",
+     "explicacion": "'Aunque' + subjuntivo: condición hipotética o no confirmada. 'Aunque' + indicativo: hecho conocido ('aunque llueve, salgo').",
+     "trampa": "Si se sabe que lloverá → indicativo. Si es hipótesis → subjuntivo.",
+     "nivel": "C1"},
+    {"frase": "Buscan un candidato que ___ (tener) experiencia en gestión de equipos internacionales.",
+     "respuesta": "tenga", "tipo": "Antecedente indefinido",
+     "explicacion": "Cuando el antecedente es indefinido (buscan alguien que...) o negado, la relativa lleva subjuntivo.",
+     "trampa": "'Tengo un candidato que tiene experiencia' (indicativo, conocido) vs 'busco uno que tenga' (subjuntivo, indefinido).",
+     "nivel": "C1"},
+    {"frase": "Te lo digo para que ___ (poder) prepararte con tiempo suficiente.",
+     "respuesta": "puedas", "tipo": "Conjunciones de finalidad",
+     "explicacion": "Para que, a fin de que, con el objetivo de que → siempre subjuntivo.",
+     "trampa": "No confundir con 'para + infinitivo' cuando el sujeto es el mismo: 'para poder prepararte'.",
+     "nivel": "B2"},
+    {"frase": "Cuando ___ (terminar) de revisar el informe, envíamelo por correo.",
+     "respuesta": "termines", "tipo": "Cuando + subjuntivo (futuro)",
+     "explicacion": "'Cuando' + subjuntivo: acción futura o hipotética. 'Cuando' + indicativo: acción habitual o pasada.",
+     "trampa": "'Cuando llegué' (pasado, indicativo) vs 'cuando llegues' (futuro, subjuntivo).",
+     "nivel": "B2"},
+    {"frase": "Si ___ (saber) lo que iba a pasar, nunca habría firmado ese contrato.",
+     "respuesta": "hubiera sabido / hubiese sabido", "tipo": "Condicional irreal de pasado",
+     "explicacion": "Si + pluscuamperfecto de subjuntivo → condicional compuesto. Expresa condición imposible en el pasado.",
+     "trampa": "Nunca se usa 'si + condicional': *si habría sabido* es incorrecto.",
+     "nivel": "C1"},
+    {"frase": "Ojalá ___ (llegar) a un acuerdo antes de que expire el plazo.",
+     "respuesta": "lleguen", "tipo": "Ojalá + subjuntivo",
+     "explicacion": "'Ojalá' siempre rige subjuntivo. Presente para deseos realizables; imperfecto para poco probables.",
+     "trampa": "*Ojalá llegarán* es incorrecto en español normativo.",
+     "nivel": "B2"},
+    {"frase": "Le pidió que ___ (guardar) la información con absoluta discreción.",
+     "respuesta": "guardara / guardase", "tipo": "Petición en pasado",
+     "explicacion": "Verbos de influencia (pedir, rogar, ordenar...) en pasado → imperfecto de subjuntivo en la subordinada.",
+     "trampa": "Si el verbo principal está en presente: 'Le pide que guarde'.",
+     "nivel": "C1"},
+    {"frase": "Habla como si ___ (conocer) personalmente a todos los miembros del consejo.",
+     "respuesta": "conociera / conociese", "tipo": "Como si",
+     "explicacion": "'Como si' siempre lleva imperfecto o pluscuamperfecto de subjuntivo: expresa una comparación irreal.",
+     "trampa": "*Como si conoce* es incorrecto. Siempre subjuntivo después de 'como si'.",
+     "nivel": "C1"},
+    {"frase": "En cuanto ___ (recibir) la notificación oficial, procederemos a tramitar los permisos.",
+     "respuesta": "recibamos", "tipo": "Conjunciones temporales + futuro",
+     "explicacion": "En cuanto, tan pronto como, una vez que + subjuntivo cuando la acción es futura.",
+     "trampa": "'En cuanto llegué' (pasado, indicativo) vs 'en cuanto recibamos' (futuro, subjuntivo).",
+     "nivel": "C1"},
+    {"frase": "Por mucho que ___ (esforzarse), no consiguió superar el obstáculo.",
+     "respuesta": "se esforzara / se esforzase", "tipo": "Concesivas de grado",
+     "explicacion": "'Por mucho que', 'por más que' + subjuntivo expresan concesión de grado. Contexto pasado → imperfecto de subjuntivo.",
+     "trampa": "Contexto presente/futuro: 'por mucho que se esfuerce, no lo conseguirá'.",
+     "nivel": "C1"},
+    {"frase": "Me alegra que finalmente ___ (decidirse) a dar ese paso tan importante.",
+     "respuesta": "te hayas decidido", "tipo": "Perfecto de subjuntivo",
+     "explicacion": "Emoción presente + acción ya ocurrida → perfecto de subjuntivo (haya/hayas + participio).",
+     "trampa": "El perfecto de subjuntivo sitúa la acción antes del momento de habla.",
+     "nivel": "C1"},
+    {"frase": "No hay ningún experto que ___ (poder) predecir con certeza lo que ocurrirá.",
+     "respuesta": "pueda", "tipo": "Antecedente negado",
+     "explicacion": "Con antecedente negado (ningún, nadie, nada...), la oración de relativo siempre lleva subjuntivo.",
+     "trampa": "Si el antecedente existe y es conocido: 'Hay expertos que pueden predecirlo' (indicativo).",
+     "nivel": "C1"},
+    {"frase": "Antes de que ___ (llegar) los demás, necesitamos hablar de algo importante.",
+     "respuesta": "lleguen", "tipo": "Antes de que",
+     "explicacion": "'Antes de que' siempre rige subjuntivo porque introduce una acción que aún no ha ocurrido.",
+     "trampa": "No confundir con 'después de que + indicativo' (acción ya ocurrida): 'después de que llegaron'.",
+     "nivel": "B2"},
+    {"frase": "Es una pena que no ___ (poder) asistir a la ceremonia de premiación.",
+     "respuesta": "hayas podido / pudieras", "tipo": "Expresiones de valoración negativa",
+     "explicacion": "'Es una pena', 'es una lástima', 'qué pena' + que → subjuntivo. El tiempo depende del contexto.",
+     "trampa": "Si la acción es pasada respecto al presente: perfecto de subjuntivo. Si es simultánea en el pasado: imperfecto.",
+     "nivel": "C1"},
+    {"frase": "Dondequiera que ___ (ir), siempre encuentra a alguien conocido.",
+     "respuesta": "vaya", "tipo": "Pronombres relativos indefinidos",
+     "explicacion": "Quienquiera que, dondequiera que, comoquiera que, cuandoquiera que → siempre subjuntivo.",
+     "trampa": "Estas formas son propias de registro formal o literario, pero el DELE C1 las incluye.",
+     "nivel": "C1"},
+    {"frase": "Si ___ (tener) más tiempo, habría revisado el informe con más detenimiento.",
+     "respuesta": "hubiera tenido / hubiese tenido", "tipo": "Condicional irreal de pasado",
+     "explicacion": "Si + pluscuamperfecto de subjuntivo → condicional compuesto. Situación imposible en el pasado.",
+     "trampa": "*Si habría tenido* es incorrecto. Nunca 'si + condicional'.",
+     "nivel": "C1"},
+    {"frase": "Conviene que todos los participantes ___ (revisar) el material antes de la sesión.",
+     "respuesta": "revisen", "tipo": "Verbos impersonales de conveniencia",
+     "explicacion": "Conviene, importa, basta, interesa + que → subjuntivo porque expresan valoración o necesidad.",
+     "trampa": "Contrasta con verbos de percepción o conocimiento + indicativo: 'parece que viene'.",
+     "nivel": "C1"},
+    {"frase": "No es que ___ (estar) en desacuerdo, sino que necesito más información.",
+     "respuesta": "esté", "tipo": "No es que",
+     "explicacion": "'No es que' + subjuntivo introduce una negación matizada. No niega el hecho, sino que lo reformula.",
+     "trampa": "'No es que esté' (subjuntivo: niega la interpretación) ≠ 'no es que está' (incorrecto).",
+     "nivel": "C1"},
+    {"frase": "Lo hará, a no ser que algo ___ (impedírselo) en el último momento.",
+     "respuesta": "se lo impida", "tipo": "A no ser que",
+     "explicacion": "'A no ser que', 'salvo que', 'excepto que' → siempre subjuntivo. Son equivalentes a 'a menos que'.",
+     "trampa": "Son condiciones negativas: la acción ocurre salvo que se cumpla la condición.",
+     "nivel": "C1"},
+    {"frase": "Quizás ___ (tener) razón, pero necesito comprobarlo antes de confirmarlo.",
+     "respuesta": "tenga / tiene", "tipo": "Quizás / tal vez",
+     "explicacion": "'Quizás' y 'tal vez' admiten indicativo o subjuntivo. Con subjuntivo, la duda es mayor. Con indicativo, el hablante se inclina más a creer que es cierto.",
+     "trampa": "Ambas formas son correctas. El subjuntivo expresa más incertidumbre que el indicativo.",
+     "nivel": "C1"},
+    {"frase": "Por más dinero que ___ (tener), nunca se siente satisfecho.",
+     "respuesta": "tenga", "tipo": "Concesivas de grado (presente)",
+     "explicacion": "'Por más... que' + subjuntivo: concesión de grado máximo en contexto presente o habitual.",
+     "trampa": "Contexto pasado: 'por más que tuviera dinero, nunca se sentía satisfecho' (imperfecto de subjuntivo).",
+     "nivel": "C1"},
+    {"frase": "Necesito que alguien me ___ (explicar) paso a paso cómo funciona este sistema.",
+     "respuesta": "explique", "tipo": "Necesitar que",
+     "explicacion": "'Necesitar que' + subjuntivo cuando el sujeto de la subordinada es distinto. Si es el mismo sujeto: 'necesito explicarlo' (infinitivo).",
+     "trampa": "Mismo sujeto → infinitivo: 'necesito entenderlo'. Distinto sujeto → subjuntivo: 'necesito que lo entiendas'.",
+     "nivel": "B2"},
+]
+
+GR_PERIFRASIS: List[Dict] = [
+    {"perifrasis": "llevar + gerundio",
+     "significado": "Duración acumulada de una acción en curso en el momento de referencia.",
+     "ejemplos": ["Llevo tres horas esperando sin que nadie me atienda.",
+                  "Cuando llegaste, llevaba trabajando toda la tarde."],
+     "trampa": "El complemento responde a '¿cuánto tiempo llevas...?'. No confundir con 'llevar + participio'.",
+     "ejercicio": "Lleva ___ (trabajar) en esa empresa más de diez años sin que le hayan ofrecido una promoción.",
+     "respuesta": "trabajando", "nivel": "C1"},
+    {"perifrasis": "seguir + gerundio",
+     "significado": "Indica que una acción continúa sin interrupción.",
+     "ejemplos": ["Siguen debatiendo el mismo punto desde hace horas.",
+                  "Siguió trabajando hasta el amanecer aunque le aconsejaron que parara."],
+     "trampa": "Sinónimo de 'continuar + gerundio', pero más coloquial.",
+     "ejercicio": "A pesar de las advertencias, ___ (cometer) los mismos errores una y otra vez.",
+     "respuesta": "sigue cometiendo", "nivel": "B2"},
+    {"perifrasis": "dejar de + infinitivo",
+     "significado": "Interrupción definitiva o temporal de una acción.",
+     "ejemplos": ["Dejó de fumar hace tres años.", "No dejes de informarme si hay novedades."],
+     "trampa": "Con negación ('no dejes de + inf.') adquiere valor de recomendación: 'no dejes de verla' = asegúrate de verla.",
+     "ejercicio": "___ (hablar) con ella desde que tuvieron aquella discusión tan tensa.",
+     "respuesta": "Ha dejado de hablar", "nivel": "B2"},
+    {"perifrasis": "ponerse a + infinitivo",
+     "significado": "Inicio brusco o inesperado de una acción.",
+     "ejemplos": ["Sin previo aviso, se puso a llover con una intensidad tremenda.",
+                  "En cuanto se sentó, se puso a leer sin saludar a nadie."],
+     "trampa": "Indica inicio súbito, no planificado. Contrasta con 'empezar a', más neutro.",
+     "ejercicio": "Nada más recibir la noticia, ___ (llorar) sin poder contenerse.",
+     "respuesta": "se puso a llorar", "nivel": "B2"},
+    {"perifrasis": "volver a + infinitivo",
+     "significado": "Repetición de una acción ya realizada anteriormente.",
+     "ejemplos": ["Volvió a cometer el mismo error que le habían señalado.",
+                  "No quiero volver a pasar por una situación tan incómoda."],
+     "trampa": "En negativo expresa voluntad de no repetir: 'no quiero volver a verle' = nunca más.",
+     "ejercicio": "Tras años de silencio, ___ (publicar) una novela que ha sorprendido a todos.",
+     "respuesta": "ha vuelto a publicar", "nivel": "B2"},
+    {"perifrasis": "acabar de + infinitivo",
+     "significado": "Acción completada en un momento muy reciente.",
+     "ejemplos": ["Acabo de hablar con el director y me ha confirmado los cambios.",
+                  "Cuando llegué, acababan de cerrar la puerta."],
+     "trampa": "Solo en presente (recién) e imperfecto (antes de otra acción pasada). No en futuro.",
+     "ejercicio": "___ (confirmar) que el evento se celebrará tal y como estaba previsto.",
+     "respuesta": "Acaban de confirmar", "nivel": "B2"},
+    {"perifrasis": "acabar por + infinitivo",
+     "significado": "Tras un proceso o resistencia, se llega finalmente a una acción.",
+     "ejemplos": ["Aunque al principio se resistía, acabó por aceptar las condiciones.",
+                  "Después de tanto debatirlo, acabamos por no tomar ninguna decisión."],
+     "trampa": "No confundir con 'acabar de' (reciente) ni 'acabar + gerundio' (resultado gradual).",
+     "ejercicio": "Tras meses de negociaciones, ___ (firmar) un acuerdo que nadie esperaba.",
+     "respuesta": "acabaron por firmar", "nivel": "C1"},
+    {"perifrasis": "andar + gerundio",
+     "significado": "Acción habitual o persistente, con matiz de dispersión o actividad continua.",
+     "ejemplos": ["Anda buscando trabajo desde que lo despidieron.",
+                  "No me gusta que anden comentando mis asuntos a mis espaldas."],
+     "trampa": "Más coloquial que 'estar + gerundio'. Implica cierta repetición o dispersión.",
+     "ejercicio": "Últimamente ___ (quejarse) de todo sin proponer ninguna alternativa.",
+     "respuesta": "anda quejándose", "nivel": "C1"},
+    {"perifrasis": "deber de + infinitivo",
+     "significado": "Deducción lógica o probabilidad (con 'de'). Sin 'de': obligación moral.",
+     "ejemplos": ["Debe de ser muy tarde; no hay nadie en las calles.",
+                  "A juzgar por su cara, debe de estar agotada."],
+     "trampa": "'Deber + inf.' = obligación. 'Deber DE + inf.' = deducción. El DELE exige distinguirlos.",
+     "ejercicio": "No ha contestado ningún mensaje en todo el día; ___ (estar) muy ocupado.",
+     "respuesta": "debe de estar", "nivel": "C1"},
+    {"perifrasis": "ir a + infinitivo",
+     "significado": "Intención, plan o predicción inmediata sobre el futuro.",
+     "ejemplos": ["Vamos a revisar todos los puntos antes de decidir.",
+                  "Con esa actitud, va a perder la confianza de todo el equipo."],
+     "trampa": "En imperfecto expresa algo que iba a ocurrir pero se interrumpió: 'iba a llamarte pero se me fue'.",
+     "ejercicio": "Según las previsiones, ___ (producirse) un cambio significativo en el sector.",
+     "respuesta": "va a producirse", "nivel": "B2"},
+    {"perifrasis": "tener que + infinitivo",
+     "significado": "Obligación o necesidad impuesta externamente, o deducción del hablante.",
+     "ejemplos": ["Tienes que entregar el formulario antes del viernes sin falta.",
+                  "Tiene que haber algún malentendido; esto no puede ser correcto."],
+     "trampa": "Segundo uso (deducción) equivale a 'deber de': 'tiene que haber un error' = deduzco que hay un error.",
+     "ejercicio": "Con tan pocos recursos, ___ (priorizar) muy bien cada gasto para llegar a fin de mes.",
+     "respuesta": "tendrán que priorizar", "nivel": "B2"},
+    {"perifrasis": "quedar en + infinitivo",
+     "significado": "Acuerdo o compromiso adoptado entre dos o más personas.",
+     "ejemplos": ["Quedamos en llamarnos el lunes para confirmar los detalles.",
+                  "¿No habíais quedado en no comentar nada hasta que fuera oficial?"],
+     "trampa": "No confundir con 'quedar + gerundio' (resultado) ni 'quedar con' (citarse con alguien).",
+     "ejercicio": "Según lo acordado, habíamos ___ (vernos) aquí a las seis en punto.",
+     "respuesta": "quedado en vernos", "nivel": "C1"},
+    {"perifrasis": "terminar de + infinitivo",
+     "significado": "Completar una acción o proceso. Con negación: no llegar a comprender algo.",
+     "ejemplos": ["Cuando termines de leer el informe, dime qué piensas.",
+                  "No termino de entender por qué tomaron esa decisión."],
+     "trampa": "'No terminar de + infinitivo' expresa perplejidad o resistencia: 'no termino de creerlo' = me cuesta creerlo.",
+     "ejercicio": "No ___ (entender) por qué rechazaron una propuesta tan sólida.",
+     "respuesta": "termino de entender", "nivel": "C1"},
+    {"perifrasis": "echar a + infinitivo",
+     "significado": "Inicio repentino de una acción, especialmente involuntaria o emocional.",
+     "ejemplos": ["Al oír la noticia, echó a correr sin mirar atrás.",
+                  "Se echó a reír en el momento más inapropiado."],
+     "trampa": "Similar a 'ponerse a', pero más literario y con verbos concretos: correr, volar, andar, reír, llorar.",
+     "ejercicio": "Sin previo aviso, ___ (llorar) delante de todos sus compañeros.",
+     "respuesta": "echó a llorar", "nivel": "C1"},
+    {"perifrasis": "estar a punto de + infinitivo",
+     "significado": "Acción inminente que está a punto de ocurrir o que estuvo a punto de ocurrir.",
+     "ejemplos": ["Estábamos a punto de marcharnos cuando llegaste.",
+                  "Está a punto de firmar el contrato más importante de su carrera."],
+     "trampa": "En imperfecto expresa una acción que estuvo a punto de suceder: 'estaba a punto de llamarte'.",
+     "ejercicio": "Cuando sonó el teléfono, ___ (quedarse) dormida en el sofá.",
+     "respuesta": "estaba a punto de quedarse", "nivel": "C1"},
+    {"perifrasis": "llevar + participio",
+     "significado": "Número acumulado de veces que se ha realizado una acción.",
+     "ejemplos": ["Llevo leídas tres novelas este mes.",
+                  "Llevan escritas más de veinte páginas del informe."],
+     "trampa": "No confundir con 'llevar + gerundio' (duración de acción en curso). El participio concuerda con el OD.",
+     "ejercicio": "Para cuando lleguen, nosotros ya ___ (preparar) todas las presentaciones.",
+     "respuesta": "llevaremos preparadas", "nivel": "C2"},
+    {"perifrasis": "acabar + gerundio",
+     "significado": "Resultado final gradual de un proceso: se llega a ese estado de forma progresiva.",
+     "ejemplos": ["Acabó creyendo que tenía razón después de tanto insistir.",
+                  "Si sigues así, acabarás arrepintiéndote de esta decisión."],
+     "trampa": "Contrasta con 'acabar por + infinitivo' (tras resistencia) y 'acabar de + infinitivo' (acción reciente).",
+     "ejercicio": "Aunque al principio no le gustaba, ___ (enamorarse) de la ciudad.",
+     "respuesta": "acabó enamorándose", "nivel": "C1"},
+    {"perifrasis": "parar de + infinitivo",
+     "significado": "Interrupción de una acción, generalmente de forma más brusca que 'dejar de'.",
+     "ejemplos": ["No para de hablar desde que llegó.",
+                  "¿Puedes parar de hacer ruido un momento?"],
+     "trampa": "En negativo, 'no parar de + infinitivo' expresa que la acción es continua e incesante.",
+     "ejercicio": "Desde que empezó el proyecto, no ___ (trabajar) más de seis horas al día.",
+     "respuesta": "ha parado de trabajar", "nivel": "B2"},
+    {"perifrasis": "venir + gerundio",
+     "significado": "Acción que se ha ido desarrollando de forma gradual a lo largo de un período.",
+     "ejemplos": ["Vengo diciéndole lo mismo desde hace meses, pero no escucha.",
+                  "Esto viene ocurriendo desde mucho antes de que llegáramos nosotros."],
+     "trampa": "Indica proceso gradual y acumulativo, a diferencia de 'llevar + gerundio' (duración puntual medible).",
+     "ejercicio": "Los expertos ___ (advertir) sobre este riesgo desde hace más de una década.",
+     "respuesta": "vienen advirtiendo", "nivel": "C1"},
+]
+
+GR_SER_ESTAR: List[Dict] = [
+    {"frase": "El cielo ___ muy azul esta mañana.",
+     "respuesta": "está", "tipo": "Estado temporal vs característica",
+     "explicacion": "'Estar' para estados temporales o perceptibles en un momento concreto. 'Esta mañana' indica temporalidad → estar. 'El cielo es azul' (en general) también sería válido sin marcador temporal.",
+     "trampa": "Cuando hay marcador temporal (hoy, esta mañana, ahora...) la tendencia es estar.",
+     "nivel": "B2"},
+    {"frase": "Mi vecino ___ médico, pero últimamente ___ muy cansado.",
+     "respuesta": "es / está", "tipo": "Profesión vs estado",
+     "explicacion": "Profesión o identidad permanente → ser. Estado físico o emocional temporal → estar.",
+     "trampa": "Con adjetivos que cambian de significado: 'es aburrido' (su carácter) vs 'está aburrido' (ahora).",
+     "nivel": "B2"},
+    {"frase": "La reunión ___ en la sala de conferencias del tercer piso.",
+     "respuesta": "es", "tipo": "Ubicación de eventos vs cosas",
+     "explicacion": "La ubicación de EVENTOS → ser ('la reunión es en...'). La ubicación de COSAS o PERSONAS → estar ('el libro está en...').",
+     "trampa": "Es el error más frecuente de anglohablantes. En inglés siempre 'is' → los estudiantes usan 'está' para todo.",
+     "nivel": "C1"},
+    {"frase": "Este ejercicio ___ muy difícil para el nivel que tiene.",
+     "respuesta": "es", "tipo": "Característica inherente",
+     "explicacion": "Dificultad como característica del ejercicio → ser. Si dijéramos 'está muy difícil hoy' implicaría que normalmente no lo es (cambio de estado).",
+     "trampa": "'El examen estuvo muy difícil' (valoración del resultado, con indefinido) → estar. 'Es muy difícil' (característica) → ser.",
+     "nivel": "C1"},
+    {"frase": "La fruta ___ muy cara en este mercado.",
+     "respuesta": "está", "tipo": "Precio como estado",
+     "explicacion": "Los precios en español se expresan con 'estar' porque son condiciones variables y no características permanentes: 'el pan está a 2 euros'.",
+     "trampa": "Anglohablantes suelen decir *'es cara'*. En español, los precios y condiciones del mercado → estar.",
+     "nivel": "C1"},
+    {"frase": "Todos ___ invitados a la ceremonia de inauguración.",
+     "respuesta": "están", "tipo": "Participio como resultado",
+     "explicacion": "Estar + participio expresa el resultado de una acción: 'están invitados' = han sido invitados y se encuentran en ese estado. No confundir con la pasiva (ser + participio).",
+     "trampa": "'Son invitados' = voz pasiva (los invitan). 'Están invitados' = resultado, estado.",
+     "nivel": "C1"},
+    {"frase": "La película ___ basada en hechos reales.",
+     "respuesta": "está / es", "tipo": "Participio adjetival",
+     "explicacion": "'Basada' aquí funciona como adjetivo que describe el estado o resultado de la película. Estar + participio adjetival → estar.",
+     "trampa": "También se acepta 'es una película basada en...'. La diferencia es sutil, pero 'está basada' es la construcción más frecuente.",
+     "nivel": "C1"},
+    {"frase": "¡___ listo! Nos vamos en cinco minutos.",
+     "respuesta": "Está listo", "tipo": "Adjetivos con doble significado",
+     "explicacion": "'Ser listo' = ser inteligente. 'Estar listo' = estar preparado/terminado. El contexto ('nos vamos') indica preparación → estar.",
+     "trampa": "Otros pares: ser malo vs estar malo (enfermo); ser bueno vs estar bueno (sabroso/atractivo); ser vivo vs estar vivo.",
+     "nivel": "C1"},
+    {"frase": "El acuerdo ___ firmado por ambas partes el pasado martes.",
+     "respuesta": "fue", "tipo": "Pasiva perifrástica (ser + participio)",
+     "explicacion": "La pasiva perifrástica usa SER + participio para indicar que el sujeto paciente recibe la acción. 'Fue firmado' = alguien lo firmó. No confundir con estar + participio (resultado).",
+     "trampa": "'Fue firmado' (pasiva, acción) vs 'está firmado' (estado resultante). El DELE puede preguntar esta diferencia.",
+     "nivel": "C1"},
+    {"frase": "Después de la operación, ___ mucho mejor que antes.",
+     "respuesta": "está", "tipo": "Estado de salud",
+     "explicacion": "El estado de salud, tanto bueno como malo, siempre va con estar: 'está bien', 'está mejor', 'está peor', 'está enfermo'.",
+     "trampa": "*Es mejor* podría referirse a su calidad como persona. 'Está mejor' se refiere inequívocamente al estado de salud.",
+     "nivel": "B2"},
+    {"frase": "La conferencia ___ muy interesante; aprendimos muchísimo.",
+     "respuesta": "estuvo", "tipo": "Valoración de un evento",
+     "explicacion": "La valoración de un evento puntual ya concluido → estar en indefinido ('estuvo'). Si fuera una característica permanente → ser ('es interesante como persona').",
+     "trampa": "'Es interesante' (característica habitual) vs 'estuvo interesante' (valoración de algo ya terminado).",
+     "nivel": "C1"},
+    {"frase": "No ___ segura de si debo aceptar la oferta o no.",
+     "respuesta": "estoy", "tipo": "Estado de certeza",
+     "explicacion": "'Estar seguro/a de' expresa un estado de certeza o duda momentáneo. 'Ser seguro' significaría algo o alguien que inspira seguridad o que es fiable.",
+     "trampa": "'Estar seguro de algo' (certeza) vs 'ser una persona segura' (confiada, fiable).",
+     "nivel": "C1"},
+    {"frase": "___ de Barcelona, pero llevo diez años viviendo en Madrid.",
+     "respuesta": "Soy", "tipo": "Origen y procedencia",
+     "explicacion": "El origen o procedencia geográfica → siempre ser: 'soy de Barcelona', 'es de Argentina'.",
+     "trampa": "No confundir con la ubicación actual: 'estoy en Barcelona' (lugar donde estoy ahora).",
+     "nivel": "B2"},
+    {"frase": "La casa ___ muy bien situada: cerca del metro y del parque.",
+     "respuesta": "está", "tipo": "Ubicación de cosas y personas",
+     "explicacion": "La ubicación de cosas, personas y animales → estar. Solo los eventos van con ser ('la boda es en el jardín').",
+     "trampa": "Error frecuente: *'la casa es cerca del metro'*. La ubicación de objetos físicos siempre es estar.",
+     "nivel": "B2"},
+    {"frase": "El trabajo final ___ corregido por el profesor la semana pasada.",
+     "respuesta": "fue", "tipo": "Pasiva perifrástica",
+     "explicacion": "Ser + participio en pasado = pasiva perifrástica: alguien realizó la acción sobre el sujeto. 'Fue corregido' = alguien lo corrigió.",
+     "trampa": "'Fue corregido' (pasiva, acción puntual) ≠ 'está corregido' (estado resultante, ya está listo).",
+     "nivel": "C1"},
+    {"frase": "Ayer la sopa ___ buenísima. ¿Cómo la hiciste?",
+     "respuesta": "estaba / estuvo", "tipo": "Adjetivos de percepción sensorial",
+     "explicacion": "Para describir cómo está algo al probarlo, olerlo o tocarlo → estar: 'está bueno/rico/frío/caliente'.",
+     "trampa": "'Ser bueno' = tener buen carácter/calidad general. 'Estar bueno' = saber bien o tener buen aspecto.",
+     "nivel": "B2"},
+    {"frase": "Su padre ___ abogado, pero ___ de baja desde el accidente.",
+     "respuesta": "es / está", "tipo": "Profesión vs estado temporal",
+     "explicacion": "Profesión permanente → ser. Situación laboral temporal (de baja, de vacaciones, de viaje) → estar.",
+     "trampa": "Estar de baja, estar de vacaciones, estar de guardia: estas expresiones fijas siempre usan estar.",
+     "nivel": "B2"},
+    {"frase": "El contrato ___ listo para firmar; solo falta la firma del director.",
+     "respuesta": "está", "tipo": "Listo: preparado vs inteligente",
+     "explicacion": "'Estar listo' = preparado, terminado. 'Ser listo' = ser inteligente o astuto.",
+     "trampa": "Otros pares con cambio de significado: vivo (ser vivo = astuto / estar vivo = no muerto), malo, bueno, rico.",
+     "nivel": "C1"},
+    {"frase": "La frontera entre los dos países ___ a unos 50 kilómetros de aquí.",
+     "respuesta": "está", "tipo": "Ubicación con distancia",
+     "explicacion": "La ubicación física, incluso expresada con distancia → estar. 'La frontera está a 50 km'.",
+     "trampa": "No existe excepción para ubicaciones con distancia: siempre estar para cosas y personas.",
+     "nivel": "B2"},
+    {"frase": "No me gusta cómo ___ pintadas las paredes de ese edificio.",
+     "respuesta": "están", "tipo": "Estado resultante + participio",
+     "explicacion": "Estar + participio = estado resultado de una acción previa. Las paredes han sido pintadas y se encuentran en ese estado.",
+     "trampa": "'Las paredes son pintadas' sería pasiva (alguien las pinta). 'Las paredes están pintadas' = resultado.",
+     "nivel": "C1"},
+    {"frase": "Este artículo ___ escrito en un español muy formal y académico.",
+     "respuesta": "está", "tipo": "Participio adjetival de modo",
+     "explicacion": "'Estar escrito de cierta manera' describe el estado o modo del texto como resultado. El participio funciona como adjetivo.",
+     "trampa": "'Fue escrito por Cervantes' (pasiva, agente) vs 'está escrito en latín' (estado, modo).",
+     "nivel": "C1"},
+    {"frase": "Me parece que ___ equivocado en su interpretación de los datos.",
+     "respuesta": "está", "tipo": "Estado de error o acierto",
+     "explicacion": "Estar equivocado/acertado/confundido/perdido → estados temporales → estar.",
+     "trampa": "*'Es equivocado'* implicaría que equivocarse es parte de su identidad permanente, lo cual es raro.",
+     "nivel": "B2"},
+]
+
+
+# ═══════════════════════════════════════════════════════════
+#  DATOS — GRAMÁTICA C1 · PRONOMBRES, ERRORES, LECTURA
+# ═══════════════════════════════════════════════════════════
+
+GR_PRONOMBRES = [
+    {"tipo": "Combinación OI + OD",
+     "pregunta": "¿Cuál es la forma correcta?\n\n«Le di el libro a María» → con pronombres completos:",
+     "opciones": ["Le lo di", "Se lo di", "Lo le di", "Le di lo"],
+     "respuesta": "Se lo di",
+     "explicacion": "Cuando el OI (le/les) precede al OD (lo/la/los/las), el OI se convierte en 'se'. Nunca *le lo, le la, les lo...*",
+     "nivel": "B2"},
+    {"tipo": "Posición con infinitivo",
+     "pregunta": "¿Cuál es la opción correcta?\n\n«Quiero decir la verdad a ti» → con pronombres:",
+     "opciones": ["Te quiero decirla", "Quiero decírtela", "Las dos son correctas", "Quiero la decirte"],
+     "respuesta": "Las dos son correctas",
+     "explicacion": "Con perífrasis o verbo + infinitivo, los pronombres pueden ir delante del conjugado O enclíticos al infinitivo: 'te lo quiero decir' = 'quiero decírtelo'.",
+     "nivel": "B2"},
+    {"tipo": "Leísmo aceptado",
+     "pregunta": "¿Cuál es la opción normativa según la RAE?\n\n«Vi a tu hermano ayer»",
+     "opciones": ["Le vi ayer", "Lo vi ayer", "Las dos son aceptadas por la RAE", "Solo 'lo' es correcto"],
+     "respuesta": "Las dos son aceptadas por la RAE",
+     "explicacion": "El leísmo de persona masculina singular está aceptado por la RAE. 'Le vi' y 'lo vi' son ambos válidos. El leísmo de cosa (*le compré* para un objeto) no está aceptado.",
+     "nivel": "C1"},
+    {"tipo": "Posición con gerundio",
+     "pregunta": "Elige la opción correcta:\n\n«Está explicando el problema a los estudiantes»",
+     "opciones": ["Se los está explicando", "Está explicándoselo", "Las dos son correctas", "Les lo está explicando"],
+     "respuesta": "Las dos son correctas",
+     "explicacion": "Con estar + gerundio, los pronombres van delante de 'está' O enclíticos al gerundio: 'se lo está explicando' = 'está explicándoselo'.",
+     "nivel": "C1"},
+    {"tipo": "Duplicación de OI obligatoria",
+     "pregunta": "¿Cuál de estas frases es correcta en español estándar?",
+     "opciones": ["A María compré un regalo", "A María le compré un regalo",
+                  "Le compré a María", "Compré a María un regalo"],
+     "respuesta": "A María le compré un regalo",
+     "explicacion": "Cuando el OI aparece explícito ('a María'), el pronombre OI (le) TAMBIÉN debe aparecer. Esta duplicación es obligatoria en la mayoría de los dialectos.",
+     "nivel": "C1"},
+    {"tipo": "Se impersonal vs pasiva refleja",
+     "pregunta": "¿Cuál es la diferencia?\n\n«Se busca secretaria» vs «Se buscan secretarias»",
+     "opciones": [
+         "Ninguna, son intercambiables",
+         "La primera es pasiva refleja; la segunda es impersonal",
+         "La primera puede ser impersonal; la segunda es pasiva refleja (concuerda con el sujeto)",
+         "Ambas son pasivas reflejas",
+     ],
+     "respuesta": "La primera puede ser impersonal; la segunda es pasiva refleja (concuerda con el sujeto)",
+     "explicacion": "'Se busca secretaria': impersonal, verbo en singular. 'Se buscan secretarias': pasiva refleja, el verbo concuerda con 'secretarias'.",
+     "nivel": "C2"},
+    {"tipo": "Imperativo con pronombres",
+     "pregunta": "¿Cuál es la forma correcta?\n\n«Dile a tu hermana que venga» → con pronombre:",
+     "opciones": ["Díla que venga", "Dísela que venga", "Dile que venga", "Se dile que venga"],
+     "respuesta": "Dile que venga",
+     "explicacion": "Solo hay OI ('a tu hermana' → le). La subordinada 'que venga' no se pronominaliza. El pronombre va enclítico al imperativo: 'dile'.",
+     "nivel": "C1"},
+    {"tipo": "Se aspectual-afectivo",
+     "pregunta": "¿Qué añade 'se' en: «Se comió toda la pizza»?",
+     "opciones": [
+         "Reflexividad (la acción recae sobre el sujeto)",
+         "Matiz de completitud o afectación total del sujeto",
+         "Pasiva refleja",
+         "Nada, es redundante",
+     ],
+     "respuesta": "Matiz de completitud o afectación total del sujeto",
+     "explicacion": "El 'se' aspectual añade completitud: 'comió pizza' (algo de pizza) vs 'se comió la pizza' (toda entera, con mayor implicación del sujeto).",
+     "nivel": "C2"},
+    {"tipo": "OD con a personal",
+     "pregunta": "¿Cuál es la forma correcta?",
+     "opciones": [
+         "Vi tu hermana en el mercado",
+         "Vi a tu hermana en el mercado",
+         "Le vi a tu hermana en el mercado",
+         "Vi la tu hermana en el mercado",
+     ],
+     "respuesta": "Vi a tu hermana en el mercado",
+     "explicacion": "En español, el OD de persona va introducido por 'a personal': 'vi a María', 'llamé a mi madre'. Sin la 'a', la frase es incorrecta.",
+     "nivel": "B2"},
+    {"tipo": "Pronombre con cambio de significado verbal",
+     "pregunta": "¿Qué diferencia hay entre «fue» y «se fue»?",
+     "opciones": [
+         "Ninguna diferencia real",
+         "'Fue' = desplazamiento hacia un lugar; 'se fue' = marcharse, alejarse con énfasis en la separación",
+         "'Se fue' es incorrecto en español normativo",
+         "'Fue' implica ida y vuelta; 'se fue' solo ida",
+     ],
+     "respuesta": "'Fue' = desplazamiento hacia un lugar; 'se fue' = marcharse, alejarse con énfasis en la separación",
+     "explicacion": "El 'se' cambia el matiz: 'fue al médico' (se desplazó) vs 'se fue' (partió, se marchó, énfasis en el alejamiento definitivo).",
+     "nivel": "C1"},
+    {"tipo": "Posición en imperativo negativo",
+     "pregunta": "¿Cuál es la forma correcta del imperativo negativo?",
+     "opciones": ["No dímelo", "No me lo digas", "No digas me lo", "Dímelo no"],
+     "respuesta": "No me lo digas",
+     "explicacion": "En el imperativo negativo, los pronombres van DELANTE del verbo: 'no me lo digas', 'no te vayas'. Solo en el afirmativo van detrás: 'dímelo', 'vete'.",
+     "nivel": "C1"},
+    {"tipo": "Concordancia del participio",
+     "pregunta": "¿Cuál es la frase correcta?\n\n«Los informes que te he enviado»",
+     "opciones": [
+         "Los informes que te he enviados",
+         "Los informes que te he enviado",
+         "Los informes que se los he enviado",
+         "Los informes que le he enviado",
+     ],
+     "respuesta": "Los informes que te he enviado",
+     "explicacion": "En los tiempos compuestos con haber, el participio NO concuerda con el OD: 'he enviado los informes'. La concordancia (*enviados*) es un arcaísmo.",
+     "nivel": "C2"},
+]
+
+GR_ERRORES_INGLES = [
+    {"categoria": "Falso amigo: embarazada",
+     "error": "Estoy muy *embarazada* por lo que dijiste delante de todos.",
+     "correccion": "Estoy muy avergonzada / me ha dado mucha vergüenza lo que dijiste.",
+     "explicacion": "'Embarazada' = pregnant. 'Embarrassed' (inglés) = avergonzado/a.",
+     "extra": "Más falsos amigos: 'sensible' (sensitivo ≠ sensible), 'actual' (real ≠ actual), 'library' (biblioteca ≠ librería).",
+     "nivel": "B2"},
+    {"categoria": "Falso amigo: excitado",
+     "error": "Estoy muy *excitado* por el concierto de esta noche.",
+     "correccion": "Estoy muy emocionado / ilusionado / entusiasmado con el concierto.",
+     "explicacion": "'Excitado' en español tiene connotación sexual en muchos contextos. 'Excited' = emocionado, entusiasmado.",
+     "extra": "Alternativas seguras: emocionado, ilusionado, entusiasmado, con muchas ganas.",
+     "nivel": "B2"},
+    {"categoria": "Haber impersonal",
+     "error": "*Habían* muchas personas en la reunión de ayer.",
+     "correccion": "Había muchas personas en la reunión de ayer.",
+     "explicacion": "'Haber' existencial es impersonal: siempre en singular. *Habían, hubieron* (existencial) son incorrectos según la norma.",
+     "extra": "Correcto: 'Hay mucha gente', 'Había varios problemas'. Incorrecto: *'habían cambios'*.",
+     "nivel": "C1"},
+    {"categoria": "Por vs Para: finalidad",
+     "error": "Lo hice *por* impresionarte en la reunión.",
+     "correccion": "Lo hice para impresionarte en la reunión.",
+     "explicacion": "'Para + infinitivo' = finalidad o propósito consciente. 'Por + infinitivo' = causa: 'lo hice por miedo'.",
+     "extra": "PARA = destino, finalidad, destinatario, plazo. POR = causa, duración, intercambio, agente pasiva.",
+     "nivel": "C1"},
+    {"categoria": "Ser vs Estar: ubicación de eventos",
+     "error": "La boda *está* en el jardín del hotel.",
+     "correccion": "La boda es en el jardín del hotel.",
+     "explicacion": "Los EVENTOS se ubican con 'ser'. Solo cosas y personas usan 'estar' para ubicación.",
+     "extra": "Truco: si puedes decir 'tiene lugar en', es un evento → ser.",
+     "nivel": "C1"},
+    {"categoria": "Queísmo",
+     "error": "Estoy seguro *que* vendrá mañana.",
+     "correccion": "Estoy seguro de que vendrá mañana.",
+     "explicacion": "Queísmo: omitir 'de' donde sí corresponde. 'Estar seguro de que', 'acordarse de que', 'darse cuenta de que' requieren 'de'.",
+     "extra": "Truco: sustituye por 'eso'. 'Estoy seguro de eso' → necesitas 'de'. 'Pienso eso' → no necesitas 'de'.",
+     "nivel": "C1"},
+    {"categoria": "Dequeísmo",
+     "error": "Pienso *de que* es una decisión equivocada.",
+     "correccion": "Pienso que es una decisión equivocada.",
+     "explicacion": "Dequeísmo: añadir 'de' donde no corresponde. 'Pensar que', 'creer que', 'decir que' no llevan 'de'.",
+     "extra": "Mismo truco: 'pienso eso' (sin 'de') → no lleva 'de'. 'Estoy seguro de eso' → sí lleva 'de'.",
+     "nivel": "C1"},
+    {"categoria": "Tiempos: habitual vs puntual",
+     "error": "Cuando era pequeña, *fui* a la playa todos los veranos.",
+     "correccion": "Cuando era pequeña, iba a la playa todos los veranos.",
+     "explicacion": "Imperfecto para acciones habituales en el pasado. 'Todos los veranos' indica habitualidad → imperfecto.",
+     "extra": "'El verano pasado fui' (puntual → indefinido) vs 'de pequeña iba' (habitual → imperfecto).",
+     "nivel": "B2"},
+    {"categoria": "Verbos de cambio de estado",
+     "error": "Me *hice* muy cansada después del trabajo.",
+     "correccion": "Me puse muy cansada / Me quedé agotada después del trabajo.",
+     "explicacion": "'Hacerse' = cambios de identidad (hacerse médico, famoso). Para estados físicos temporales: 'ponerse' o 'quedarse'.",
+     "extra": "PONERSE (cambio rápido, emocional), QUEDARSE (resultado, involuntario), VOLVERSE (carácter), HACERSE (identidad).",
+     "nivel": "C1"},
+    {"categoria": "Artículo con genéricos",
+     "error": "*Vida* es muy corta para perder el tiempo.",
+     "correccion": "La vida es muy corta para perder el tiempo.",
+     "explicacion": "En español, los sustantivos en sentido genérico llevan artículo: 'la vida', 'el tiempo'. En inglés no: 'Life is short'.",
+     "extra": "Más ejemplos: 'la música es universal', 'el dinero no da la felicidad', 'los niños aprenden rápido'.",
+     "nivel": "B2"},
+    {"categoria": "Preposición ante subordinada",
+     "error": "*Depende si* vienes o no.",
+     "correccion": "Depende de si vienes o no.",
+     "explicacion": "Los verbos que rigen preposición la mantienen ante subordinadas. 'Depender de algo' → 'depender de si...'.",
+     "extra": "Más: 'acordarse de que', 'asegurarse de que', 'convencerse de que', 'olvidarse de que'.",
+     "nivel": "C1"},
+    {"categoria": "Orden del adverbio",
+     "error": "Estoy de acuerdo con usted *completamente*.",
+     "correccion": "Estoy completamente de acuerdo con usted.",
+     "explicacion": "Los adverbios de grado van generalmente antes del grupo verbal en español, no al final como en inglés.",
+     "extra": "Más natural: 'Estoy totalmente de acuerdo', 'Coincido plenamente', 'No podría estar más de acuerdo'.",
+     "nivel": "C1"},
+    {"categoria": "Falso amigo: realizar",
+     "error": "De repente *realicé* que había cometido un error.",
+     "correccion": "De repente me di cuenta de que había cometido un error.",
+     "explicacion": "'Realizar' en español = llevar a cabo ('realizar una tarea'). 'To realize' = darse cuenta. El calco es incorrecto en español normativo.",
+     "extra": "También: 'to make a decision' ≠ *hacer una decisión* → 'tomar una decisión'.",
+     "nivel": "C1"},
+    {"categoria": "Pasiva: uso excesivo",
+     "error": "El informe fue escrito *por mí* ayer por la tarde.",
+     "correccion": "Yo escribí el informe ayer. / El informe lo escribí yo.",
+     "explicacion": "El español prefiere la voz activa. El uso excesivo de la pasiva perifrástica con agente explícito es un anglicismo frecuente.",
+     "extra": "La pasiva refleja (se + verbo) es más natural: 'se publicó el informe', 'se vendieron muchas entradas'.",
+     "nivel": "C1"},
+]
+
+GR_LECTURA = [
+    {
+        "titulo": "La paradoja de la elección",
+        "fuente": "Texto adaptado · Nivel C1",
+        "texto": (
+            "En las últimas décadas, la proliferación de opciones en todos los ámbitos de la vida cotidiana "
+            "ha sido presentada como un síntoma inequívoco de progreso y libertad. Sin embargo, el psicólogo "
+            "Barry Schwartz argumenta que el exceso de opciones no solo no nos hace más libres, sino que nos "
+            "paraliza y nos hace, paradójicamente, menos satisfechos.\n\n"
+            "Schwartz distingue entre dos tipos de personas: los \"maximizadores\", que exploran todas las "
+            "opciones antes de decidir, y los \"satisficientes\", que eligen la primera alternativa que cumpla "
+            "sus criterios mínimos. Los maximizadores toman mejores decisiones objetivamente, pero reportan menor "
+            "satisfacción: cuantas más opciones consideraron, mayor es el pesar por las no elegidas.\n\n"
+            "Este fenómeno, el \"coste de oportunidad psicológico\", se agrava en un mundo de infinitas opciones, "
+            "donde conformarse se percibe como fracaso personal. La implicación es clara: más opciones no equivale "
+            "necesariamente a más libertad real."
+        ),
+        "preguntas": [
+            {"pregunta": "¿Cuál es la tesis principal del texto?",
+             "opciones": ["a) Más opciones siempre mejora la calidad de vida.",
+                          "b) El exceso de opciones puede reducir la satisfacción personal.",
+                          "c) Los maximizadores son más felices que los satisficientes.",
+                          "d) La libertad de elección es un mito moderno."],
+             "respuesta": "b) El exceso de opciones puede reducir la satisfacción personal.",
+             "explicacion": "El texto argumenta que más opciones genera más insatisfacción. Las otras opciones contradicen o exageran el argumento."},
+            {"pregunta": "¿Por qué los maximizadores reportan menor satisfacción?",
+             "opciones": ["a) Porque siempre toman peores decisiones.",
+                          "b) Porque dedican demasiado tiempo a decidir.",
+                          "c) Porque el pesar por las opciones no elegidas es mayor.",
+                          "d) Porque no tienen criterios claros."],
+             "respuesta": "c) Porque el pesar por las opciones no elegidas es mayor.",
+             "explicacion": "El texto dice: 'mayor es el pesar por las no elegidas'. No es el tiempo invertido, sino el coste emocional de lo descartado."},
+            {"pregunta": "¿Qué implica el texto sobre libertad y opciones?",
+             "opciones": ["a) Más libertad siempre conlleva más opciones.",
+                          "b) La libertad solo existe con pocas opciones.",
+                          "c) A partir de cierto punto, más opciones no equivalen a más libertad real.",
+                          "d) La libertad es incompatible con la satisfacción."],
+             "respuesta": "c) A partir de cierto punto, más opciones no equivalen a más libertad real.",
+             "explicacion": "La conclusión del texto: 'Más opciones no equivale necesariamente a más libertad real'."},
+        ],
+    },
+    {
+        "titulo": "La economía del sueño",
+        "fuente": "Texto adaptado · Nivel C1",
+        "texto": (
+            "Dormir bien no es solo una cuestión de bienestar individual. Es un factor estratégico para la "
+            "productividad económica. Se estima que en países como Estados Unidos, Japón o Alemania, la "
+            "privación de sueño cuesta entre el 1,5 y el 3% del PIB anual.\n\n"
+            "La paradoja es notable: las mismas culturas que generan ese déficit de sueño lo penalizan "
+            "socialmente. Quien duerme en el trabajo es tachado de perezoso; quien trabaja sin parar recibe "
+            "aplausos. Esta glorificación del agotamiento —la \"cultura del hustle\"— no solo es "
+            "contraproducente económicamente, sino que genera consecuencias negativas para la salud pública.\n\n"
+            "Algunas empresas han implementado cabinas de siesta u horarios más flexibles. Sin embargo, los "
+            "críticos señalan que, sin un cambio cultural profundo, estas medidas son parches estéticos. "
+            "La conclusión científica es inequívoca: somos peores en creatividad, toma de decisiones y empatía "
+            "cuando dormimos mal. Una sociedad que duerme mal toma peores decisiones colectivas."
+        ),
+        "preguntas": [
+            {"pregunta": "¿Cuál es la paradoja principal del texto?",
+             "opciones": ["a) Dormir bien mejora la productividad pero perjudica la economía.",
+                          "b) Las culturas que generan déficit de sueño penalizan a quien duerme.",
+                          "c) Las empresas invierten en el sueño pero los empleados lo rechazan.",
+                          "d) El sueño es valorado en teoría pero ignorado por la ciencia."],
+             "respuesta": "b) Las culturas que generan déficit de sueño penalizan a quien duerme.",
+             "explicacion": "Las mismas culturas que producen el déficit castigan socialmente a quien duerme en el trabajo."},
+            {"pregunta": "¿Qué crítica se hace a las medidas empresariales?",
+             "opciones": ["a) Son demasiado caras.",
+                          "b) Los empleados no las usan.",
+                          "c) Son superficiales sin cambio cultural de fondo.",
+                          "d) Generan desigualdad entre trabajadores."],
+             "respuesta": "c) Son superficiales sin cambio cultural de fondo.",
+             "explicacion": "El texto: 'sin un cambio cultural profundo, no son más que parches estéticos que no abordan la raíz del problema'."},
+            {"pregunta": "¿Qué conclusión extrae el texto?",
+             "opciones": ["a) Las empresas deben instalar salas de descanso.",
+                          "b) El déficit de sueño perjudica al individuo y a la sociedad.",
+                          "c) La economía moderna ha resuelto el problema del sueño.",
+                          "d) Dormir bien es solo una cuestión personal."],
+             "respuesta": "b) El déficit de sueño perjudica al individuo y a la sociedad.",
+             "explicacion": "Somos peores en todo cuando dormimos mal, y 'una sociedad que duerme mal toma peores decisiones colectivas'."},
+        ],
+    },
+    {
+        "titulo": "El español en el mundo digital",
+        "fuente": "Texto adaptado · Nivel C1",
+        "texto": (
+            "El español es hoy la segunda lengua del mundo por número de hablantes nativos. Sin embargo, "
+            "en el entorno digital su presencia es desproporcionadamente baja: solo el 4% de los contenidos "
+            "de Internet está en español, frente al 60% en inglés, pese a que los hispanohablantes representan "
+            "casi el 8% de la población mundial conectada.\n\n"
+            "Esta brecha tiene consecuencias prácticas: menor disponibilidad de contenidos especializados y "
+            "dependencia del inglés para acceder a ciencia y tecnología. Paradójicamente, el español crece "
+            "en redes sociales y comunicación informal, pero su presencia en repositorios de conocimiento "
+            "formal sigue siendo marginal.\n\n"
+            "Parte del problema radica en la fragmentación del mercado hispanohablante: veinte países, "
+            "múltiples variedades, estándares técnicos distintos. No obstante, el creciente volumen de "
+            "contenido generado por usuarios —podcasts, vídeos, blogs— está comenzando a alterar el "
+            "equilibrio, aunque de forma todavía insuficiente."
+        ),
+        "preguntas": [
+            {"pregunta": "¿Cuál es la situación paradójica que describe el texto?",
+             "opciones": ["a) El español tiene muchos hablantes pero pocos usuarios de internet.",
+                          "b) El español crece en comunicación informal pero es marginal en conocimiento formal digital.",
+                          "c) El español tiene muchos contenidos pero de baja calidad.",
+                          "d) Los hispanohablantes prefieren consumir contenidos en inglés."],
+             "respuesta": "b) El español crece en comunicación informal pero es marginal en conocimiento formal digital.",
+             "explicacion": "El texto: 'mientras el español crece como lengua de comunicación interpersonal... su presencia en los repositorios de conocimiento formal sigue siendo marginal'."},
+            {"pregunta": "¿Qué factor dificulta las plataformas digitales en español?",
+             "opciones": ["a) La falta de inversión económica.",
+                          "b) La preferencia de los usuarios por el inglés.",
+                          "c) La fragmentación en veinte países con variedades y estándares distintos.",
+                          "d) La ausencia de políticas lingüísticas comunes."],
+             "respuesta": "c) La fragmentación en veinte países con variedades y estándares distintos.",
+             "explicacion": "El texto señala explícitamente: 'la fragmentación del mercado hispanohablante: veinte países, múltiples variedades, estándares técnicos diferentes'."},
+            {"pregunta": "¿Qué tendencia positiva menciona el texto?",
+             "opciones": ["a) Los gobiernos invierten más en digitalización en español.",
+                          "b) El inglés está perdiendo su posición dominante.",
+                          "c) El contenido generado por usuarios en español comienza a cambiar el equilibrio.",
+                          "d) Las plataformas tecnológicas adoptan el español como lengua principal."],
+             "respuesta": "c) El contenido generado por usuarios en español comienza a cambiar el equilibrio.",
+             "explicacion": "El último párrafo: 'el creciente volumen de contenido generado por usuarios... está comenzando a alterar ese equilibrio'."},
+        ],
+    },
+]
+
 # ─────────────────────────────────────────────
 #  STREAMLIT CONFIG
 # ─────────────────────────────────────────────
@@ -2600,7 +3298,10 @@ with st.sidebar:
     st.markdown("## 📘 Cata Español C2")
     modulo = st.radio(
         "Módulo:",
-        ["📗 Verbos + Preposición", "🔗 Conectores"],
+        ["📗 Verbos + Preposición", "🔗 Conectores",
+         "🔀 Subjuntivo", "⚙️ Perífrasis",
+         "🔵🔴 Ser vs Estar", "🔤 Pronombres",
+         "🇬🇧 Errores", "📚 Comprensión lectora"],
         label_visibility="collapsed",
     )
     st.markdown("---")
@@ -2637,8 +3338,10 @@ with st.sidebar:
                 st.rerun()
         else:
             st.caption("Sin verbos débiles aún.")
+    elif modulo == "🔗 Conectores":
+        st.caption("50 conectores · C1/C2 · 6 tipos de ejercicio")
     else:
-        st.caption("50 conectores · C1/C2 · 5 tipos de ejercicio")
+        st.caption("Gramática C1 · DELE Cervantes")
 
 st.markdown("""
 <div class="hero">
@@ -2740,107 +3443,57 @@ if modulo == "📗 Verbos + Preposición":
     #  TAB 2 — QUIZ
     # ────────────────────────────────
     with tab2:
-        col_quiz, col_free = st.columns([1.1, 0.9], gap="large")
-    
-        with col_quiz:
-            st.markdown('<div class="section-title">Quiz dinámico</div>', unsafe_allow_html=True)
-            st.markdown('<div class="section-sub">Los verbos con más fallos aparecen con mayor frecuencia.</div>', unsafe_allow_html=True)
-    
-            if st.session_state.quiz_data is None:
-                new_quiz_question(items, weighted_items, st.session_state.study_mode)
-    
-            quiz = st.session_state.quiz_data
-            if quiz and quiz["item"] in items:
-                st.markdown('<div class="quiz-box">', unsafe_allow_html=True)
-                st.markdown(quiz["question"])
-    
-                user_answer = ""
-                if quiz["type"] in ["Elegir preposición", "Ejemplo correcto"]:
-                    display_opts = []
-                    for opt in quiz["options"]:
-                        display_opts.append("\n".join(textwrap.wrap(opt, width=54))
-                                           if quiz["type"] == "Ejemplo correcto" else opt)
-                    sel = st.radio("Selecciona", display_opts, key=f"r_{quiz['question'][:30]}")
-                    if quiz["type"] == "Ejemplo correcto":
-                        user_answer = dict(zip(display_opts, quiz["options"])).get(sel, sel)
-                    else:
-                        user_answer = sel
+        st.markdown('<div class="section-title">Quiz dinámico</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Los verbos con más fallos aparecen con mayor frecuencia.</div>', unsafe_allow_html=True)
+        
+        if st.session_state.quiz_data is None:
+            new_quiz_question(items, weighted_items, st.session_state.study_mode)
+        
+        quiz = st.session_state.quiz_data
+        if quiz and quiz["item"] in items:
+            st.markdown('<div class="quiz-box">', unsafe_allow_html=True)
+            st.markdown(quiz["question"])
+        
+            user_answer = ""
+            if quiz["type"] in ["Elegir preposición", "Ejemplo correcto"]:
+                display_opts = []
+                for opt in quiz["options"]:
+                    display_opts.append("\n".join(textwrap.wrap(opt, width=54))
+                                       if quiz["type"] == "Ejemplo correcto" else opt)
+                sel = st.radio("Selecciona", display_opts, key=f"r_{quiz['question'][:30]}")
+                if quiz["type"] == "Ejemplo correcto":
+                    user_answer = dict(zip(display_opts, quiz["options"])).get(sel, sel)
                 else:
-                    user_answer = st.text_input("Tu respuesta", placeholder="Ej: acordarse de",
-                                                key=f"i_{quiz['question'][:30]}")
-    
-                q1, q2, q3 = st.columns(3)
-                with q1:
-                    if st.button("Comprobar ✓", use_container_width=True):
-                        check_answer(user_answer)
-                        st.rerun()
-                with q2:
-                    if st.button("Ver solución 👁", use_container_width=True):
-                        set_feedback("neutral", f"Solución: {quiz['answer']}\n\nEjemplo: {random.choice(quiz['item']['ejemplos'])}")
-                        st.rerun()
-                with q3:
-                    if st.button("Nueva →", use_container_width=True):
-                        new_quiz_question(items, weighted_items, st.session_state.study_mode)
-                        set_feedback("neutral", "Nueva pregunta cargada.")
-                        st.rerun()
-    
-                if st.button("Reiniciar marcador", use_container_width=True):
-                    st.session_state.quiz_score = 0
-                    st.session_state.quiz_total = 0
-                    st.session_state.quiz_streak = 0
-                    set_feedback("neutral", "Marcador reiniciado.")
+                    user_answer = sel
+            else:
+                user_answer = st.text_input("Tu respuesta", placeholder="Ej: acordarse de",
+                                            key=f"i_{quiz['question'][:30]}")
+        
+            q1, q2, q3 = st.columns(3)
+            with q1:
+                if st.button("Comprobar ✓", use_container_width=True):
+                    check_answer(user_answer)
                     st.rerun()
-    
-                show_feedback()
-                st.markdown('</div>', unsafe_allow_html=True)
-    
-        with col_free:
-            st.markdown('<div class="section-title">✍️ Escritura libre + IA</div>', unsafe_allow_html=True)
-            st.markdown('<div class="section-sub">Escribe tu propia frase y recibe feedback de Claude.</div>', unsafe_allow_html=True)
-    
-            rand_item = random.choice(items)
-            if "free_write_item" not in st.session_state:
-                st.session_state.free_write_item = rand_item
-    
-            fw_item = st.session_state.free_write_item
-            nivel_color_fw = NIVEL_COLORS.get(fw_item.get("nivel", "B2"), "#6b7280")
-    
-            st.markdown(f"""
-            <div class="quiz-box">
-                <div>
-                    <span class="card-chip" style="background:#ede9fe;color:#4c1d95;">{fw_item['expresion']}</span>
-                    <span class="nivel-badge" style="background:{nivel_color_fw};">{fw_item.get('nivel','B2')}</span>
-                </div>
-                <p style="color:#374151;font-size:0.92rem;margin-top:0.5rem;">
-                    Escribe una frase original usando <strong>{fw_item['expresion']}</strong>.
-                    Procura que sea natural y de nivel C2.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-            user_frase = st.text_area("Tu frase:", height=80, key="free_frase",
-                                      placeholder=f"Ej: {random.choice(fw_item['ejemplos'])}")
-    
-            fw1, fw2 = st.columns(2)
-            with fw1:
-                if st.button("Pedir feedback a IA 🤖", use_container_width=True):
-                    if user_frase.strip():
-                        with st.spinner("Claude está evaluando tu frase…"):
-                            fb = call_claude_feedback(fw_item["expresion"], user_frase.strip())
-                        st.session_state.ai_feedback = fb
-                    else:
-                        st.session_state.ai_feedback = "⚠️ Escribe una frase primero."
+            with q2:
+                if st.button("Ver solución 👁", use_container_width=True):
+                    set_feedback("neutral", f"Solución: {quiz['answer']}\n\nEjemplo: {random.choice(quiz['item']['ejemplos'])}")
                     st.rerun()
-            with fw2:
-                if st.button("Cambiar verbo 🔄", use_container_width=True):
-                    st.session_state.free_write_item = random.choice(items)
-                    st.session_state.ai_feedback = None
+            with q3:
+                if st.button("Nueva →", use_container_width=True):
+                    new_quiz_question(items, weighted_items, st.session_state.study_mode)
+                    set_feedback("neutral", "Nueva pregunta cargada.")
                     st.rerun()
-    
-            if st.session_state.ai_feedback:
-                st.markdown(f'<div class="feedback-ai">🤖 <strong>Feedback de IA:</strong>\n\n{st.session_state.ai_feedback}</div>',
-                            unsafe_allow_html=True)
-    
+        
+            if st.button("Reiniciar marcador", use_container_width=True):
+                st.session_state.quiz_score = 0
+                st.session_state.quiz_total = 0
+                st.session_state.quiz_streak = 0
+                set_feedback("neutral", "Marcador reiniciado.")
+                st.rerun()
+        
+            show_feedback()
+            st.markdown('</div>', unsafe_allow_html=True)
+        
     # ────────────────────────────────
     #  TAB 3 — RELLENA EL HUECO
     # ────────────────────────────────
@@ -3037,12 +3690,11 @@ if modulo == "📗 Verbos + Preposición":
     
     # ─────────────────────────────────────────────
 if modulo == "🔗 Conectores":
-    ctab1, ctab2, ctab3, ctab4, ctab5, ctab6, ctab7 = st.tabs([
+    ctab1, ctab2, ctab3, ctab4, ctab5, ctab6 = st.tabs([
         "📖 Tarjetas",
         "🏷️ Clasifica el conector",
         "🧩 Rellena el hueco",
         "📝 Ordena el texto",
-        "✍️ Escritura libre + IA",
         "📊 Tabla de referencia",
         "🗒️ Tabla para rellenar",
     ])
@@ -3269,64 +3921,9 @@ if modulo == "🔗 Conectores":
             show_con_fb(*st.session_state.cno_fb)
 
     # ══════════════════════════════
-    #  TAB 5 — ESCRITURA LIBRE + IA
+    #  TAB 5 — TABLA DE REFERENCIA
     # ══════════════════════════════
     with ctab5:
-        st.markdown('<div class="section-title">Escritura libre + feedback de IA</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Escribe una frase o mini-párrafo usando el conector propuesto. Claude evaluará función, registro y puntuación.</div>', unsafe_allow_html=True)
-
-        if st.session_state.cnf_item is None:
-            st.session_state.cnf_item = random.choice(CONECTORES)
-
-        fc = st.session_state.cnf_item
-        nc_fc = NIVEL_COLORS.get(fc.get("nivel", "C1"), "#8b5cf6")
-
-        col_card, col_write = st.columns([1, 1.2], gap="large")
-
-        with col_card:
-            st.markdown(f"""
-            <div class="card-box">
-                <span class="con-card-chip">{fc['funcion']}</span>
-                <span class="nivel-badge" style="background:{nc_fc};">{fc.get('nivel','C1')}</span>
-                <div class="con-card-title">{fc['conector']}</div>
-                <div class="card-line" style="color:#6b7280;font-style:italic;">{fc['matiz']}</div>
-                <div style="margin-top:0.8rem;"><strong>Ejemplo:</strong></div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown(f'<div class="con-example-block">{fc["ejemplos"][0]}</div>', unsafe_allow_html=True)
-
-            if st.button("Cambiar conector 🔄", use_container_width=True, key="cn_free_change"):
-                st.session_state.cnf_item = random.choice(CONECTORES)
-                st.session_state.cnf_fb = None
-                st.rerun()
-
-        with col_write:
-            frase_libre = st.text_area(
-                "Tu frase o mini-párrafo:",
-                height=120,
-                key="cn_free_frase",
-                placeholder=f"Escribe aquí usando '{fc['conector']}'…",
-            )
-
-            if st.button("Pedir feedback a Claude 🤖", use_container_width=True, key="cn_free_ai"):
-                if frase_libre.strip():
-                    with st.spinner("Claude está evaluando tu uso del conector…"):
-                        fb = call_claude_conector(fc["conector"], frase_libre.strip())
-                    st.session_state.cnf_fb = fb
-                else:
-                    st.session_state.cnf_fb = "⚠️ Escribe una frase primero."
-                st.rerun()
-
-            if st.session_state.cnf_fb:
-                st.markdown(
-                    f'<div class="feedback-ai">🤖 <strong>Feedback de Claude:</strong>\n\n{st.session_state.cnf_fb}</div>',
-                    unsafe_allow_html=True,
-                )
-
-    # ══════════════════════════════
-    #  TAB 6 — TABLA DE REFERENCIA
-    # ══════════════════════════════
-    with ctab6:
         st.markdown('<div class="section-title">Tabla de referencia</div>', unsafe_allow_html=True)
         st.markdown('<div class="section-sub">Todos los conectores organizados por función. Úsala para estudiar y consultar.</div>', unsafe_allow_html=True)
 
@@ -3399,9 +3996,9 @@ if modulo == "🔗 Conectores":
         )
 
     # ══════════════════════════════
-    #  TAB 7 — TABLA PARA RELLENAR
+    #  TAB 6 — TABLA PARA RELLENAR
     # ══════════════════════════════
-    with ctab7:
+    with ctab6:
         st.markdown('<div class="section-title">Tabla para rellenar</div>', unsafe_allow_html=True)
         st.markdown('<div class="section-sub">Se muestra la función y el matiz. Escribe el conector que corresponde a cada descripción.</div>', unsafe_allow_html=True)
 
@@ -3521,3 +4118,626 @@ if modulo == "🔗 Conectores":
                 f'</div>',
                 unsafe_allow_html=True,
             )
+
+# ═══════════════════════════════════════════════════════════
+#  MÓDULO 3 — GRAMÁTICA C1
+# ═══════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════
+#  MÓDULOS DE GRAMÁTICA — uno por opción del sidebar
+# ═══════════════════════════════════════════════════════════
+
+if modulo == "🔀 Subjuntivo":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Subjuntivo vs Indicativo</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Rellena el hueco con la forma verbal correcta. Los contextos están diseñados al nivel del DELE C1.</div>', unsafe_allow_html=True)
+
+    if st.session_state.gr_subj_idx is None:
+        st.session_state.gr_subj_idx = random.randrange(len(GR_SUBJUNTIVO))
+
+    ej = GR_SUBJUNTIVO[st.session_state.gr_subj_idx]
+    nc = NIVEL_COLORS.get(ej.get("nivel", "C1"), "#8b5cf6")
+
+    frase_html = ej["frase"].replace("___",
+        '<span style="background:#d1fae5;color:#065f46;padding:2px 10px;border-radius:6px;font-weight:700;">___</span>')
+    st.markdown(
+        f'<div class="quiz-box">'
+        f'<span style="display:inline-block;background:#d1fae5;color:#064e3b;border-radius:999px;'
+        f'padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;margin-bottom:0.6rem;">{ej["tipo"]}</span>'
+        f'<span class="nivel-badge" style="background:{nc};">{ej.get("nivel","C1")}</span>'
+        f'<p style="font-size:1.05rem;color:#1e1b4b;margin-top:0.6rem;">{frase_html}</p>'
+        f'</div>', unsafe_allow_html=True)
+
+    gr_subj_ans = st.text_input("Forma verbal:",
+                                 placeholder="Ej: haya terminado / fuera / tenga...",
+                                 key=f"gr_subj_{st.session_state.gr_subj_idx}")
+
+    gs1, gs2, gs3 = st.columns(3)
+    with gs1:
+        if st.button("Comprobar ✓", key="gr_subj_check", use_container_width=True):
+            st.session_state.gr_subj_total += 1
+            def _norm(t): return " ".join(t.lower().strip().split())
+            _validas = [v.strip() for v in ej["respuesta"].split("/")]
+            _correcto = any(_norm(gr_subj_ans) == _norm(v) for v in _validas)
+            _display = " / ".join(f"**{v}**" for v in _validas)
+            if _correcto:
+                st.session_state.gr_subj_score += 1
+                _otras = [v for v in _validas if _norm(v) != _norm(gr_subj_ans)]
+                _extra = (f"\n\n✅ También válido: {chr(39)} / {chr(39).join(_otras)}{chr(39)}" if _otras else "")
+                st.session_state.gr_subj_fb = ("ok",
+                    f"✅ Correcto: **{gr_subj_ans}**{_extra}\n\n📖 {ej['explicacion']}"
+                    + (f"\n\n⚠️ Ojo: {ej['trampa']}" if ej.get('trampa') else ""))
+            else:
+                st.session_state.gr_subj_fb = ("bad",
+                    f"❌ Correcta: {_display}\n\n📖 {ej['explicacion']}"
+                    + (f"\n\n⚠️ Ojo: {ej['trampa']}" if ej.get('trampa') else ""))
+            st.rerun()
+    with gs2:
+        if st.button("Ver solución 👁", key="gr_subj_sol", use_container_width=True):
+            st.session_state.gr_subj_fb = ("neutral",
+                f"**{ej['respuesta']}** — {ej['tipo']}\n\n📖 {ej['explicacion']}"
+                + (f"\n\n⚠️ Ojo: {ej['trampa']}" if ej.get('trampa') else ""))
+            st.rerun()
+    with gs3:
+        if st.button("Nueva →", key="gr_subj_next", use_container_width=True):
+            st.session_state.gr_subj_idx = random.randrange(len(GR_SUBJUNTIVO))
+            st.session_state.gr_subj_fb = None
+            st.rerun()
+
+    if st.session_state.gr_subj_fb:
+        kind, msg = st.session_state.gr_subj_fb
+        css = {"ok":"feedback-ok","bad":"feedback-bad","neutral":"feedback-neutral"}[kind]
+        st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+
+    if st.session_state.gr_subj_total:
+        pct = int(st.session_state.gr_subj_score / st.session_state.gr_subj_total * 100)
+        st.progress(st.session_state.gr_subj_score / st.session_state.gr_subj_total)
+        st.caption(f"Precisión: {st.session_state.gr_subj_score}/{st.session_state.gr_subj_total} ({pct} %)")
+        if st.button("Reiniciar marcador", key="gr_subj_reset"):
+            st.session_state.gr_subj_score = 0
+            st.session_state.gr_subj_total = 0
+            st.session_state.gr_subj_fb = None
+            st.rerun()
+
+
+if modulo == "⚙️ Perífrasis":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Perífrasis verbales</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Estudia las perífrasis más importantes y practica con ejercicios de producción.</div>', unsafe_allow_html=True)
+
+    pst1, pst2 = st.tabs(["📖 Tarjetas", "✏️ Ejercicios"])
+
+    with pst1:
+        pidx = st.session_state.gr_peri_card % len(GR_PERIFRASIS)
+        p = GR_PERIFRASIS[pidx]
+        nc_p = NIVEL_COLORS.get(p.get("nivel", "C1"), "#8b5cf6")
+
+        st.markdown(f"""
+        <div class="card-box">
+            <span style="display:inline-block;background:#d1fae5;color:#064e3b;border-radius:999px;
+                  padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;margin-bottom:0.6rem;">{p['perifrasis']}</span>
+            <span class="nivel-badge" style="background:{nc_p};">{p.get('nivel','C1')}</span>
+            <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
+                        color:#064e3b;margin:0.4rem 0;">{p['perifrasis']}</div>
+            <div style="color:#374151;margin-bottom:0.6rem;">{p['significado']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("**Ejemplos:**")
+        for ej_p in p["ejemplos"]:
+            st.markdown(f'<div style="background:#ecfdf5;border-left:3px solid #059669;border-radius:0 10px 10px 0;'
+                        f'padding:0.55rem 0.9rem;margin:0.35rem 0;font-style:italic;color:#065f46;'
+                        f'font-size:0.93rem;">{ej_p}</div>', unsafe_allow_html=True)
+
+        if p.get("trampa"):
+            st.markdown(f'<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;'
+                        f'padding:0.55rem 0.9rem;font-size:0.88rem;color:#78350f;margin-top:0.6rem;">'
+                        f'⚠️ <strong>Atención:</strong> {p["trampa"]}</div>', unsafe_allow_html=True)
+
+        pc1, pc2, pc3 = st.columns(3)
+        with pc1:
+            if st.button("← Anterior", key="gr_peri_prev", use_container_width=True):
+                st.session_state.gr_peri_card = (pidx - 1) % len(GR_PERIFRASIS)
+                st.rerun()
+        with pc2:
+            if st.button("Siguiente →", key="gr_peri_next_c", use_container_width=True):
+                st.session_state.gr_peri_card = (pidx + 1) % len(GR_PERIFRASIS)
+                st.rerun()
+        with pc3:
+            if st.button("Aleatoria 🎲", key="gr_peri_rand", use_container_width=True):
+                st.session_state.gr_peri_card = random.randrange(len(GR_PERIFRASIS))
+                st.rerun()
+        st.caption(f"Perífrasis {pidx + 1} de {len(GR_PERIFRASIS)}")
+
+    with pst2:
+        if st.session_state.gr_peri_idx is None:
+            st.session_state.gr_peri_idx = random.randrange(len(GR_PERIFRASIS))
+
+        pq = GR_PERIFRASIS[st.session_state.gr_peri_idx]
+        nc_pq = NIVEL_COLORS.get(pq.get("nivel", "C1"), "#8b5cf6")
+
+        frase_pq = pq["ejercicio"].replace("___",
+            '<span style="background:#d1fae5;color:#065f46;padding:2px 10px;'
+            'border-radius:6px;font-weight:700;">___</span>')
+        st.markdown(
+            f'<div class="quiz-box">'
+            f'<span style="display:inline-block;background:#d1fae5;color:#064e3b;border-radius:999px;'
+            f'padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;margin-bottom:0.6rem;">{pq["perifrasis"]}</span>'
+            f'<span class="nivel-badge" style="background:{nc_pq};">{pq.get("nivel","C1")}</span>'
+            f'<p style="font-size:1.05rem;color:#1e1b4b;margin-top:0.6rem;">{frase_pq}</p>'
+            f'</div>', unsafe_allow_html=True)
+
+        pq_ans = st.text_input("Completa con la perífrasis:",
+                                placeholder="Ej: lleva trabajando / dejó de fumar...",
+                                key=f"gr_peri_inp_{st.session_state.gr_peri_idx}")
+
+        pq1, pq2, pq3 = st.columns(3)
+        with pq1:
+            if st.button("Comprobar ✓", key="gr_peri_check", use_container_width=True):
+                st.session_state.gr_peri_total += 1
+                correct_tok = set(" ".join(pq["respuesta"].lower().strip().split()).split())
+                user_tok = set(" ".join(pq_ans.lower().strip().split()).split())
+                if len(correct_tok & user_tok) >= max(1, len(correct_tok) - 1):
+                    st.session_state.gr_peri_score += 1
+                    st.session_state.gr_peri_fb = ("ok",
+                        f"✅ Correcto. Esperado: **{pq['respuesta']}**\n\n📖 {pq['significado']}"
+                        + (f"\n\n⚠️ {pq['trampa']}" if pq.get('trampa') else ""))
+                else:
+                    st.session_state.gr_peri_fb = ("bad",
+                        f"❌ Forma correcta: **{pq['respuesta']}**\n\n📖 {pq['significado']}"
+                        + (f"\n\n⚠️ {pq['trampa']}" if pq.get('trampa') else ""))
+                st.rerun()
+        with pq2:
+            if st.button("Ver solución 👁", key="gr_peri_sol", use_container_width=True):
+                st.session_state.gr_peri_fb = ("neutral",
+                    f"**{pq['respuesta']}**\n\n📖 {pq['significado']}")
+                st.rerun()
+        with pq3:
+            if st.button("Nueva →", key="gr_peri_next_q", use_container_width=True):
+                st.session_state.gr_peri_idx = random.randrange(len(GR_PERIFRASIS))
+                st.session_state.gr_peri_fb = None
+                st.rerun()
+
+        if st.session_state.gr_peri_fb:
+            kind, msg = st.session_state.gr_peri_fb
+            css = {"ok":"feedback-ok","bad":"feedback-bad","neutral":"feedback-neutral"}[kind]
+            st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+
+        if st.session_state.gr_peri_total:
+            pct = int(st.session_state.gr_peri_score / st.session_state.gr_peri_total * 100)
+            st.progress(st.session_state.gr_peri_score / st.session_state.gr_peri_total)
+            st.caption(f"Precisión: {st.session_state.gr_peri_score}/{st.session_state.gr_peri_total} ({pct} %)")
+
+
+if modulo == "🔵🔴 Ser vs Estar":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Ser vs Estar</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Uno de los errores más frecuentes de anglohablantes en el DELE. Presta atención a los contextos.</div>', unsafe_allow_html=True)
+
+    if st.session_state.gr_se_idx is None:
+        st.session_state.gr_se_idx = random.randrange(len(GR_SER_ESTAR))
+
+    se = GR_SER_ESTAR[st.session_state.gr_se_idx]
+    nc_se = NIVEL_COLORS.get(se.get("nivel", "C1"), "#8b5cf6")
+
+    frase_se = se["frase"].replace("___",
+        '<span style="background:#dbeafe;color:#1e3a8a;padding:2px 10px;border-radius:6px;font-weight:700;">___</span>')
+    st.markdown(
+        f'<div class="quiz-box">'
+        f'<span style="display:inline-block;background:#dbeafe;color:#1e3a8a;border-radius:999px;'
+        f'padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;margin-bottom:0.6rem;">{se["tipo"]}</span>'
+        f'<span class="nivel-badge" style="background:{nc_se};">{se.get("nivel","C1")}</span>'
+        f'<p style="font-size:1.05rem;color:#1e1b4b;margin-top:0.6rem;">{frase_se}</p>'
+        f'</div>', unsafe_allow_html=True)
+
+    se_ans = st.text_input("Forma correcta (ser / estar / es / está / fue / estuvo...):",
+                            key=f"gr_se_{st.session_state.gr_se_idx}")
+
+    se1, se2, se3 = st.columns(3)
+    with se1:
+        if st.button("Comprobar ✓", key="gr_se_check", use_container_width=True):
+            st.session_state.gr_se_total += 1
+            def _norm2(t): return " ".join(t.lower().strip().split())
+            # Accept if any token of the answer matches
+            correct_parts = [p.strip() for p in se["respuesta"].split("/")]
+            user_norm = _norm2(se_ans)
+            if any(_norm2(p) == user_norm or _norm2(p) in user_norm for p in correct_parts):
+                st.session_state.gr_se_score += 1
+                st.session_state.gr_se_fb = ("ok",
+                    f"✅ Correcto: **{se['respuesta']}**\n\n📖 {se['explicacion']}"
+                    + (f"\n\n⚠️ Ojo: {se['trampa']}" if se.get('trampa') else ""))
+            else:
+                st.session_state.gr_se_fb = ("bad",
+                    f"❌ Correcta: **{se['respuesta']}**\n\n📖 {se['explicacion']}"
+                    + (f"\n\n⚠️ Ojo: {se['trampa']}" if se.get('trampa') else ""))
+            st.rerun()
+    with se2:
+        if st.button("Ver solución 👁", key="gr_se_sol", use_container_width=True):
+            st.session_state.gr_se_fb = ("neutral",
+                f"**{se['respuesta']}** — {se['tipo']}\n\n📖 {se['explicacion']}"
+                + (f"\n\n⚠️ Ojo: {se['trampa']}" if se.get('trampa') else ""))
+            st.rerun()
+    with se3:
+        if st.button("Nueva →", key="gr_se_next", use_container_width=True):
+            st.session_state.gr_se_idx = random.randrange(len(GR_SER_ESTAR))
+            st.session_state.gr_se_fb = None
+            st.rerun()
+
+    if st.session_state.gr_se_fb:
+        kind, msg = st.session_state.gr_se_fb
+        css = {"ok":"feedback-ok","bad":"feedback-bad","neutral":"feedback-neutral"}[kind]
+        st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+
+    if st.session_state.gr_se_total:
+        pct = int(st.session_state.gr_se_score / st.session_state.gr_se_total * 100)
+        st.progress(st.session_state.gr_se_score / st.session_state.gr_se_total)
+        st.caption(f"Precisión: {st.session_state.gr_se_score}/{st.session_state.gr_se_total} ({pct} %)")
+        if st.button("Reiniciar marcador", key="gr_se_reset"):
+            st.session_state.gr_se_score = 0
+            st.session_state.gr_se_total = 0
+            st.session_state.gr_se_fb = None
+            st.rerun()
+
+    st.markdown("---")
+    st.markdown("**Reglas clave ser vs estar:**")
+    tabla_se = """
+    <table style="width:100%;border-collapse:collapse;font-size:0.87rem;background:white;
+                  border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+    <thead><tr>
+        <th style="padding:0.5rem 0.8rem;background:#dbeafe;color:#1e3a8a;text-align:left;">SER</th>
+        <th style="padding:0.5rem 0.8rem;background:#dcfce7;color:#14532d;text-align:left;">ESTAR</th>
+    </tr></thead>
+    <tbody>
+    <tr style="border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem 0.8rem;">Identidad, profesión, origen</td>
+        <td style="padding:0.4rem 0.8rem;">Estado físico o emocional temporal</td>
+    </tr>
+    <tr style="border-top:1px solid #e5e7eb;background:#f9fafb;">
+        <td style="padding:0.4rem 0.8rem;">Características permanentes</td>
+        <td style="padding:0.4rem 0.8rem;">Ubicación de personas y cosas</td>
+    </tr>
+    <tr style="border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem 0.8rem;">Ubicación de eventos</td>
+        <td style="padding:0.4rem 0.8rem;">Precios y condiciones variables</td>
+    </tr>
+    <tr style="border-top:1px solid #e5e7eb;background:#f9fafb;">
+        <td style="padding:0.4rem 0.8rem;">Pasiva perifrástica (ser + participio)</td>
+        <td style="padding:0.4rem 0.8rem;">Resultado de acción (estar + participio)</td>
+    </tr>
+    <tr style="border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem 0.8rem;color:#6b7280;font-style:italic;">es listo (inteligente)</td>
+        <td style="padding:0.4rem 0.8rem;color:#6b7280;font-style:italic;">está listo (preparado)</td>
+    </tr>
+    <tr style="border-top:1px solid #e5e7eb;background:#f9fafb;">
+        <td style="padding:0.4rem 0.8rem;color:#6b7280;font-style:italic;">es malo (mala persona)</td>
+        <td style="padding:0.4rem 0.8rem;color:#6b7280;font-style:italic;">está malo (enfermo)</td>
+    </tr>
+    </tbody>
+    </table>
+    """
+    st.markdown(tabla_se, unsafe_allow_html=True)
+
+
+
+if modulo == "🔤 Pronombres":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Pronombres OD / OI / Reflexivos</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Combinaciones, posición y usos avanzados. Errores muy frecuentes en el DELE C1.</div>', unsafe_allow_html=True)
+
+    for _k, _v in {"gr_pron_idx": None, "gr_pron_fb": None,
+                   "gr_pron_score": 0, "gr_pron_total": 0}.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    if st.session_state.gr_pron_idx is None:
+        st.session_state.gr_pron_idx = random.randrange(len(GR_PRONOMBRES))
+
+    pr = GR_PRONOMBRES[st.session_state.gr_pron_idx]
+    nc_pr = NIVEL_COLORS.get(pr.get("nivel", "C1"), "#8b5cf6")
+
+    st.markdown(
+        f'<div class="quiz-box">'
+        f'<span style="display:inline-block;background:#ede9fe;color:#4c1d95;border-radius:999px;'
+        f'padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;margin-bottom:0.6rem;">{pr["tipo"]}</span>'
+        f'<span class="nivel-badge" style="background:{nc_pr};">{pr.get("nivel","C1")}</span>'
+        f'<p style="font-size:1.05rem;color:#1e1b4b;margin-top:0.6rem;">{pr["pregunta"]}</p>'
+        f'</div>', unsafe_allow_html=True)
+
+    pr_sel = st.radio("Elige la opción correcta:", pr["opciones"],
+                      key=f"gr_pron_radio_{st.session_state.gr_pron_idx}")
+
+    pr1, pr2, pr3 = st.columns(3)
+    with pr1:
+        if st.button("Comprobar ✓", key="gr_pron_check", use_container_width=True):
+            st.session_state.gr_pron_total += 1
+            if pr_sel == pr["respuesta"]:
+                st.session_state.gr_pron_score += 1
+                st.session_state.gr_pron_fb = ("ok",
+                    f"✅ Correcto: **{pr['respuesta']}**\n\n📖 {pr['explicacion']}")
+            else:
+                st.session_state.gr_pron_fb = ("bad",
+                    f"❌ Correcta: **{pr['respuesta']}**\n\n📖 {pr['explicacion']}")
+            st.rerun()
+    with pr2:
+        if st.button("Ver solución 👁", key="gr_pron_sol", use_container_width=True):
+            st.session_state.gr_pron_fb = ("neutral",
+                f"**{pr['respuesta']}**\n\n📖 {pr['explicacion']}")
+            st.rerun()
+    with pr3:
+        if st.button("Nueva →", key="gr_pron_next", use_container_width=True):
+            st.session_state.gr_pron_idx = random.randrange(len(GR_PRONOMBRES))
+            st.session_state.gr_pron_fb = None
+            st.rerun()
+
+    if st.session_state.gr_pron_fb:
+        kind, msg = st.session_state.gr_pron_fb
+        css = {"ok": "feedback-ok", "bad": "feedback-bad", "neutral": "feedback-neutral"}[kind]
+        st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
+
+    if st.session_state.gr_pron_total:
+        pct = int(st.session_state.gr_pron_score / st.session_state.gr_pron_total * 100)
+        st.progress(st.session_state.gr_pron_score / st.session_state.gr_pron_total)
+        st.caption(f"Precisión: {st.session_state.gr_pron_score}/{st.session_state.gr_pron_total} ({pct} %)")
+        if st.button("Reiniciar", key="gr_pron_reset"):
+            st.session_state.gr_pron_score = 0
+            st.session_state.gr_pron_total = 0
+            st.session_state.gr_pron_fb = None
+            st.rerun()
+
+    st.markdown("---")
+    st.markdown("**Tabla de combinaciones OI + OD:**")
+    st.markdown("""
+    <table style="width:100%;border-collapse:collapse;font-size:0.87rem;background:white;
+                  border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+    <thead><tr style="background:#ede9fe;">
+        <th style="padding:0.5rem;color:#4c1d95;">OI</th>
+        <th style="padding:0.5rem;color:#4c1d95;">+ lo</th>
+        <th style="padding:0.5rem;color:#4c1d95;">+ la</th>
+        <th style="padding:0.5rem;color:#4c1d95;">+ los</th>
+        <th style="padding:0.5rem;color:#4c1d95;">+ las</th>
+    </tr></thead>
+    <tbody>
+    <tr style="text-align:center;border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem;font-weight:700;background:#f9fafb;">me</td>
+        <td style="padding:0.4rem;">me lo</td><td>me la</td><td>me los</td><td>me las</td>
+    </tr>
+    <tr style="text-align:center;border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem;font-weight:700;background:#f9fafb;">te</td>
+        <td style="padding:0.4rem;">te lo</td><td>te la</td><td>te los</td><td>te las</td>
+    </tr>
+    <tr style="text-align:center;border-top:1px solid #e5e7eb;background:#fef9c3;">
+        <td style="padding:0.4rem;font-weight:700;">le → SE</td>
+        <td style="padding:0.4rem;font-weight:700;">se lo</td>
+        <td style="font-weight:700;">se la</td>
+        <td style="font-weight:700;">se los</td>
+        <td style="font-weight:700;">se las</td>
+    </tr>
+    <tr style="text-align:center;border-top:1px solid #e5e7eb;">
+        <td style="padding:0.4rem;font-weight:700;background:#f9fafb;">nos</td>
+        <td>nos lo</td><td>nos la</td><td>nos los</td><td>nos las</td>
+    </tr>
+    <tr style="text-align:center;border-top:1px solid #e5e7eb;background:#fef9c3;">
+        <td style="padding:0.4rem;font-weight:700;">les → SE</td>
+        <td style="padding:0.4rem;font-weight:700;">se lo</td>
+        <td style="font-weight:700;">se la</td>
+        <td style="font-weight:700;">se los</td>
+        <td style="font-weight:700;">se las</td>
+    </tr>
+    </tbody>
+    </table>
+    <div style="font-size:0.82rem;color:#6b7280;margin-top:0.4rem;">
+    ⚠️ le/les + lo/la/los/las → siempre SE (nunca *le lo, *les la...)
+    </div>
+    """, unsafe_allow_html=True)
+
+
+if modulo == "🇬🇧 Errores":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Errores frecuentes de anglohablantes</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Detecta el error, entiende por qué ocurre y aprende la forma correcta. Especialmente relevante para el DELE C1.</div>', unsafe_allow_html=True)
+
+    for _k, _v in {"gr_err_idx": 0, "gr_err_revealed": False}.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    err = GR_ERRORES_INGLES[st.session_state.gr_err_idx]
+    nc_err = NIVEL_COLORS.get(err.get("nivel", "C1"), "#8b5cf6")
+
+    st.markdown(
+        f'<span style="display:inline-block;background:#fce7f3;color:#831843;border-radius:999px;'
+        f'padding:0.25rem 0.7rem;font-size:0.8rem;font-weight:700;">{err["categoria"]}</span>'
+        f'<span class="nivel-badge" style="background:{nc_err};">{err.get("nivel","C1")}</span>',
+        unsafe_allow_html=True)
+
+    st.markdown(
+        f'<div style="background:#fef2f2;border-left:3px solid #ef4444;border-radius:0 10px 10px 0;'
+        f'padding:0.6rem 0.9rem;margin:0.6rem 0;font-size:0.95rem;color:#7f1d1d;">'
+        f'❌ <strong>Error frecuente:</strong> {err["error"]}</div>',
+        unsafe_allow_html=True)
+
+    if not st.session_state.gr_err_revealed:
+        if st.button("👁 Ver corrección y explicación", key="gr_err_reveal"):
+            st.session_state.gr_err_revealed = True
+            st.rerun()
+    else:
+        st.markdown(
+            f'<div style="background:#ecfdf5;border-left:3px solid #059669;border-radius:0 10px 10px 0;'
+            f'padding:0.6rem 0.9rem;margin:0.4rem 0;font-size:0.95rem;color:#065f46;">'
+            f'✅ <strong>Corrección:</strong> {err["correccion"]}</div>',
+            unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="quiz-box"><strong>📖 Explicación:</strong><br>{err["explicacion"]}</div>',
+            unsafe_allow_html=True)
+        if err.get("extra"):
+            st.markdown(
+                f'<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;'
+                f'padding:0.55rem 0.9rem;font-size:0.88rem;color:#78350f;margin-top:0.6rem;">'
+                f'💡 <strong>Saber más:</strong> {err["extra"]}</div>',
+                unsafe_allow_html=True)
+
+    st.markdown("")
+    e1, e2, e3 = st.columns(3)
+    with e1:
+        if st.button("← Anterior", key="gr_err_prev", use_container_width=True):
+            st.session_state.gr_err_idx = (st.session_state.gr_err_idx - 1) % len(GR_ERRORES_INGLES)
+            st.session_state.gr_err_revealed = False
+            st.rerun()
+    with e2:
+        st.markdown(
+            f'<p style="text-align:center;color:#6b7280;padding-top:0.5rem;">'
+            f'{st.session_state.gr_err_idx + 1} / {len(GR_ERRORES_INGLES)}</p>',
+            unsafe_allow_html=True)
+    with e3:
+        if st.button("Siguiente →", key="gr_err_next", use_container_width=True):
+            st.session_state.gr_err_idx = (st.session_state.gr_err_idx + 1) % len(GR_ERRORES_INGLES)
+            st.session_state.gr_err_revealed = False
+            st.rerun()
+
+
+if modulo == "📚 Comprensión lectora":
+    for _k, _v in {
+        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
+        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
+        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
+        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
+        "gr_err_idx": 0, "gr_err_revealed": False,
+        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
+    }.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    st.markdown('<div class="section-title">Comprensión lectora · Estilo DELE C1</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Lee el texto y responde las preguntas. Las opciones incorrectas están diseñadas para que debas leer con precisión.</div>', unsafe_allow_html=True)
+
+    for _k, _v in {"gr_lect_idx": 0, "gr_lect_answers": {},
+                   "gr_lect_checked": False}.items():
+        if _k not in st.session_state:
+            st.session_state[_k] = _v
+
+    texto = GR_LECTURA[st.session_state.gr_lect_idx]
+
+    tl1, tl2, tl3 = st.columns([1, 2, 1])
+    with tl1:
+        if st.button("← Texto anterior", key="gr_lect_prev", use_container_width=True):
+            st.session_state.gr_lect_idx = (st.session_state.gr_lect_idx - 1) % len(GR_LECTURA)
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+    with tl2:
+        st.markdown(
+            f'<p style="text-align:center;font-weight:700;color:#064e3b;padding-top:0.4rem;">'
+            f'{texto["titulo"]} ({st.session_state.gr_lect_idx + 1}/{len(GR_LECTURA)})</p>',
+            unsafe_allow_html=True)
+    with tl3:
+        if st.button("Texto siguiente →", key="gr_lect_next", use_container_width=True):
+            st.session_state.gr_lect_idx = (st.session_state.gr_lect_idx + 1) % len(GR_LECTURA)
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+
+    st.markdown(
+        f'<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;'
+        f'padding:1.4rem;font-size:0.97rem;color:#1f2937;line-height:1.8;margin-bottom:1rem;">'
+        f'{texto["texto"].replace(chr(10), "<br><br>")}</div>',
+        unsafe_allow_html=True)
+    st.caption(texto["fuente"])
+
+    st.markdown("**Preguntas:**")
+    for i, q in enumerate(texto["preguntas"]):
+        st.markdown(f"**{i+1}.** {q['pregunta']}")
+        sel = st.radio(
+            label=f"P{i+1}",
+            options=q["opciones"],
+            label_visibility="collapsed",
+            key=f"gr_lect_{st.session_state.gr_lect_idx}_q{i}",
+        )
+        st.session_state.gr_lect_answers[i] = sel
+
+        if st.session_state.gr_lect_checked:
+            if sel == q["respuesta"]:
+                st.markdown(
+                    f'<div class="feedback-ok">✅ Correcto. {q["explicacion"]}</div>',
+                    unsafe_allow_html=True)
+            else:
+                st.markdown(
+                    f'<div class="feedback-bad">❌ Correcta: **{q["respuesta"]}**\n\n{q["explicacion"]}</div>',
+                    unsafe_allow_html=True)
+        st.markdown("")
+
+    lb1, lb2 = st.columns(2)
+    with lb1:
+        if st.button("Comprobar todo ✓", key="gr_lect_check", use_container_width=True):
+            st.session_state.gr_lect_checked = True
+            st.rerun()
+    with lb2:
+        if st.button("Reiniciar respuestas 🔄", key="gr_lect_reset", use_container_width=True):
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+
+    if st.session_state.gr_lect_checked:
+        total = len(texto["preguntas"])
+        score = sum(
+            1 for i, q in enumerate(texto["preguntas"])
+            if st.session_state.gr_lect_answers.get(i) == q["respuesta"]
+        )
+        pct = int(score / total * 100) if total else 0
+        color = "#065f46" if pct >= 75 else "#92400e" if pct >= 50 else "#991b1b"
+        st.markdown(
+            f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;'
+            f'padding:0.9rem 1.2rem;margin-top:0.5rem;text-align:center;">'
+            f'<span style="font-size:1.3rem;font-weight:700;color:{color};">{score}/{total}</span>'
+            f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">correctas ({pct} %)</span>'
+            f'</div>',
+            unsafe_allow_html=True)
+

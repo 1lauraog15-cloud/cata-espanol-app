@@ -1435,15 +1435,25 @@ if modulo == "📗 Verbos + Preposición":
     
     # ─────────────────────────────────────────────
 if modulo == "🔗 Conectores":
+    st.markdown("""
+    <div class="mod-header" style="background:#fdf3dc;">
+        <div class="mod-header-icon">🔗</div>
+        <div class="mod-header-text" style="color:#c07a18;">
+            <h2>Conectores del discurso</h2>
+            <p>50 conectores · Función, matiz y ejercicios · C1 / C2</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     ctab0, ctab1, ctab2, ctab3, ctab4, ctab5, ctab6, ctab7 = st.tabs([
-        "📋 Tabla resumen",
+        "📋 Resumen",
         "📖 Tarjetas",
-        "🏷️ Clasifica el conector",
+        "🏷️ Clasifica",
         "🧩 Rellena el hueco",
         "📝 Ordena el texto",
-        "✍️ Escritura libre + IA",
-        "📊 Tabla de referencia",
-        "🗒️ Tabla para rellenar",
+        "✍️ Escritura + IA",
+        "📊 Referencia",
+        "🗒️ Para rellenar",
     ])
 
     # ══════════════════════════════

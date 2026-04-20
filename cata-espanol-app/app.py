@@ -1,7 +1,6 @@
 import random
 import textwrap
-import json
-from typing import Dict, List, Optional
+from typing import Dict, List
 import streamlit as st
 
 from data import (
@@ -10,6 +9,7 @@ from data import (
     GR_SUBJUNTIVO, GR_PERIFRASIS, GR_SER_ESTAR, GR_PRONOMBRES,
     GR_ERRORES_INGLES, GR_LECTURA,
 )
+from core.state import safe_idx, next_from_queue, init_all_state
 
 PREPS = ["de", "a", "con", "en", "por", "sobre", "contra", "ante", "entre", "hacia", "tras"]
 CATEGORY_LABELS = {
@@ -541,61 +541,8 @@ st.markdown("""
 #  FUNCIONES — VERBOS
 # ─────────────────────────────────────────────
 
-def init_state() -> None:
-    all_items: List[Dict] = []
-    for prep, items in DATA.items():
-        for item in items:
-            enriched = dict(item)
-            enriched["prep"] = prep
-            all_items.append(enriched)
-
-    defaults = {
-        "all_items": all_items,
-        "filtered_items": list(all_items),
-        "current_card_index": 0,
-        "quiz_score": 0,
-        "quiz_total": 0,
-        "quiz_streak": 0,
-        "feedback": ("neutral", "Elige categorías y empieza a practicar ✨"),
-        "quiz_data": None,
-        "study_mode": "Elegir preposición",
-        "weak_items": {},
-        "gap_index": None,
-        "gap_feedback": None,
-        "error_index": None,
-        "error_feedback": None,
-        "ai_feedback": None,
-        "dp_index": 0,
-        "dp_revealed": False,
-        "dp_quiz_ans": None,
-    }
-    for k, v in defaults.items():
-        if k not in st.session_state:
-            st.session_state[k] = v
-
-
 def normalize(text: str) -> str:
     return " ".join(text.lower().strip().split())
-
-
-def safe_idx(key: str, pool: list, default: int = 0) -> int:
-    """Devuelve siempre un índice válido para *pool*, reseteando session_state si es necesario.
-
-    Casos que cubre:
-    - pool vacío        → devuelve default (0) y escribe default en session_state
-    - valor None        → devuelve 0 % len(pool), lo escribe en session_state
-    - valor fuera de rango (level change reduce el pool) → clamp con módulo
-    - valor ya válido   → lo devuelve tal cual sin tocar session_state
-    """
-    if not pool:
-        st.session_state[key] = default
-        return default
-    val = st.session_state.get(key, default)
-    if not isinstance(val, int):
-        val = default
-    val = val % len(pool)
-    st.session_state[key] = val
-    return val
 
 
 def active_items(selected_preps: List[str]):
@@ -765,25 +712,6 @@ def call_claude_feedback(verbo_expr: str, frase_usuario: str) -> str:
 #  ESTADO CONECTORES
 # ─────────────────────────────────────────────
 
-def init_con_state():
-    defaults = {
-        "con_card_index": 0,
-        "cng_idx": None,
-        "cng_fb": None,
-        "cnc_idx": None,
-        "cnc_fb": None,
-        "cnc_score": 0,
-        "cnc_total": 0,
-        "cno_idx": 0,
-        "cno_shuf": [],
-        "cno_fb": None,
-        "cnf_item": None,
-        "cnf_fb": None,
-    }
-    for k, v in defaults.items():
-        if k not in st.session_state:
-            st.session_state[k] = v
-
 def call_claude_conector(conector: str, frase: str) -> str:
     import asyncio
     async def _call():
@@ -832,12 +760,7 @@ def show_con_fb(kind: str, msg: str):
 #  STREAMLIT CONFIG
 # ─────────────────────────────────────────────
 
-init_state()
-init_con_state()
-
-# ── Modulo session state ──────────────────────────────────────
-if "modulo" not in st.session_state:
-    st.session_state.modulo = "🏠 Inicio"
+init_all_state()
 
 # ── Sidebar ───────────────────────────────────────────────────
 with st.sidebar:
@@ -868,6 +791,8 @@ with st.sidebar:
         for _rk in ["gr_peri_card", "gr_err_idx", "gr_lect_idx"]:
             if _rk in st.session_state:
                 st.session_state[_rk] = 0
+        for _rk in ["gr_subj_queue", "gr_peri_queue", "gr_se_queue", "gr_pron_queue"]:
+            st.session_state[_rk] = []
         st.session_state._prev_nivel = _nivel_sig
 
     st.markdown('<div class="nav-divider"></div>', unsafe_allow_html=True)
@@ -1445,14 +1370,13 @@ if modulo == "🔗 Conectores":
     </div>
     """, unsafe_allow_html=True)
 
-    ctab0, ctab1, ctab2, ctab3, ctab4, ctab5, ctab6, ctab7 = st.tabs([
+    ctab0, ctab1, ctab2, ctab3, ctab4, ctab5, ctab6 = st.tabs([
         "📋 Resumen",
         "📖 Tarjetas",
         "🏷️ Clasifica",
         "🧩 Rellena el hueco",
         "📝 Ordena el texto",
         "✍️ Escritura + IA",
-        "📊 Referencia",
         "🗒️ Para rellenar",
     ])
 
@@ -1594,7 +1518,7 @@ if modulo == "🔗 Conectores":
         st.markdown('<div class="section-sub">Elige la función discursiva de cada conector. Fundamental para usarlos con precisión.</div>', unsafe_allow_html=True)
 
         if st.session_state.cnc_idx is None:
-            st.session_state.cnc_idx = random.randrange(len(CLASIFICACION_EJERCICIOS))
+            next_from_queue("cnc_queue", "cnc_idx", CLASIFICACION_EJERCICIOS)
 
         ej = CLASIFICACION_EJERCICIOS[st.session_state.cnc_idx]
 
@@ -1628,7 +1552,7 @@ if modulo == "🔗 Conectores":
                 st.rerun()
         with cg3:
             if st.button("Nuevo →", key="cn_clas_next", use_container_width=True):
-                st.session_state.cnc_idx = random.randrange(len(CLASIFICACION_EJERCICIOS))
+                next_from_queue("cnc_queue", "cnc_idx", CLASIFICACION_EJERCICIOS)
                 st.session_state.cnc_fb = None
                 st.rerun()
 
@@ -1653,7 +1577,7 @@ if modulo == "🔗 Conectores":
         st.markdown('<div class="section-sub">Elige el conector más adecuado para cada contexto. Atención a los matices.</div>', unsafe_allow_html=True)
 
         if st.session_state.cng_idx is None:
-            st.session_state.cng_idx = random.randrange(len(GAP_EJERCICIOS))
+            next_from_queue("cng_queue", "cng_idx", GAP_EJERCICIOS)
 
         gap = GAP_EJERCICIOS[st.session_state.cng_idx]
         nc_gap = NIVEL_COLORS.get(gap.get("nivel", "C1"), "#8b5cf6")
@@ -1691,7 +1615,7 @@ if modulo == "🔗 Conectores":
                 st.rerun()
         with gg3:
             if st.button("Nueva frase →", key="cn_gap_next", use_container_width=True):
-                st.session_state.cng_idx = random.randrange(len(GAP_EJERCICIOS))
+                next_from_queue("cng_queue", "cng_idx", GAP_EJERCICIOS)
                 st.session_state.cng_fb = None
                 st.rerun()
 
@@ -1815,84 +1739,9 @@ if modulo == "🔗 Conectores":
                 )
 
     # ══════════════════════════════
-    #  TAB 6 — TABLA DE REFERENCIA
+    #  TAB 6 — TABLA PARA RELLENAR
     # ══════════════════════════════
     with ctab6:
-        st.markdown('<div class="section-title">Tabla de referencia</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Todos los conectores organizados por función. Úsala para estudiar y consultar.</div>', unsafe_allow_html=True)
-
-        from collections import defaultdict as _ddict
-        grouped = _ddict(list)
-        for c in CONECTORES:
-            grouped[c["funcion"]].append(c)
-
-        funcion_colors = {
-            "Contraste y concesión":       ("#fef3c7", "#78350f"),
-            "Causa y origen":              ("#dbeafe", "#1e3a8a"),
-            "Consecuencia y resultado":    ("#dcfce7", "#14532d"),
-            "Adición y continuidad":       ("#ede9fe", "#4c1d95"),
-            "Hipótesis y condición":       ("#fce7f3", "#831843"),
-            "Estructuración y orden":      ("#e0f2fe", "#0c4a6e"),
-            "Reformulación y aclaración":  ("#f0fdf4", "#166534"),
-            "Ejemplificación y digresión": ("#fff7ed", "#7c2d12"),
-            "Conclusión y cierre":         ("#f5f3ff", "#3b0764"),
-            "Énfasis y afirmación":        ("#fef9c3", "#713f12"),
-        }
-
-        nivel_order = {"B2": 0, "C1": 1, "C2": 2}
-        for funcion, items in grouped.items():
-            bg, fg = funcion_colors.get(funcion, ("#f8fafc", "#1e293b"))
-            items_sorted = sorted(items, key=lambda x: (nivel_order.get(x.get("nivel", "B2"), 1), x["conector"]))
-
-            rows_html = ""
-            for item in items_sorted:
-                nivel = item.get("nivel", "C1")
-                nc = NIVEL_COLORS.get(nivel, "#6b7280")
-                rows_html += f"""
-                <tr>
-                  <td style="padding:0.45rem 0.8rem;font-weight:700;color:{fg};white-space:nowrap;">
-                    {item['conector']}
-                    <span style="background:{nc};color:white;border-radius:4px;
-                                 padding:1px 6px;font-size:0.72rem;font-weight:700;
-                                 margin-left:0.4rem;">{nivel}</span>
-                  </td>
-                  <td style="padding:0.45rem 0.8rem;color:#374151;font-size:0.88rem;">
-                    {item['matiz']}
-                  </td>
-                </tr>"""
-
-            st.markdown(f"""
-            <div style="margin-bottom:1.2rem;">
-              <div style="background:{bg};border-radius:12px 12px 0 0;
-                          padding:0.55rem 1rem;font-weight:700;color:{fg};font-size:0.95rem;">
-                {funcion} <span style="font-weight:400;font-size:0.85rem;margin-left:0.5rem;">
-                ({len(items)} conectores)</span>
-              </div>
-              <table style="width:100%;border-collapse:collapse;background:white;
-                            border:1px solid #e5e7eb;border-radius:0 0 12px 12px;overflow:hidden;">
-                <thead>
-                  <tr style="background:#f8fafc;border-bottom:1px solid #e5e7eb;">
-                    <th style="padding:0.4rem 0.8rem;text-align:left;color:#6b7280;
-                               font-size:0.8rem;font-weight:600;width:30%;">CONECTOR</th>
-                    <th style="padding:0.4rem 0.8rem;text-align:left;color:#6b7280;
-                               font-size:0.8rem;font-weight:600;">MATIZ / USO</th>
-                  </tr>
-                </thead>
-                <tbody>{rows_html}</tbody>
-              </table>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown(
-            '<div style="color:#6b7280;font-size:0.82rem;margin-top:0.5rem;">' +
-            '🔵 B2 &nbsp;|&nbsp; 🟣 C1 &nbsp;|&nbsp; 🔴 C2</div>',
-            unsafe_allow_html=True,
-        )
-
-    # ══════════════════════════════
-    #  TAB 7 — TABLA PARA RELLENAR
-    # ══════════════════════════════
-    with ctab7:
         st.markdown('<div class="section-title">Tabla para rellenar</div>', unsafe_allow_html=True)
         st.markdown('<div class="section-sub">Se muestra la función y el matiz. Escribe el conector que corresponde a cada descripción.</div>', unsafe_allow_html=True)
 
@@ -2022,17 +1871,6 @@ if modulo == "🔗 Conectores":
 # ═══════════════════════════════════════════════════════════
 
 if modulo == "🔀 Subjuntivo":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Subjuntivo vs Indicativo</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Rellena el hueco con la forma verbal correcta. Los contextos están diseñados al nivel del DELE C1.</div>', unsafe_allow_html=True)
 
@@ -2082,7 +1920,7 @@ if modulo == "🔀 Subjuntivo":
             st.rerun()
     with gs3:
         if st.button("Nueva →", key="gr_subj_next", use_container_width=True):
-            st.session_state.gr_subj_idx = random.randrange(len(_pool_subj))
+            next_from_queue("gr_subj_queue", "gr_subj_idx", _pool_subj)
             st.session_state.gr_subj_fb = None
             st.rerun()
 
@@ -2103,17 +1941,6 @@ if modulo == "🔀 Subjuntivo":
 
 
 if modulo == "⚙️ Perífrasis":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Perífrasis verbales</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Estudia las perífrasis más importantes y practica con ejercicios de producción.</div>', unsafe_allow_html=True)
 
@@ -2205,7 +2032,7 @@ if modulo == "⚙️ Perífrasis":
                 st.rerun()
         with pq3:
             if st.button("Nueva →", key="gr_peri_next_q", use_container_width=True):
-                st.session_state.gr_peri_idx = random.randrange(len(_pool_peri))
+                next_from_queue("gr_peri_queue", "gr_peri_idx", _pool_peri)
                 st.session_state.gr_peri_fb = None
                 st.rerun()
 
@@ -2221,17 +2048,6 @@ if modulo == "⚙️ Perífrasis":
 
 
 if modulo == "🔵🔴 Ser vs Estar":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Ser vs Estar</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Uno de los errores más frecuentes de anglohablantes en el DELE. Presta atención a los contextos.</div>', unsafe_allow_html=True)
 
@@ -2278,7 +2094,7 @@ if modulo == "🔵🔴 Ser vs Estar":
             st.rerun()
     with se3:
         if st.button("Nueva →", key="gr_se_next", use_container_width=True):
-            st.session_state.gr_se_idx = random.randrange(len(_pool_se))
+            next_from_queue("gr_se_queue", "gr_se_idx", _pool_se)
             st.session_state.gr_se_fb = None
             st.rerun()
 
@@ -2339,24 +2155,8 @@ if modulo == "🔵🔴 Ser vs Estar":
 
 
 if modulo == "🔤 Pronombres":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Pronombres OD / OI / Reflexivos</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Combinaciones, posición y usos avanzados. Errores muy frecuentes en el DELE C1.</div>', unsafe_allow_html=True)
-
-    for _k, _v in {"gr_pron_idx": None, "gr_pron_fb": None,
-                   "gr_pron_score": 0, "gr_pron_total": 0}.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
 
     _pool_pron = [e for e in GR_PRONOMBRES if e.get("nivel","C1") in nivel_filter] or GR_PRONOMBRES
     pr = _pool_pron[safe_idx("gr_pron_idx", _pool_pron)]
@@ -2392,7 +2192,7 @@ if modulo == "🔤 Pronombres":
             st.rerun()
     with pr3:
         if st.button("Nueva →", key="gr_pron_next", use_container_width=True):
-            st.session_state.gr_pron_idx = random.randrange(len(_pool_pron))
+            next_from_queue("gr_pron_queue", "gr_pron_idx", _pool_pron)
             st.session_state.gr_pron_fb = None
             st.rerun()
 
@@ -2459,23 +2259,8 @@ if modulo == "🔤 Pronombres":
 
 
 if modulo == "🇬🇧 Errores":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Errores frecuentes de anglohablantes</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Detecta el error, entiende por qué ocurre y aprende la forma correcta. Especialmente relevante para el DELE C1.</div>', unsafe_allow_html=True)
-
-    for _k, _v in {"gr_err_idx": 0, "gr_err_revealed": False}.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
 
     _pool_err = [e for e in GR_ERRORES_INGLES if e.get("nivel","C1") in nivel_filter] or GR_ERRORES_INGLES
     err = _pool_err[safe_idx("gr_err_idx", _pool_err)]
@@ -2533,24 +2318,8 @@ if modulo == "🇬🇧 Errores":
 
 
 if modulo == "📚 Comprensión lectora":
-    for _k, _v in {
-        "gr_subj_idx": None, "gr_subj_fb": None, "gr_subj_score": 0, "gr_subj_total": 0,
-        "gr_peri_card": 0, "gr_peri_idx": None, "gr_peri_fb": None, "gr_peri_score": 0, "gr_peri_total": 0,
-        "gr_se_idx": None, "gr_se_fb": None, "gr_se_score": 0, "gr_se_total": 0,
-        "gr_pron_idx": None, "gr_pron_fb": None, "gr_pron_score": 0, "gr_pron_total": 0,
-        "gr_err_idx": 0, "gr_err_revealed": False,
-        "gr_lect_idx": 0, "gr_lect_answers": {}, "gr_lect_checked": False,
-    }.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
-
     st.markdown('<div class="section-title">Comprensión lectora · Estilo DELE C1</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-sub">Lee el texto y responde las preguntas. Las opciones incorrectas están diseñadas para que debas leer con precisión.</div>', unsafe_allow_html=True)
-
-    for _k, _v in {"gr_lect_idx": 0, "gr_lect_answers": {},
-                   "gr_lect_checked": False}.items():
-        if _k not in st.session_state:
-            st.session_state[_k] = _v
 
     texto = GR_LECTURA[st.session_state.gr_lect_idx]
 

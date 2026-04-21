@@ -2,6 +2,7 @@
 import streamlit as st
 
 from data import DIAGNOSTICO
+from core.config import NIVEL_COLORS, NIVEL_BG
 
 _AREAS = ["verbos", "conectores", "subjuntivo", "gramatica", "errores"]
 _AREA_LABELS = {
@@ -18,8 +19,6 @@ _AREA_MODULO = {
     "gramatica":  "⚙️ Perífrasis",
     "errores":    "🇬🇧 Errores",
 }
-_NIVEL_COLOR = {"B2": "#3b82f6", "C1": "#8b5cf6", "C2": "#ef4444"}
-_NIVEL_BG    = {"B2": "#eff6ff", "C1": "#f5f3ff", "C2": "#fff1f2"}
 
 
 def _score_to_nivel(score: int) -> str:
@@ -58,8 +57,8 @@ def render() -> None:
     if step >= total:
         score = sum(1 for i, q in enumerate(DIAGNOSTICO) if answers.get(i) == q["respuesta"])
         nivel = _score_to_nivel(score)
-        nc = _NIVEL_COLOR[nivel]
-        nb = _NIVEL_BG[nivel]
+        nc = NIVEL_COLORS[nivel]
+        nb = NIVEL_BG[nivel]
 
         # Guardar en session_state para que el sidebar pueda leerlo
         st.session_state.nivel_diagnosticado = nivel
@@ -136,7 +135,7 @@ def render() -> None:
 
     # ── PREGUNTA ACTIVA ───────────────────────────────────
     q = DIAGNOSTICO[step]
-    nc_q = _NIVEL_COLOR.get(q["nivel"], "#8b5cf6")
+    nc_q = NIVEL_COLORS.get(q["nivel"], "#8b5cf6")
 
     # Cabecera
     st.markdown(f"""

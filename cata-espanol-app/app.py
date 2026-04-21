@@ -2,7 +2,7 @@ from typing import List
 import streamlit as st
 
 from data import DATA
-from core.config import PREPS, CATEGORY_LABELS
+from core.config import PREPS, CATEGORY_LABELS, NIVEL_COLORS, NIVEL_BG, PAGE_CONFIG
 from core.state import init_all_state
 from modules.verbos_module import render as render_verbos, active_items
 from modules.conectores_module import render as render_conectores
@@ -25,12 +25,7 @@ from modules.diagnostico_module import render as render_diagnostico
 #  STREAMLIT CONFIG
 # ─────────────────────────────────────────────
 
-st.set_page_config(
-    page_title="EspañolPro · C1 / C2",
-    page_icon="🇪🇸",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+st.set_page_config(**PAGE_CONFIG)
 
 st.markdown("""
 <style>
@@ -634,8 +629,8 @@ if modulo == "🏠 Inicio":
     # ── Tarjeta diagnóstico destacada ─────────────────────
     _diag_nivel = st.session_state.get("nivel_diagnosticado")
     if _diag_nivel:
-        _nc = {"B2": "#3b82f6", "C1": "#8b5cf6", "C2": "#ef4444"}[_diag_nivel]
-        _nb = {"B2": "#eff6ff", "C1": "#f5f3ff", "C2": "#fff1f2"}[_diag_nivel]
+        _nc = NIVEL_COLORS[_diag_nivel]
+        _nb = NIVEL_BG[_diag_nivel]
         st.markdown(f"""
         <div style="background:{_nb};border:2px solid {_nc};border-radius:16px;
                     padding:1.2rem 1.6rem;margin-bottom:1.4rem;

@@ -111,7 +111,6 @@ def render(nivel_filter: List[str]) -> None:
             "Conclusión y cierre":         ("#f5f3ff", "#3b0764"),
             "Énfasis y afirmación":        ("#fef3c7", "#92400e"),
         }
-        _nbadge0 = {"B2": "#3b82f6", "C1": "#8b5cf6", "C2": "#ef4444"}
         _nordre = {"B2": 0, "C1": 1, "C2": 2}
 
         for funcion, _raw_con in _grouped0.items():
@@ -122,7 +121,7 @@ def render(nivel_filter: List[str]) -> None:
 
             rows0 = ""
             for it in items_s:
-                nc0 = _nbadge0.get(it.get("nivel", "C1"), "#6b7280")
+                nc0 = NIVEL_COLORS.get(it.get("nivel", "C1"), "#6b7280")
                 rows0 += (
                     f'<tr>'
                     f'<td style="padding:0.35rem 0.8rem;font-weight:700;color:{fg0};white-space:nowrap;">'

@@ -263,8 +263,6 @@ def render(nivel_filter: List[str], base_items: List[Dict], weighted_items: List
             "hacia":  ("#f5f3ff", "#3b0764"),
             "tras":   ("#f8fafc", "#374151"),
         }
-        _nivel_badge = {"B2": "#3b82f6", "C1": "#8b5cf6", "C2": "#ef4444"}
-
         for prep, _raw_items in DATA.items():
             _items_f = [it for it in _raw_items if it.get("nivel", "B2") in nivel_filter]
             if not _items_f:
@@ -273,7 +271,7 @@ def render(nivel_filter: List[str], base_items: List[Dict], weighted_items: List
 
             rows = ""
             for it in sorted(_items_f, key=lambda x: x.get("nivel", "B2")):
-                nc = _nivel_badge.get(it.get("nivel", "B2"), "#6b7280")
+                nc = NIVEL_COLORS.get(it.get("nivel", "B2"), "#6b7280")
                 rows += (
                     f'<tr>'
                     f'<td style="padding:0.35rem 0.8rem;font-weight:700;color:{fg};">'

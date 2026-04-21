@@ -34,6 +34,44 @@ def active_items(selected_preps: List[str]):
     return base, weighted
 
 
+def render_sidebar(nivel_filter: List[str]):
+    """Renderiza los filtros de verbos en el sidebar y devuelve (base_items, weighted_items)."""
+    st.markdown('<div class="nav-divider"></div>', unsafe_allow_html=True)
+
+    with st.expander("🔧 Preposiciones", expanded=False):
+        selected_preps: List[str] = []
+        cols_prep = st.columns(2)
+        for j, prep in enumerate(PREPS):
+            n = len(DATA.get(prep, []))
+            with cols_prep[j % 2]:
+                if st.checkbox(f"{CATEGORY_LABELS[prep]} ({n})",
+                               value=True, key=f"prep_{prep}"):
+                    selected_preps.append(prep)
+
+    base_items, weighted_items = active_items(selected_preps)
+    st.session_state.filtered_items = base_items
+    base_items     = [i for i in base_items     if i.get("nivel", "B2") in nivel_filter]
+    weighted_items = [i for i in weighted_items if i.get("nivel", "B2") in nivel_filter]
+
+    mode = st.selectbox(
+        "🎯 Tipo de quiz",
+        ["Elegir preposición", "Completar expresión", "Ejemplo correcto", "Mixto"],
+        index=0,
+    )
+    st.session_state.study_mode = mode
+
+    n_weak = len([v for v, c in st.session_state.weak_items.items() if c >= 2])
+    if n_weak:
+        st.markdown(
+            f'<span class="weak-tag">⚠️ {n_weak} verbo(s) con ≥2 fallos</span>',
+            unsafe_allow_html=True)
+        if st.button("Reiniciar repetición espaciada", key="reset_weak"):
+            st.session_state.weak_items = {}
+            st.rerun()
+
+    return base_items, weighted_items
+
+
 def set_feedback(kind: str, message: str) -> None:
     st.session_state.feedback = (kind, message)
 

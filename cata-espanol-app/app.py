@@ -14,6 +14,7 @@ from modules.gramatica_module import (
     render_errores,
     render_lectura,
 )
+from modules.diagnostico_module import render as render_diagnostico
 
 # ─────────────────────────────────────────────
 #  STREAMLIT CONFIG
@@ -569,6 +570,8 @@ with st.sidebar:
                 st.session_state.modulo = key
                 st.rerun()
 
+    _nav("🎯 Diagnóstico", "🎯", "Diagnóstico de nivel")
+    st.markdown('<div class="nav-divider"></div>', unsafe_allow_html=True)
     _nav("🏠 Inicio", "🏠", "Inicio")
     st.markdown('<div class="nav-section">LÉXICO</div>', unsafe_allow_html=True)
     _nav("📗 Verbos + Preposición", "📗", "Verbos + Preposición")
@@ -624,7 +627,56 @@ with st.sidebar:
 # ─────────────────────────────────────────────
 #  HOME SCREEN
 # ─────────────────────────────────────────────
+if modulo == "🎯 Diagnóstico":
+    render_diagnostico()
+
 if modulo == "🏠 Inicio":
+    # ── Tarjeta diagnóstico destacada ─────────────────────
+    _diag_nivel = st.session_state.get("nivel_diagnosticado")
+    if _diag_nivel:
+        _nc = {"B2": "#3b82f6", "C1": "#8b5cf6", "C2": "#ef4444"}[_diag_nivel]
+        _nb = {"B2": "#eff6ff", "C1": "#f5f3ff", "C2": "#fff1f2"}[_diag_nivel]
+        st.markdown(f"""
+        <div style="background:{_nb};border:2px solid {_nc};border-radius:16px;
+                    padding:1.2rem 1.6rem;margin-bottom:1.4rem;
+                    display:flex;align-items:center;gap:1.2rem;">
+            <div style="font-size:2rem;">🎯</div>
+            <div style="flex:1;">
+                <div style="font-weight:700;color:{_nc};font-size:1rem;">
+                    Tu nivel diagnosticado: {_diag_nivel}
+                </div>
+                <div style="font-size:0.85rem;color:#374151;margin-top:0.2rem;">
+                    Basado en tu último test de diagnóstico.
+                    Puedes repetirlo cuando quieras.
+                </div>
+            </div>
+            <div>
+        """, unsafe_allow_html=True)
+        if st.button("Repetir diagnóstico →", key="home_repeat_diag"):
+            st.session_state.modulo = "🎯 Diagnóstico"
+            st.session_state.diag_step = 0
+            st.session_state.diag_answers = {}
+            st.rerun()
+        st.markdown("</div></div>", unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div style="background:linear-gradient(135deg,#1e3a5f 0%,#3b0764 100%);
+                    border-radius:16px;padding:1.4rem 1.8rem;margin-bottom:1.4rem;
+                    display:flex;align-items:center;gap:1.4rem;color:white;">
+            <div style="font-size:2.4rem;">🎯</div>
+            <div style="flex:1;">
+                <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;">
+                    ¿Cuál es tu nivel real?
+                </div>
+                <div style="font-size:0.88rem;opacity:0.82;margin-top:0.2rem;">
+                    Haz el diagnóstico de 20 preguntas y descubre en qué áreas trabajar primero.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🎯  Empezar diagnóstico", key="home_start_diag"):
+            st.session_state.modulo = "🎯 Diagnóstico"
+            st.rerun()
     st.markdown("""
     <div class="home-hero">
         <h1>Español avanzado.<br>Preparación DELE.</h1>

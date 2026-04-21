@@ -123,6 +123,11 @@ def init_all_state() -> None:
         "gr_lect_idx": 0,
         "gr_lect_answers": {},
         "gr_lect_checked": False,
+        # ── Diagnóstico ────────────────────────────────────────
+        "diag_step": 0,
+        "diag_answers": {},
+        "diag_sel": None,
+        "nivel_diagnosticado": None,
         # ── Misc ───────────────────────────────────────────────
         "modulo": "🏠 Inicio",
         "tabla_ejercicio": [],

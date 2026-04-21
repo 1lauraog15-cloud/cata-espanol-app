@@ -1,0 +1,193 @@
+"""20 preguntas de diagnóstico de nivel (B2 · C1 · C2)."""
+
+DIAGNOSTICO = [
+    # ── VERBOS + PREPOSICIÓN ── 4 preguntas (2 B2, 2 C1)
+    {
+        "pregunta": "El médico me aconsejó que dejara ___ fumar de inmediato.",
+        "opciones": ["a) a", "b) de", "c) con", "d) en"],
+        "respuesta": "b) de",
+        "area": "verbos",
+        "nivel": "B2",
+        "explicacion": "'Dejar de + infinitivo' expresa interrupción de una acción. Es una perífrasis muy frecuente: 'dejar de hacer algo'.",
+    },
+    {
+        "pregunta": "Siempre ha soñado ___ vivir en una ciudad junto al mar.",
+        "opciones": ["a) en", "b) con", "c) de", "d) por"],
+        "respuesta": "b) con",
+        "area": "verbos",
+        "nivel": "B2",
+        "explicacion": "'Soñar con algo/alguien' es la construcción fija. No se usa 'soñar en' en este sentido.",
+    },
+    {
+        "pregunta": "El director insistió ___ que todos los informes estuvieran listos antes del viernes.",
+        "opciones": ["a) a", "b) sobre", "c) en", "d) por"],
+        "respuesta": "c) en",
+        "area": "verbos",
+        "nivel": "C1",
+        "explicacion": "'Insistir en algo/en que + subjuntivo' es la estructura correcta. La preposición 'en' introduce el contenido de la insistencia.",
+    },
+    {
+        "pregunta": "No se trata ___ ganar el debate, sino de encontrar una solución conjunta.",
+        "opciones": ["a) sobre", "b) en", "c) de", "d) con"],
+        "respuesta": "c) de",
+        "area": "verbos",
+        "nivel": "C1",
+        "explicacion": "'Tratarse de + infinitivo/sustantivo' introduce el tema o la cuestión central. Es una expresión impersonal muy útil en registro formal.",
+    },
+
+    # ── CONECTORES ── 4 preguntas (1 B2, 2 C1, 1 C2)
+    {
+        "pregunta": "Llegó tarde a la reunión; ___, nadie le recriminó nada.",
+        "opciones": ["a) por tanto", "b) sin embargo", "c) además", "d) puesto que"],
+        "respuesta": "b) sin embargo",
+        "area": "conectores",
+        "nivel": "B2",
+        "explicacion": "'Sin embargo' introduce una concesión o contraste: algo inesperado respecto a lo anterior. Aquí contrasta el retraso con la reacción tranquila.",
+    },
+    {
+        "pregunta": "La propuesta fue rechazada ___ no cumplía los requisitos mínimos establecidos.",
+        "opciones": ["a) aunque", "b) no obstante", "c) dado que", "d) a pesar de que"],
+        "respuesta": "c) dado que",
+        "area": "conectores",
+        "nivel": "C1",
+        "explicacion": "'Dado que' introduce causa en registro formal o académico. Equivale a 'puesto que' o 'ya que', pero con mayor formalidad.",
+    },
+    {
+        "pregunta": "El proyecto era ambicioso; ___, contaba con escasos recursos para llevarlo a cabo.",
+        "opciones": ["a) es decir", "b) ahora bien", "c) por ende", "d) inclusive"],
+        "respuesta": "b) ahora bien",
+        "area": "conectores",
+        "nivel": "C1",
+        "explicacion": "'Ahora bien' introduce una matización o contraste con lo dicho: afirma algo positivo y luego añade una reserva o restricción.",
+    },
+    {
+        "pregunta": "La medida generó polémica; ___, el gobierno la mantuvo con total convicción.",
+        "opciones": ["a) con todo", "b) por consiguiente", "c) de ahí que", "d) en suma"],
+        "respuesta": "a) con todo",
+        "area": "conectores",
+        "nivel": "C2",
+        "explicacion": "'Con todo' es un conector concesivo de alto registro que equivale a 'a pesar de todo' o 'sin embargo'. Introduce una consecuencia inesperada.",
+    },
+
+    # ── SUBJUNTIVO ── 4 preguntas (1 B2, 2 C1, 1 C2)
+    {
+        "pregunta": "Quiero que tú ___ más cuidado con el presupuesto.",
+        "opciones": ["a) tienes", "b) tengas", "c) tendrás", "d) tendrías"],
+        "respuesta": "b) tengas",
+        "area": "subjuntivo",
+        "nivel": "B2",
+        "explicacion": "Tras 'querer que', el verbo de la cláusula subordinada va en subjuntivo. 'Quiero que tengas' es la estructura básica de deseo con cambio de sujeto.",
+    },
+    {
+        "pregunta": "Es probable que el comité ___ una decisión antes del fin de semana.",
+        "opciones": ["a) toma", "b) tomará", "c) tome", "d) tomaría"],
+        "respuesta": "c) tome",
+        "area": "subjuntivo",
+        "nivel": "C1",
+        "explicacion": "'Es probable que' expresa probabilidad y rige subjuntivo en la subordinada. Las expresiones de probabilidad y valoración exigen subjuntivo.",
+    },
+    {
+        "pregunta": "Si ___ más tiempo libre, me habría apuntado al curso de fotografía.",
+        "opciones": ["a) tuviera", "b) hubiera tenido", "c) tendría", "d) tenga"],
+        "respuesta": "b) hubiera tenido",
+        "area": "subjuntivo",
+        "nivel": "C1",
+        "explicacion": "La condicional irreal en pasado usa 'si + pluscuamperfecto de subjuntivo' (hubiera/hubiese tenido) en la prótasis. Expresa una condición no cumplida en el pasado.",
+    },
+    {
+        "pregunta": "Por mucho que lo ___, no consigue entender la lógica de ese argumento.",
+        "opciones": ["a) intenta", "b) intentara", "c) intente", "d) ha intentado"],
+        "respuesta": "c) intente",
+        "area": "subjuntivo",
+        "nivel": "C2",
+        "explicacion": "'Por mucho que + subjuntivo' es una concesión hipotética: aunque haga el máximo esfuerzo. La concesión con 'por + adv/adj + que' exige subjuntivo.",
+    },
+
+    # ── SER/ESTAR Y PERÍFRASIS ── 4 preguntas (2 B2, 2 C1)
+    {
+        "pregunta": "La reunión ___ en la sala de conferencias del tercer piso.",
+        "opciones": ["a) está", "b) es", "c) estará siendo", "d) será"],
+        "respuesta": "b) es",
+        "area": "gramatica",
+        "nivel": "B2",
+        "explicacion": "Los eventos y celebraciones usan 'ser' para indicar su lugar y tiempo: 'La reunión es en...'. 'Estar' indica ubicación de personas y objetos físicos, no de eventos.",
+    },
+    {
+        "pregunta": "Después de la operación, el paciente ___ muy débil pero estable.",
+        "opciones": ["a) es", "b) fue", "c) estaba", "d) era"],
+        "respuesta": "c) estaba",
+        "area": "gramatica",
+        "nivel": "B2",
+        "explicacion": "'Estar' describe estados físicos o emocionales temporales. La debilidad postoperatoria es una condición temporal, no una característica permanente de la persona.",
+    },
+    {
+        "pregunta": "El informe ___ redactado por el departamento jurídico antes del plazo.",
+        "opciones": ["a) estaba", "b) fue", "c) quedó", "d) había sido"],
+        "respuesta": "b) fue",
+        "area": "gramatica",
+        "nivel": "C1",
+        "explicacion": "'Ser + participio' forma la pasiva perifrástica, que indica la acción en su proceso. 'Fue redactado' = alguien lo redactó. 'Estaba redactado' indicaría el resultado/estado.",
+    },
+    {
+        "pregunta": "Llevo tres horas ___ los documentos para la presentación de mañana.",
+        "opciones": ["a) preparar", "b) preparando", "c) a preparar", "d) preparado"],
+        "respuesta": "b) preparando",
+        "area": "gramatica",
+        "nivel": "C1",
+        "explicacion": "'Llevar + gerundio' es una perífrasis durativa que expresa una acción que comenzó en el pasado y continúa en el presente. Siempre va con gerundio, nunca con infinitivo.",
+    },
+
+    # ── ERRORES ANGLOHABLANTES ── 4 preguntas (2 C1, 2 C2)
+    {
+        "pregunta": "¿Cuál de estas frases es incorrecta?",
+        "opciones": [
+            "a) Actualmente trabajo en una empresa de tecnología.",
+            "b) No me acuerdo de su nombre actualmente.",
+            "c) Los precios han subido actualmente mucho.",
+            "d) B y C, porque 'actualmente' significa 'en la actualidad', no 'de hecho'.",
+        ],
+        "respuesta": "d) B y C, porque 'actualmente' significa 'en la actualidad', no 'de hecho'.",
+        "area": "errores",
+        "nivel": "C1",
+        "explicacion": "'Actualmente' es un falso amigo de 'actually' (inglés). En español significa 'en este momento / hoy en día'. Para 'actually' se usa 'de hecho', 'en realidad' o 'la verdad es que'.",
+    },
+    {
+        "pregunta": "Un hablante anglosajón dice: 'Estoy muy excitada por el concierto de esta noche.' ¿Qué es incorrecto?",
+        "opciones": [
+            "a) Nada, es perfectamente correcto.",
+            "b) 'Excitada' tiene connotación sexual; debería decir 'emocionada' o 'entusiasmada'.",
+            "c) Falta la preposición: 'excitada con el concierto'.",
+            "d) El tiempo verbal es incorrecto.",
+        ],
+        "respuesta": "b) 'Excitada' tiene connotación sexual; debería decir 'emocionada' o 'entusiasmada'.",
+        "area": "errores",
+        "nivel": "C1",
+        "explicacion": "'Excitado/a' en español tiene principalmente connotación sexual. Para expresar entusiasmo ante un evento se usan 'emocionado/a', 'entusiasmado/a' o 'muy contento/a'. Calco directo del inglés 'excited'.",
+    },
+    {
+        "pregunta": "¿Qué oración usa 'realizar' correctamente?",
+        "opciones": [
+            "a) De repente me realicé de que había olvidado el pasaporte.",
+            "b) Realizó un viaje por toda Sudamérica.",
+            "c) ¿Te realizas de lo que acabas de decir?",
+            "d) No me realizo por qué está enfadado.",
+        ],
+        "respuesta": "b) Realizó un viaje por toda Sudamérica.",
+        "area": "errores",
+        "nivel": "C2",
+        "explicacion": "'Realizar' en español significa 'llevar a cabo / ejecutar', no 'darse cuenta'. El verbo 'to realize' (inglés) se traduce como 'darse cuenta de', 'caer en la cuenta' o 'percatarse de'.",
+    },
+    {
+        "pregunta": "¿Cuál es la traducción más precisa de 'The government must address this issue'?",
+        "opciones": [
+            "a) El gobierno debe dirigirse a esta cuestión.",
+            "b) El gobierno debe abordar este problema.",
+            "c) El gobierno debe adivinar este asunto.",
+            "d) El gobierno debe hablar esta materia.",
+        ],
+        "respuesta": "b) El gobierno debe abordar este problema.",
+        "area": "errores",
+        "nivel": "C2",
+        "explicacion": "'To address an issue' se traduce como 'abordar un problema / una cuestión'. 'Dirigirse a' en español significa hablar a alguien, no tratar un tema. Calco frecuente en traducción.",
+    },
+]

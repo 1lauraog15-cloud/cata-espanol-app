@@ -681,4 +681,203 @@ GR_LECTURA = [
              "explicacion": "El último párrafo: 'el creciente volumen de contenido generado por usuarios... está comenzando a alterar ese equilibrio'."},
         ],
     },
+    {
+        "titulo": "La paradoja de la hiperconectividad",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "seleccion_multiple",
+        "texto": (
+            "La promesa de la tecnología digital era simple: más conexión, más eficiencia, más libertad. "
+            "Sin embargo, una década después de la expansión masiva de los smartphones, los datos apuntan "
+            "en una dirección incómoda. Lejos de liberarnos, la hiperconectividad parece haber generado "
+            "nuevas formas de dependencia que los propios usuarios reconocen pero son incapaces de gestionar.\n\n"
+            "El fenómeno tiene una explicación neurológica precisa. Las notificaciones, los 'me gusta' y los "
+            "mensajes instantáneos activan el sistema dopaminérgico del cerebro de forma intermitente — "
+            "exactamente el patrón que los neurocientíficos identifican como el más adictivo. No es accidental: "
+            "los equipos de diseño de las grandes plataformas han estudiado durante años cómo maximizar el "
+            "tiempo de pantalla, y los resultados hablan por sí solos. El usuario medio consulta su teléfono "
+            "96 veces al día.\n\n"
+            "Las consecuencias no se limitan al plano individual. En el entorno laboral, la expectativa de "
+            "disponibilidad permanente ha difuminado los límites entre el tiempo de trabajo y el tiempo "
+            "personal, generando lo que los psicólogos denominan 'fatiga de conectividad'. Estudios recientes "
+            "en varios países europeos muestran que los trabajadores que reciben mensajes laborales fuera del "
+            "horario establecido reportan niveles de estrés significativamente más elevados, incluso cuando "
+            "deciden no responder.\n\n"
+            "Frente a este panorama, han surgido movimientos que abogan por el 'derecho a la desconexión' "
+            "como una necesidad regulada por ley. Francia fue pionera en legislar al respecto en 2017, "
+            "obligando a las empresas de más de 50 empleados a negociar con sus trabajadores políticas de "
+            "desconexión digital. Otros países han seguido su ejemplo, aunque la aplicación efectiva de "
+            "estas normas sigue siendo, en muchos casos, más declarativa que real.\n\n"
+            "Lo que está en juego no es solo la productividad o el bienestar individual, sino el modo en "
+            "que las sociedades contemporáneas definen la frontera entre lo público y lo privado, entre "
+            "el tiempo vendido y el tiempo vivido."
+        ),
+        "preguntas": [
+            {
+                "pregunta": "Según el texto, ¿qué tiene de particular el patrón de notificaciones de las redes sociales?",
+                "opciones": [
+                    "a) Que aparecen de forma constante y predecible",
+                    "b) Que su carácter intermitente las hace especialmente adictivas",
+                    "c) Que han sido diseñadas para reducir el tiempo de pantalla",
+                    "d) Que afectan al sistema nervioso solo en usuarios vulnerables"
+                ],
+                "respuesta": "b) Que su carácter intermitente las hace especialmente adictivas",
+                "explicacion": "El texto dice que las notificaciones activan el sistema dopaminérgico 'de forma intermitente' y que ese es 'exactamente el patrón que los neurocientíficos identifican como el más adictivo'."
+            },
+            {
+                "pregunta": "¿Qué se entiende por 'fatiga de conectividad' según el texto?",
+                "opciones": [
+                    "a) El agotamiento físico producido por el uso prolongado de pantallas",
+                    "b) La dificultad para concentrarse después de recibir muchas notificaciones",
+                    "c) El estrés generado por la expectativa de estar siempre disponible laboralmente",
+                    "d) La sensación de saturación que produce recibir demasiada información"
+                ],
+                "respuesta": "c) El estrés generado por la expectativa de estar siempre disponible laboralmente",
+                "explicacion": "El texto lo define directamente: 'la expectativa de disponibilidad permanente ha difuminado los límites entre trabajo y tiempo personal, generando lo que los psicólogos denominan fatiga de conectividad'."
+            },
+            {
+                "pregunta": "¿Qué crítica hace el texto a las leyes de desconexión digital?",
+                "opciones": [
+                    "a) Que solo se aplican en países europeos",
+                    "b) Que las empresas se niegan a cumplirlas",
+                    "c) Que su aplicación real es frecuentemente insuficiente",
+                    "d) Que Francia las impuso sin consultar a los trabajadores"
+                ],
+                "respuesta": "c) Que su aplicación real es frecuentemente insuficiente",
+                "explicacion": "El texto dice que 'la aplicación efectiva de estas normas sigue siendo, en muchos casos, más declarativa que real'."
+            }
+        ]
+    },
+    {
+        "titulo": "El coste invisible del consumo digital",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "seleccion_multiple",
+        "texto": (
+            "Existe una creencia extendida de que la digitalización de la economía es, por naturaleza, "
+            "más sostenible que el modelo industrial tradicional. Enviar un correo electrónico parece "
+            "infinitamente menos contaminante que imprimir una carta. Escuchar música en streaming parece "
+            "más ecológico que fabricar un disco. Sin embargo, esta intuición, aunque comprensible, ignora "
+            "una realidad que los especialistas en sostenibilidad llevan años intentando visibilizar: "
+            "la infraestructura digital tiene una huella ecológica enorme y creciente.\n\n"
+            "Los centros de datos consumen actualmente entre el 1 y el 1,5% de la electricidad mundial, "
+            "una cifra comparable al consumo total de algunos países de tamaño medio. A esto hay que añadir "
+            "el impacto de las redes de telecomunicaciones y los propios dispositivos de los usuarios, "
+            "cuya fabricación requiere minerales escasos extraídos en condiciones frecuentemente "
+            "problemáticas desde el punto de vista medioambiental y social.\n\n"
+            "El problema se agrava con la expansión de tecnologías intensivas en consumo energético. "
+            "El entrenamiento de un modelo de inteligencia artificial de gran escala puede emitir tanto "
+            "dióxido de carbono como cinco automóviles durante toda su vida útil. Las criptomonedas, "
+            "por su parte, utilizan mecanismos de validación que requieren una cantidad de energía "
+            "comparable a la de países enteros.\n\n"
+            "Algunas empresas tecnológicas han respondido con compromisos ambiciosos: alimentar sus "
+            "instalaciones con energía renovable al 100%, alcanzar la neutralidad de carbono antes de "
+            "2030 o invertir en proyectos de reforestación. Los críticos, sin embargo, señalan que muchos "
+            "de estos compromisos se basan en mecanismos de compensación cuya eficacia real es discutida, "
+            "y que el crecimiento exponencial del sector neutraliza con frecuencia los avances conseguidos "
+            "en eficiencia.\n\n"
+            "La sostenibilidad digital no es, por tanto, un problema resuelto ni en vías de resolución "
+            "sencilla. Exige repensar no solo cómo producimos energía, sino cuánta energía estamos "
+            "dispuestos a consumir y para qué."
+        ),
+        "preguntas": [
+            {
+                "pregunta": "¿Cuál es la idea principal que defiende el texto?",
+                "opciones": [
+                    "a) Que la digitalización es más contaminante que la industria tradicional",
+                    "b) Que la percepción de que lo digital es sostenible no se corresponde con la realidad",
+                    "c) Que los centros de datos son el principal problema medioambiental del siglo XXI",
+                    "d) Que las empresas tecnológicas mienten sobre sus compromisos ecológicos"
+                ],
+                "respuesta": "b) Que la percepción de que lo digital es sostenible no se corresponde con la realidad",
+                "explicacion": "El texto no afirma que lo digital sea más contaminante (a), ni que los centros de datos sean el principal problema (c), ni acusa a las empresas de mentir (d)."
+            },
+            {
+                "pregunta": "¿Qué crítica se hace a los compromisos medioambientales de las empresas tecnológicas?",
+                "opciones": [
+                    "a) Que son insuficientes porque no incluyen la fabricación de dispositivos",
+                    "b) Que el crecimiento del sector puede anular las mejoras conseguidas",
+                    "c) Que están diseñados para mejorar la imagen pública sin coste real",
+                    "d) Que solo se aplican en países con legislación más estricta"
+                ],
+                "respuesta": "b) Que el crecimiento del sector puede anular las mejoras conseguidas",
+                "explicacion": "El texto dice que 'el crecimiento exponencial del sector neutraliza con frecuencia los avances conseguidos en eficiencia'."
+            },
+            {
+                "pregunta": "¿Qué conclusión extrae el texto sobre la sostenibilidad digital?",
+                "opciones": [
+                    "a) Que depende principalmente de la transición a energías renovables",
+                    "b) Que es un problema que las empresas pueden resolver sin intervención política",
+                    "c) Que requiere cuestionar tanto la producción como el consumo de energía",
+                    "d) Que los avances técnicos la harán posible a medio plazo"
+                ],
+                "respuesta": "c) Que requiere cuestionar tanto la producción como el consumo de energía",
+                "explicacion": "La última frase es explícita: 'exige repensar no solo cómo producimos energía, sino cuánta energía estamos dispuestos a consumir'."
+            }
+        ]
+    },
+    {
+        "titulo": "El trabajo del futuro y la trampa de la adaptabilidad",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "seleccion_multiple",
+        "texto": (
+            "Durante los últimos años, el discurso dominante sobre el futuro del trabajo ha girado en "
+            "torno a un concepto: la adaptabilidad. Ante la automatización creciente y la transformación "
+            "digital de la economía, se ha impuesto la idea de que los trabajadores deben reinventarse "
+            "continuamente, adquirir nuevas competencias y abrazar el cambio como una constante. "
+            "Lo que rara vez se cuestiona es quién asume el coste de esa adaptación.\n\n"
+            "En los modelos económicos tradicionales, la formación continua era una responsabilidad "
+            "compartida entre el Estado, las empresas y los trabajadores. Las grandes corporaciones "
+            "invertían en la cualificación de sus empleados porque los concebían como activos a largo "
+            "plazo. Este modelo ha erosionado significativamente en las últimas décadas. La proliferación "
+            "de contratos temporales, el auge de la economía de plataformas y la externalización de "
+            "servicios han trasladado el riesgo —y el coste de la formación— casi exclusivamente "
+            "al individuo.\n\n"
+            "El resultado es una paradoja: se exige más adaptabilidad precisamente a quienes tienen "
+            "menos recursos para adaptarse. Los trabajadores con empleos precarios, que son los más "
+            "expuestos a la automatización, son también los que menos tiempo, dinero y acceso a "
+            "formación de calidad tienen. La brecha no es solo económica; es también una brecha "
+            "de capacidad de respuesta ante el cambio.\n\n"
+            "Frente a esta situación, algunos economistas proponen modelos alternativos como la "
+            "flexiseguridad, que combinan mercados laborales más dinámicos con redes de protección "
+            "social robustas. Dinamarca se cita habitualmente como ejemplo de este enfoque, aunque "
+            "los intentos de trasplantar su modelo a otros contextos han topado con resistencias "
+            "estructurales y culturales considerables.\n\n"
+            "El debate de fondo no es tecnológico sino político: quién decide qué tipo de trabajo "
+            "merece protección, quién paga por la transición y quién se queda atrás si la transición falla."
+        ),
+        "preguntas": [
+            {
+                "pregunta": "Según el texto, ¿qué ha cambiado respecto a la formación de los trabajadores?",
+                "opciones": [
+                    "a) Que las empresas invierten más en formación que antes",
+                    "b) Que el Estado ha asumido un papel más activo en la formación continua",
+                    "c) Que la responsabilidad de formarse recae ahora principalmente en el trabajador",
+                    "d) Que la formación continua ya no es necesaria gracias a la automatización"
+                ],
+                "respuesta": "c) Que la responsabilidad de formarse recae ahora principalmente en el trabajador",
+                "explicacion": "El texto dice que el coste de la formación se ha trasladado 'casi exclusivamente al individuo'."
+            },
+            {
+                "pregunta": "¿En qué consiste la paradoja que describe el texto?",
+                "opciones": [
+                    "a) En que la tecnología crea más empleos de los que destruye",
+                    "b) En que se pide más capacidad de cambio a quienes menos pueden cambiar",
+                    "c) En que los trabajadores cualificados son los más afectados por la automatización",
+                    "d) En que las empresas forman a sus empleados para que luego se vayan"
+                ],
+                "respuesta": "b) En que se pide más capacidad de cambio a quienes menos pueden cambiar",
+                "explicacion": "El texto lo formula así: 'se exige más adaptabilidad precisamente a quienes tienen menos recursos para adaptarse'."
+            },
+            {
+                "pregunta": "¿Cómo presenta el texto el modelo danés de flexiseguridad?",
+                "opciones": [
+                    "a) Como la solución definitiva al problema del trabajo precario",
+                    "b) Como un modelo exportable a cualquier país desarrollado",
+                    "c) Como un ejemplo útil pero difícil de replicar en otros contextos",
+                    "d) Como un sistema que ha fracasado fuera de Dinamarca"
+                ],
+                "respuesta": "c) Como un ejemplo útil pero difícil de replicar en otros contextos",
+                "explicacion": "El texto dice que 'los intentos de trasplantar su modelo a otros contextos han topado con resistencias estructurales y culturales considerables'."
+            }
+        ]
+    },
 ]

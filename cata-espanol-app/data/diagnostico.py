@@ -1,4 +1,12 @@
-"""20 preguntas de diagnóstico de nivel (B2 · C1 · C2)."""
+"""20 preguntas de diagnóstico de nivel (B2 · C1 · C2).
+
+Distribución:
+- 4 verbos + preposición  (2 B2, 2 C1)
+- 4 conectores            (1 B2, 2 C1, 1 C2)
+- 4 subjuntivo            (1 B2, 2 C1, 1 C2)
+- 4 ser/estar · perífrasis (2 B2, 2 C1)
+- 4 errores anglohablantes (2 C1, 2 C2)
+"""
 
 DIAGNOSTICO = [
     # ── VERBOS + PREPOSICIÓN ── 4 preguntas (2 B2, 2 C1)

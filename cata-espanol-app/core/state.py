@@ -77,7 +77,6 @@ def init_all_state() -> None:
         "gap_feedback": None,
         "error_index": None,
         "error_feedback": None,
-        "ai_feedback": None,
         "dp_index": 0,
         "dp_revealed": False,
         "dp_quiz_ans": None,
@@ -93,7 +92,6 @@ def init_all_state() -> None:
         "cno_shuf": [],
         "cno_fb": None,
         "cnf_item": None,
-        "cnf_fb": None,
         "cnc_queue": [],
         "cng_queue": [],
         # ── Gramática ──────────────────────────────────────────

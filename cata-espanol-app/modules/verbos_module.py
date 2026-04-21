@@ -148,47 +148,6 @@ def check_answer(user_answer: str) -> None:
         set_feedback("bad", f"❌ Respuesta correcta: {answer_display}\n\nEjemplo: {ejemplo}{nota}")
 
 
-async def get_ai_feedback_async(verbo_expr: str, frase_usuario: str) -> str:
-    import aiohttp
-    payload = {
-        "model": "claude-sonnet-4-20250514",
-        "max_tokens": 350,
-        "messages": [{"role": "user", "content": (
-            f"Eres un profesor de español de nivel C2 experto en gramática. "
-            f"El alumno debe escribir una frase usando la expresión '{verbo_expr}'. "
-            f"Frase del alumno: «{frase_usuario}»\n\n"
-            f"Evalúa brevemente (máximo 4 líneas):\n"
-            f"1. ¿Usa correctamente la preposición y la estructura?\n"
-            f"2. ¿Es natural y fluida para un hablante nativo?\n"
-            f"3. Una sugerencia de mejora si la hay.\n"
-            f"Responde SIEMPRE en español, de forma directa y constructiva."
-        )}],
-    }
-    async with aiohttp.ClientSession() as session:
-        async with session.post(
-            "https://api.anthropic.com/v1/messages",
-            json=payload,
-            headers={"Content-Type": "application/json"},
-            timeout=aiohttp.ClientTimeout(total=20),
-        ) as resp:
-            data = await resp.json()
-            return data["content"][0]["text"]
-
-
-def call_claude_feedback(verbo_expr: str, frase_usuario: str) -> str:
-    import asyncio
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                future = pool.submit(asyncio.run, get_ai_feedback_async(verbo_expr, frase_usuario))
-                return future.result(timeout=25)
-        return loop.run_until_complete(get_ai_feedback_async(verbo_expr, frase_usuario))
-    except Exception as e:
-        return f"Error al obtener feedback: {e}"
-
-
 # ── Render principal ─────────────────────────────────────────────
 
 def render(nivel_filter: List[str], base_items: List[Dict], weighted_items: List[Dict]) -> None:

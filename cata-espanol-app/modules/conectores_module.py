@@ -23,48 +23,6 @@ def _show_fb(kind: str, msg: str) -> None:
     st.markdown(f'<div class="{css}">{msg}</div>', unsafe_allow_html=True)
 
 
-def _call_claude_conector(conector: str, frase: str) -> str:
-    import asyncio
-
-    async def _call():
-        import aiohttp
-        payload = {
-            "model": "claude-sonnet-4-20250514",
-            "max_tokens": 400,
-            "messages": [{"role": "user", "content": (
-                f"Eres un profesor de español de nivel C2 experto en discurso y conectores. "
-                f"El alumno debe escribir una frase o mini-párrafo usando el conector '{conector}'. "
-                f"Frase del alumno: «{frase}»\n\n"
-                f"Evalúa en máximo 4 líneas:\n"
-                f"1. ¿Usa el conector correctamente (función, posición, puntuación, modo verbal si aplica)?\n"
-                f"2. ¿El registro y la sintaxis son adecuados para un C2?\n"
-                f"3. Una sugerencia concreta de mejora si la hay.\n"
-                f"Responde siempre en español, de forma directa y constructiva."
-            )}]
-        }
-        try:
-            async with aiohttp.ClientSession() as s:
-                async with s.post(
-                    "https://api.anthropic.com/v1/messages", json=payload,
-                    headers={"Content-Type": "application/json"},
-                    timeout=aiohttp.ClientTimeout(total=20),
-                ) as r:
-                    d = await r.json()
-                    return d["content"][0]["text"]
-        except Exception as e:
-            return f"Error al conectar con la IA: {e}"
-
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                return pool.submit(asyncio.run, _call()).result(timeout=25)
-        return loop.run_until_complete(_call())
-    except Exception as e:
-        return f"Error: {e}"
-
-
 def render(nivel_filter: List[str]) -> None:
     st.markdown("""
     <div class="mod-header" style="background:#fdf3dc;">
@@ -386,11 +344,11 @@ def render(nivel_filter: List[str]) -> None:
             _show_fb(*st.session_state.cno_fb)
 
     # ══════════════════════════════
-    #  TAB 5 — ESCRITURA LIBRE + IA
+    #  TAB 5 — ESCRITURA LIBRE
     # ══════════════════════════════
     with ctab5:
-        st.markdown('<div class="section-title">Escritura libre + feedback de IA</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-sub">Escribe una frase o mini-párrafo usando el conector propuesto. Claude evaluará función, registro y puntuación.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">Escritura libre</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-sub">Escribe una frase o mini-párrafo usando el conector propuesto.</div>', unsafe_allow_html=True)
 
         if st.session_state.cnf_item is None:
             st.session_state.cnf_item = random.choice(CONECTORES)
@@ -416,31 +374,15 @@ def render(nivel_filter: List[str]) -> None:
 
             if st.button("Cambiar conector 🔄", use_container_width=True, key="cnf_change"):
                 st.session_state.cnf_item = random.choice(CONECTORES)
-                st.session_state.cnf_fb = None
                 st.rerun()
 
         with col_write_f:
-            frase_libre = st.text_area(
+            st.text_area(
                 "Tu frase o mini-párrafo:",
                 height=120,
                 key="cnf_frase",
                 placeholder=f"Escribe aquí usando '{fc['conector']}'…",
             )
-
-            if st.button("Pedir feedback a Claude 🤖", use_container_width=True, key="cnf_ai"):
-                if frase_libre.strip():
-                    with st.spinner("Claude está evaluando tu uso del conector…"):
-                        fb = _call_claude_conector(fc["conector"], frase_libre.strip())
-                    st.session_state.cnf_fb = fb
-                else:
-                    st.session_state.cnf_fb = "⚠️ Escribe una frase primero."
-                st.rerun()
-
-            if st.session_state.cnf_fb:
-                st.markdown(
-                    f'<div class="feedback-ai">🤖 <strong>Feedback de Claude:</strong>\n\n{st.session_state.cnf_fb}</div>',
-                    unsafe_allow_html=True,
-                )
 
     # ══════════════════════════════
     #  TAB 6 — TABLA PARA RELLENAR

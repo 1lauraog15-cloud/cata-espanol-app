@@ -1,4 +1,4 @@
-"""Módulo Home — pantalla de inicio."""
+"""UI Home — pantalla de inicio."""
 import streamlit as st
 
 from core.config import NIVEL_COLORS, NIVEL_BG
@@ -31,7 +31,7 @@ _MODULE_CARDS = [
 ]
 
 
-def render() -> None:
+def render_home() -> None:
     # ── Tarjeta diagnóstico ───────────────────────────────────────
     _diag_nivel = st.session_state.get("nivel_diagnosticado")
     if _diag_nivel:

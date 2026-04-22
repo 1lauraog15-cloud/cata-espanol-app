@@ -454,31 +454,7 @@ def render_errores(nivel_filter: List[str]) -> None:
             st.rerun()
 
 
-def render_lectura(nivel_filter: List[str]) -> None:
-    st.markdown('<div class="section-title">Comprensión lectora · Estilo DELE C1</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-sub">Lee el texto y responde las preguntas. Las opciones incorrectas están diseñadas para que debas leer con precisión.</div>', unsafe_allow_html=True)
-
-    texto = GR_LECTURA[st.session_state.gr_lect_idx]
-
-    tl1, tl2, tl3 = st.columns([1, 2, 1])
-    with tl1:
-        if st.button("← Texto anterior", key="gr_lect_prev", use_container_width=True):
-            st.session_state.gr_lect_idx = (st.session_state.gr_lect_idx - 1) % len(GR_LECTURA)
-            st.session_state.gr_lect_answers = {}
-            st.session_state.gr_lect_checked = False
-            st.rerun()
-    with tl2:
-        st.markdown(
-            f'<p style="text-align:center;font-weight:700;color:#064e3b;padding-top:0.4rem;">'
-            f'{texto["titulo"]} ({st.session_state.gr_lect_idx + 1}/{len(GR_LECTURA)})</p>',
-            unsafe_allow_html=True)
-    with tl3:
-        if st.button("Texto siguiente →", key="gr_lect_next", use_container_width=True):
-            st.session_state.gr_lect_idx = (st.session_state.gr_lect_idx + 1) % len(GR_LECTURA)
-            st.session_state.gr_lect_answers = {}
-            st.session_state.gr_lect_checked = False
-            st.rerun()
-
+def _lect_seleccion_multiple(texto: dict, idx: int) -> None:
     st.markdown(
         f'<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;'
         f'padding:1.4rem;font-size:0.97rem;color:#1f2937;line-height:1.8;margin-bottom:1rem;">'
@@ -493,19 +469,14 @@ def render_lectura(nivel_filter: List[str]) -> None:
             label=f"P{i+1}",
             options=q["opciones"],
             label_visibility="collapsed",
-            key=f"gr_lect_{st.session_state.gr_lect_idx}_q{i}",
+            key=f"gr_lect_{idx}_q{i}",
         )
         st.session_state.gr_lect_answers[i] = sel
-
         if st.session_state.gr_lect_checked:
             if sel == q["respuesta"]:
-                st.markdown(
-                    f'<div class="feedback-ok">✅ Correcto. {q["explicacion"]}</div>',
-                    unsafe_allow_html=True)
+                st.markdown(f'<div class="feedback-ok">✅ Correcto. {q["explicacion"]}</div>', unsafe_allow_html=True)
             else:
-                st.markdown(
-                    f'<div class="feedback-bad">❌ Correcta: **{q["respuesta"]}**\n\n{q["explicacion"]}</div>',
-                    unsafe_allow_html=True)
+                st.markdown(f'<div class="feedback-bad">❌ Correcta: **{q["respuesta"]}**\n\n{q["explicacion"]}</div>', unsafe_allow_html=True)
         st.markdown("")
 
     lb1, lb2 = st.columns(2)
@@ -521,10 +492,7 @@ def render_lectura(nivel_filter: List[str]) -> None:
 
     if st.session_state.gr_lect_checked:
         total = len(texto["preguntas"])
-        score = sum(
-            1 for i, q in enumerate(texto["preguntas"])
-            if st.session_state.gr_lect_answers.get(i) == q["respuesta"]
-        )
+        score = sum(1 for i, q in enumerate(texto["preguntas"]) if st.session_state.gr_lect_answers.get(i) == q["respuesta"])
         pct = int(score / total * 100) if total else 0
         color = "#065f46" if pct >= 75 else "#92400e" if pct >= 50 else "#991b1b"
         st.markdown(
@@ -534,3 +502,175 @@ def render_lectura(nivel_filter: List[str]) -> None:
             f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">correctas ({pct} %)</span>'
             f'</div>',
             unsafe_allow_html=True)
+
+
+def _lect_verdadero_falso(texto: dict, idx: int) -> None:
+    st.markdown(
+        f'<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;'
+        f'padding:1.4rem;font-size:0.97rem;color:#1f2937;line-height:1.8;margin-bottom:1rem;">'
+        f'{texto["texto"].replace(chr(10), "<br><br>")}</div>',
+        unsafe_allow_html=True)
+    st.caption(texto["fuente"])
+
+    st.markdown("**Afirmaciones:**")
+    for i, af in enumerate(texto["preguntas"]):
+        st.markdown(f"**{i+1}.** {af['afirmacion']}")
+        bv, bf = st.columns(2)
+        with bv:
+            if st.button("✓ Verdadero", key=f"gr_lect_vf_{idx}_{i}_v", use_container_width=True):
+                st.session_state.gr_lect_answers[i] = "V"
+                st.rerun()
+        with bf:
+            if st.button("✗ Falso", key=f"gr_lect_vf_{idx}_{i}_f", use_container_width=True):
+                st.session_state.gr_lect_answers[i] = "F"
+                st.rerun()
+
+        user_ans = st.session_state.gr_lect_answers.get(i)
+        correct = af["respuesta"]
+        if user_ans is not None:
+            if user_ans == correct:
+                st.markdown(f'<div class="feedback-ok">✅ Correcto. {af["justificacion"]}</div>', unsafe_allow_html=True)
+            else:
+                label = "Verdadero" if correct == "V" else "Falso"
+                st.markdown(f'<div class="feedback-bad">❌ Es {label}. {af["justificacion"]}</div>', unsafe_allow_html=True)
+        elif st.session_state.gr_lect_checked:
+            label = "Verdadero" if correct == "V" else "Falso"
+            st.markdown(f'<div class="feedback-neutral">ℹ️ Respuesta: {label}. {af["justificacion"]}</div>', unsafe_allow_html=True)
+        st.markdown("")
+
+    rb1, rb2 = st.columns(2)
+    with rb1:
+        if st.button("Ver todas las respuestas", key="gr_lect_reveal_all", use_container_width=True):
+            st.session_state.gr_lect_checked = True
+            st.rerun()
+    with rb2:
+        if st.button("Reiniciar 🔄", key="gr_lect_reset", use_container_width=True):
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+
+    answered = [i for i in range(len(texto["preguntas"])) if i in st.session_state.gr_lect_answers]
+    if answered:
+        total = len(texto["preguntas"])
+        score = sum(1 for i, af in enumerate(texto["preguntas"]) if st.session_state.gr_lect_answers.get(i) == af["respuesta"])
+        color = "#065f46" if score == total else "#92400e" if score >= total // 2 else "#991b1b"
+        st.markdown(
+            f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;'
+            f'padding:0.9rem 1.2rem;margin-top:0.5rem;text-align:center;">'
+            f'<span style="font-size:1.3rem;font-weight:700;color:{color};">{score}/{total}</span>'
+            f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">afirmaciones correctas</span>'
+            f'</div>',
+            unsafe_allow_html=True)
+
+
+def _lect_emparejamiento(texto: dict, idx: int) -> None:
+    texto_data = texto["texto"]
+    st.markdown(
+        f'<div style="font-size:0.95rem;color:#374151;margin-bottom:0.8rem;">{texto_data["instruccion"]}</div>',
+        unsafe_allow_html=True)
+
+    for letra, contenido in texto_data["subtextos"].items():
+        st.markdown(
+            f'<div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;'
+            f'padding:1rem 1.2rem;margin-bottom:0.7rem;font-size:0.95rem;color:#1f2937;line-height:1.7;">'
+            f'<strong style="color:#0369a1;font-size:1.05rem;">{letra}</strong> — {contenido}'
+            f'</div>',
+            unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown("**Afirmaciones — ¿A qué texto corresponde cada una?**")
+
+    for i, af in enumerate(texto["preguntas"]):
+        st.markdown(f"**{i+1}.** {af['afirmacion']}")
+        sel = st.selectbox(
+            label=f"Texto para afirmación {i+1}",
+            options=["A", "B", "C", "D"],
+            label_visibility="collapsed",
+            key=f"gr_lect_emp_{idx}_{i}",
+        )
+        st.session_state.gr_lect_answers[i] = sel
+        if st.session_state.gr_lect_checked:
+            correct = af["respuesta"]
+            if sel == correct:
+                st.markdown(f'<div class="feedback-ok">✅ Correcto ({correct}). {af["explicacion"]}</div>', unsafe_allow_html=True)
+            else:
+                st.markdown(f'<div class="feedback-bad">❌ Correcta: {correct}. {af["explicacion"]}</div>', unsafe_allow_html=True)
+
+    ec1, ec2 = st.columns(2)
+    with ec1:
+        if st.button("Comprobar todo ✓", key="gr_lect_check", use_container_width=True):
+            st.session_state.gr_lect_checked = True
+            st.rerun()
+    with ec2:
+        if st.button("Reiniciar 🔄", key="gr_lect_reset", use_container_width=True):
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+
+    if st.session_state.gr_lect_checked:
+        total = len(texto["preguntas"])
+        score = sum(1 for i, af in enumerate(texto["preguntas"]) if st.session_state.gr_lect_answers.get(i) == af["respuesta"])
+        pct = int(score / total * 100) if total else 0
+        color = "#065f46" if pct >= 75 else "#92400e" if pct >= 50 else "#991b1b"
+        st.markdown(
+            f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;'
+            f'padding:0.9rem 1.2rem;margin-top:0.5rem;text-align:center;">'
+            f'<span style="font-size:1.3rem;font-weight:700;color:{color};">{score}/{total}</span>'
+            f'<span style="color:#6b7280;font-size:0.9rem;margin-left:0.5rem;">correctas ({pct} %)</span>'
+            f'</div>',
+            unsafe_allow_html=True)
+
+
+def render_lectura(nivel_filter: List[str]) -> None:
+    st.markdown('<div class="section-title">Comprensión lectora · Estilo DELE C1</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-sub">Lee el texto y responde las preguntas. Las opciones incorrectas están diseñadas para que debas leer con precisión.</div>', unsafe_allow_html=True)
+
+    fmt_map = {
+        "Todos": None,
+        "Selección múltiple": "seleccion_multiple",
+        "Verdadero / Falso": "verdadero_falso",
+        "Emparejamiento": "emparejamiento",
+    }
+    fmt_label = st.selectbox("Formato", list(fmt_map.keys()), key="gr_lect_fmt_sel")
+    fmt_val = fmt_map[fmt_label]
+
+    if st.session_state.get("_gr_lect_prev_fmt") != fmt_label:
+        st.session_state.gr_lect_idx = 0
+        st.session_state.gr_lect_answers = {}
+        st.session_state.gr_lect_checked = False
+        st.session_state["_gr_lect_prev_fmt"] = fmt_label
+
+    pool = [t for t in GR_LECTURA if fmt_val is None or t["formato"] == fmt_val]
+    if not pool:
+        st.info("No hay textos para el formato seleccionado.")
+        return
+
+    idx = st.session_state.gr_lect_idx % len(pool)
+    st.session_state.gr_lect_idx = idx
+    texto = pool[idx]
+
+    tl1, tl2, tl3 = st.columns([1, 2, 1])
+    with tl1:
+        if st.button("← Texto anterior", key="gr_lect_prev", use_container_width=True):
+            st.session_state.gr_lect_idx = (idx - 1) % len(pool)
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+    with tl2:
+        st.markdown(
+            f'<p style="text-align:center;font-weight:700;color:#064e3b;padding-top:0.4rem;">'
+            f'{texto["titulo"]} ({idx + 1}/{len(pool)})</p>',
+            unsafe_allow_html=True)
+    with tl3:
+        if st.button("Texto siguiente →", key="gr_lect_next", use_container_width=True):
+            st.session_state.gr_lect_idx = (idx + 1) % len(pool)
+            st.session_state.gr_lect_answers = {}
+            st.session_state.gr_lect_checked = False
+            st.rerun()
+
+    if texto["formato"] == "seleccion_multiple":
+        _lect_seleccion_multiple(texto, idx)
+    elif texto["formato"] == "verdadero_falso":
+        _lect_verdadero_falso(texto, idx)
+    elif texto["formato"] == "emparejamiento":
+        _lect_emparejamiento(texto, idx)

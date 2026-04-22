@@ -563,6 +563,7 @@ GR_LECTURA = [
     {
         "titulo": "La paradoja de la elección",
         "fuente": "Texto adaptado · Nivel C1",
+        "formato": "seleccion_multiple",
         "texto": (
             "En las últimas décadas, la proliferación de opciones en todos los ámbitos de la vida cotidiana "
             "ha sido presentada como un síntoma inequívoco de progreso y libertad. Sin embargo, el psicólogo "
@@ -603,6 +604,7 @@ GR_LECTURA = [
     {
         "titulo": "La economía del sueño",
         "fuente": "Texto adaptado · Nivel C1",
+        "formato": "seleccion_multiple",
         "texto": (
             "Dormir bien no es solo una cuestión de bienestar individual. Es un factor estratégico para la "
             "productividad económica. Se estima que en países como Estados Unidos, Japón o Alemania, la "
@@ -643,6 +645,7 @@ GR_LECTURA = [
     {
         "titulo": "El español en el mundo digital",
         "fuente": "Texto adaptado · Nivel C1",
+        "formato": "seleccion_multiple",
         "texto": (
             "El español es hoy la segunda lengua del mundo por número de hablantes nativos. Sin embargo, "
             "en el entorno digital su presencia es desproporcionadamente baja: solo el 4% de los contenidos "
@@ -878,6 +881,308 @@ GR_LECTURA = [
                 "respuesta": "c) Como un ejemplo útil pero difícil de replicar en otros contextos",
                 "explicacion": "El texto dice que 'los intentos de trasplantar su modelo a otros contextos han topado con resistencias estructurales y culturales considerables'."
             }
+        ]
+    },
+    # ── VERDADERO / FALSO ─────────────────────────────────────────
+    {
+        "titulo": "La memoria no es un archivo",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "verdadero_falso",
+        "texto": (
+            "Durante décadas, la metáfora dominante para explicar el funcionamiento de la memoria humana "
+            "fue la del archivo o la grabación: el cerebro registraría los eventos, los almacenaría y, "
+            "cuando fuera necesario, los reproduciría con fidelidad. Esta imagen, intuitiva y reconfortante, "
+            "ha resultado ser fundamentalmente errónea.\n\n"
+            "La neurociencia cognitiva ha demostrado que la memoria es un proceso reconstructivo, no "
+            "reproductivo. Cada vez que recordamos algo, no recuperamos un fichero intacto: reactivamos "
+            "fragmentos dispersos de información que el cerebro ensambla en tiempo real, rellenando las "
+            "lagunas con inferencias, expectativas y conocimientos previos. Como consecuencia, el acto "
+            "mismo de recordar puede alterar el recuerdo: cada evocación lo modifica ligeramente.\n\n"
+            "Este mecanismo tiene implicaciones prácticas relevantes. Los testimonios oculares, durante "
+            "mucho tiempo considerados pruebas sólidas en procesos judiciales, han sido revisados a la "
+            "luz de estos hallazgos. Estudios sistemáticos muestran que testigos honestos y seguros de "
+            "sí mismos pueden relatar versiones inexactas o incluso contradictorias de un mismo evento.\n\n"
+            "La memoria emocional merece mención aparte. Los recuerdos ligados a experiencias de alta "
+            "carga emocional suelen ser más vívidos y persistentes. Sin embargo, viveza e intensidad no "
+            "equivalen a exactitud: la emoción hace que el recuerdo sea más difícil de olvidar, pero no "
+            "garantiza que sea más fiel a lo ocurrido.\n\n"
+            "Comprender la naturaleza reconstructiva de la memoria no implica que esta sea inútil o "
+            "poco fiable en términos generales. Significa, más bien, que debemos tratarla como lo que "
+            "es: una herramienta adaptativa, flexible y orientada al futuro, no un espejo fiel del pasado."
+        ),
+        "preguntas": [
+            {
+                "afirmacion": "La neurociencia ha confirmado que la memoria funciona como una grabación fiel de los eventos.",
+                "respuesta": "Falso",
+                "explicacion": "El texto afirma lo contrario: 'la memoria es un proceso reconstructivo, no reproductivo' y califica la metáfora del archivo de 'fundamentalmente errónea'."
+            },
+            {
+                "afirmacion": "El acto de recordar algo puede modificar el propio recuerdo.",
+                "respuesta": "Verdadero",
+                "explicacion": "El texto lo dice explícitamente: 'el acto mismo de recordar puede alterar el recuerdo: cada evocación lo modifica ligeramente'."
+            },
+            {
+                "afirmacion": "Según el texto, los recuerdos emocionalmente intensos son más precisos que los neutros.",
+                "respuesta": "Falso",
+                "explicacion": "El texto aclara que 'viveza e intensidad no equivalen a exactitud': la emoción hace el recuerdo más persistente, pero no más fiel a lo ocurrido."
+            },
+            {
+                "afirmacion": "El texto concluye que la memoria es una herramienta poco fiable que no debería tomarse como referencia.",
+                "respuesta": "Falso",
+                "explicacion": "El texto matiza: comprender su naturaleza reconstructiva 'no implica que sea inútil o poco fiable en términos generales', sino que debe tratarse como 'una herramienta adaptativa'."
+            },
+        ]
+    },
+    {
+        "titulo": "La soledad en las ciudades",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "verdadero_falso",
+        "texto": (
+            "La ciudad moderna fue concebida, entre otras cosas, como espacio de encuentro: mercados, "
+            "plazas, cafés, transportes colectivos. Sin embargo, los datos de las últimas encuestas "
+            "sociológicas dibujan un panorama paradójico: cuanto más densa es la ciudad, mayor puede "
+            "ser la sensación de aislamiento de sus habitantes.\n\n"
+            "Este fenómeno, que los investigadores denominan 'soledad urbana', no debe confundirse con "
+            "el aislamiento físico. Una persona puede estar rodeada de miles de personas y sentirse "
+            "profundamente sola. Lo que define la soledad, en este contexto, no es la ausencia de "
+            "presencias, sino la ausencia de vínculos significativos.\n\n"
+            "Contra la intuición popular, los estudios muestran que los jóvenes adultos —entre 18 y "
+            "35 años— son el grupo demográfico que reporta mayores niveles de soledad en entornos "
+            "urbanos, por encima de los mayores de 65 años. La hiperconectividad digital puede "
+            "contribuir a esta paradoja: muchas interacciones en redes sociales generan la ilusión "
+            "de compañía sin satisfacer la necesidad de conexión real.\n\n"
+            "El diseño urbano no es ajeno a este problema. Ciudades que priorizan el espacio privado "
+            "sobre el público, con pocas zonas de encuentro espontáneo, producen entornos que "
+            "dificultan la formación de lazos comunitarios. Algunas administraciones han comenzado "
+            "a incorporar criterios de 'diseño para la cohesión social' en sus planes urbanísticos, "
+            "con resultados prometedores aunque todavía limitados.\n\n"
+            "Lo que está claro es que la soledad urbana no es un problema individual sino estructural, "
+            "y que abordarlo requiere tanto políticas públicas como una relectura de lo que significa "
+            "habitar juntos un mismo espacio."
+        ),
+        "preguntas": [
+            {
+                "afirmacion": "El texto define la soledad urbana como la ausencia física de otras personas.",
+                "respuesta": "Falso",
+                "explicacion": "El texto distingue expresamente ambos conceptos: 'lo que define la soledad no es la ausencia de presencias, sino la ausencia de vínculos significativos'."
+            },
+            {
+                "afirmacion": "Los jóvenes adultos reportan niveles más altos de soledad urbana que las personas mayores de 65 años.",
+                "respuesta": "Verdadero",
+                "explicacion": "El texto lo afirma directamente: 'los jóvenes adultos —entre 18 y 35 años— son el grupo que reporta mayores niveles de soledad en entornos urbanos, por encima de los mayores de 65 años'."
+            },
+            {
+                "afirmacion": "Según el texto, las redes sociales resuelven eficazmente la necesidad de conexión de los jóvenes.",
+                "respuesta": "Falso",
+                "explicacion": "El texto afirma lo contrario: las interacciones digitales 'generan la ilusión de compañía sin satisfacer la necesidad de conexión real'."
+            },
+            {
+                "afirmacion": "El texto considera la soledad urbana un problema de naturaleza estructural, no solo individual.",
+                "respuesta": "Verdadero",
+                "explicacion": "La conclusión es explícita: 'la soledad urbana no es un problema individual sino estructural, y abordarlo requiere políticas públicas'."
+            },
+        ]
+    },
+    {
+        "titulo": "El sesgo de confirmación",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "verdadero_falso",
+        "texto": (
+            "Entre los numerosos sesgos cognitivos que los psicólogos han catalogado en las últimas "
+            "décadas, el sesgo de confirmación ocupa un lugar central. Su mecanismo es sencillo: "
+            "tendemos a buscar, interpretar y recordar la información de manera que confirme lo que "
+            "ya creemos, ignorando o minimizando los datos que contradicen nuestras convicciones.\n\n"
+            "Este sesgo no discrimina por nivel educativo ni inteligencia. Personas con alta formación "
+            "académica y profesionales expertos lo manifiestan con la misma frecuencia que el resto "
+            "de la población. De hecho, algunos estudios sugieren que una mayor capacidad intelectual "
+            "puede hacer que el sesgo sea más sofisticado: los argumentos para defender la posición "
+            "previa son más elaborados, no más objetivos.\n\n"
+            "El entorno digital ha potenciado sus efectos. Los algoritmos de las plataformas de "
+            "contenido aprenden rápidamente las preferencias del usuario y le ofrecen información "
+            "coherente con sus puntos de vista, creando las llamadas 'burbujas de filtro'. El "
+            "resultado es que muchos usuarios consumen exclusivamente contenidos que refuerzan "
+            "sus creencias existentes, sin exposición significativa a perspectivas alternativas.\n\n"
+            "¿Puede contrarrestarse? La respuesta es matizada. Ser consciente del sesgo reduce su "
+            "influencia, pero no la elimina. El método científico ha sido diseñado, en parte, "
+            "precisamente para combatirlo: la obligación de buscar activamente evidencias que "
+            "puedan falsificar una hipótesis es el contrapeso institucionalizado al sesgo de "
+            "confirmación natural del pensamiento humano.\n\n"
+            "En un contexto de polarización creciente, entender este mecanismo no es un ejercicio "
+            "académico: es una herramienta necesaria para cualquier forma de pensamiento crítico."
+        ),
+        "preguntas": [
+            {
+                "afirmacion": "Según el texto, el sesgo de confirmación afecta más a personas con menor nivel educativo.",
+                "respuesta": "Falso",
+                "explicacion": "El texto afirma lo contrario: 'no discrimina por nivel educativo ni inteligencia' y añade que una mayor capacidad intelectual puede hacerlo 'más sofisticado'."
+            },
+            {
+                "afirmacion": "Los algoritmos de las plataformas digitales pueden reforzar el sesgo de confirmación.",
+                "respuesta": "Verdadero",
+                "explicacion": "El texto lo explica: los algoritmos 'ofrecen información coherente con los puntos de vista del usuario', creando 'burbujas de filtro' que refuerzan creencias existentes."
+            },
+            {
+                "afirmacion": "El texto afirma que ser consciente del sesgo de confirmación lo elimina completamente.",
+                "respuesta": "Falso",
+                "explicacion": "El texto es explícito: 'ser consciente del sesgo reduce su influencia, pero no la elimina'."
+            },
+            {
+                "afirmacion": "El método científico incorpora mecanismos para contrarrestar el sesgo de confirmación.",
+                "respuesta": "Verdadero",
+                "explicacion": "El texto lo afirma: 'la obligación de buscar activamente evidencias que puedan falsificar una hipótesis es el contrapeso institucionalizado al sesgo de confirmación'."
+            },
+        ]
+    },
+    # ── EMPAREJAMIENTO ────────────────────────────────────────────
+    {
+        "titulo": "La economía circular",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "emparejamiento",
+        "texto": (
+            "El modelo económico predominante desde la revolución industrial puede describirse como "
+            "'lineal': se extraen recursos naturales, se fabrican productos, se usan y se desechan. "
+            "Este modelo, eficiente a corto plazo, genera una presión insostenible sobre los recursos "
+            "del planeta y produce cantidades crecientes de residuos.\n\n"
+            "La economía circular propone un enfoque radicalmente distinto: diseñar productos y "
+            "sistemas de forma que los materiales permanezcan en uso el mayor tiempo posible y, "
+            "al final de su vida útil, puedan reintegrarse en el ciclo productivo como nuevos "
+            "recursos. El residuo de un proceso se convierte, idealmente, en el insumo del siguiente.\n\n"
+            "Uno de los obstáculos más señalados es la obsolescencia programada: la práctica de "
+            "diseñar productos con una vida útil artificialmente corta para estimular la compra "
+            "recurrente. Este modelo, rentable para los fabricantes a corto plazo, es "
+            "incompatible con los principios de la circularidad.\n\n"
+            "El ecodiseño es una de las respuestas: incorporar criterios medioambientales desde "
+            "la fase de concepción del producto, facilitando su reparación, reutilización y "
+            "reciclaje. Otro concepto clave es la simbiosis industrial: acuerdos entre empresas "
+            "de distintos sectores por los que los residuos o subproductos de una se convierten "
+            "en materia prima de otra.\n\n"
+            "La transición hacia la circularidad no es solo tecnológica. Implica cambios en los "
+            "modelos de negocio, en los hábitos de consumo y en los marcos regulatorios, y exige "
+            "una coordinación que va más allá de la voluntad individual de empresas o consumidores."
+        ),
+        "instruccion": "Relaciona cada concepto con su descripción según el texto.",
+        "pares": [
+            {
+                "termino": "Economía lineal",
+                "definicion": "Modelo basado en extraer, fabricar, usar y desechar sin recuperar los materiales."
+            },
+            {
+                "termino": "Economía circular",
+                "definicion": "Sistema en el que los materiales permanecen en uso el mayor tiempo posible y se reintegran al ciclo productivo al final de su vida útil."
+            },
+            {
+                "termino": "Obsolescencia programada",
+                "definicion": "Práctica de diseñar productos con vida útil reducida intencionalmente para fomentar nuevas compras."
+            },
+            {
+                "termino": "Ecodiseño",
+                "definicion": "Incorporación de criterios medioambientales en la concepción del producto para facilitar su reparación, reutilización y reciclaje."
+            },
+            {
+                "termino": "Simbiosis industrial",
+                "definicion": "Acuerdos entre empresas por los que los residuos de una se convierten en materia prima de otra."
+            },
+        ]
+    },
+    {
+        "titulo": "Mecanismos del lenguaje persuasivo",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "emparejamiento",
+        "texto": (
+            "El lenguaje no es nunca neutro. Incluso cuando se aspira a la objetividad, las elecciones "
+            "léxicas, la estructura de las frases y los recursos retóricos utilizados construyen una "
+            "perspectiva sobre la realidad. Conocer los mecanismos del lenguaje persuasivo no es solo "
+            "una habilidad de escritor: es una herramienta de lectura crítica indispensable.\n\n"
+            "La eufemización consiste en sustituir una expresión con connotaciones negativas por "
+            "otra más suave o neutra. Los eufemismos sirven para atenuar realidades incómodas: "
+            "un 'ajuste de plantilla' describe lo mismo que un 'despido masivo', pero activa "
+            "respuestas emocionales muy distintas en quien lo escucha.\n\n"
+            "El encuadre —o framing— se refiere a la forma en que se presenta la información: "
+            "los mismos datos pueden generar percepciones opuestas según cómo se enmarquen. "
+            "Decir que 'un tratamiento tiene un 90% de supervivencia' activa reacciones distintas "
+            "a decir que 'tiene un 10% de mortalidad', aunque ambas frases sean equivalentes.\n\n"
+            "La apelación a la autoridad es el recurso de citar a una fuente reconocida para "
+            "reforzar un argumento, independientemente de si esa autoridad es relevante en "
+            "el contexto específico del debate. Su contrapunto es el ad hominem: atacar la "
+            "credibilidad personal del interlocutor en lugar de refutar sus argumentos.\n\n"
+            "Finalmente, la falacia del hombre de paja consiste en distorsionar o simplificar "
+            "la posición del adversario para hacer más fácil su refutación, atacando una versión "
+            "caricaturizada en lugar del argumento real."
+        ),
+        "instruccion": "Relaciona cada recurso retórico con su descripción según el texto.",
+        "pares": [
+            {
+                "termino": "Eufemización",
+                "definicion": "Sustitución de una expresión de connotaciones negativas por otra más suave para atenuar realidades incómodas."
+            },
+            {
+                "termino": "Encuadre (framing)",
+                "definicion": "Presentación de la misma información de formas distintas para generar percepciones diferentes en el receptor."
+            },
+            {
+                "termino": "Apelación a la autoridad",
+                "definicion": "Uso de una fuente reconocida para reforzar un argumento, independientemente de su relevancia en el contexto."
+            },
+            {
+                "termino": "Ad hominem",
+                "definicion": "Ataque a la credibilidad personal del interlocutor en lugar de refutar sus argumentos."
+            },
+            {
+                "termino": "Falacia del hombre de paja",
+                "definicion": "Distorsión o simplificación de la posición del adversario para facilitar su refutación atacando una versión caricaturizada."
+            },
+        ]
+    },
+    {
+        "titulo": "La inteligencia emocional en el entorno profesional",
+        "fuente": "Texto original · Nivel C1",
+        "formato": "emparejamiento",
+        "texto": (
+            "Desde que Daniel Goleman popularizó el concepto en los años noventa, la inteligencia "
+            "emocional ha pasado de ser un término psicológico de nicho a convertirse en uno de "
+            "los criterios más valorados en los procesos de selección de personal. Sin embargo, "
+            "el concepto abarca componentes bien diferenciados que conviene distinguir.\n\n"
+            "La autoconciencia es la capacidad de reconocer y comprender las propias emociones "
+            "en el momento en que se producen, así como su efecto sobre el comportamiento y "
+            "las decisiones. Es la base sobre la que se construyen las demás competencias "
+            "emocionales: difícilmente puede gestionarse lo que no se reconoce.\n\n"
+            "La autorregulación se refiere a la capacidad de controlar los impulsos y emociones "
+            "perturbadoras de manera que no interfieran negativamente con la conducta. "
+            "No implica suprimir las emociones, sino canalizarlas de forma constructiva.\n\n"
+            "La empatía —frecuentemente confundida con la simpatía— es la capacidad de percibir "
+            "y comprender las emociones ajenas adoptando la perspectiva del otro sin necesidad "
+            "de compartir sus sentimientos. En entornos de trabajo, facilita la comunicación, "
+            "la resolución de conflictos y el liderazgo efectivo.\n\n"
+            "Las habilidades sociales designan la capacidad de gestionar relaciones e influir "
+            "en los demás de forma positiva: comunicar con claridad, negociar, colaborar y "
+            "construir redes de confianza. Son el componente más visible de la inteligencia "
+            "emocional, aunque dependen de los anteriores para ser genuinas.\n\n"
+            "Por último, la motivación intrínseca describe el impulso que lleva a las personas "
+            "a perseguir metas por razones internas —satisfacción, propósito, crecimiento— más "
+            "allá de recompensas externas como el salario o el reconocimiento."
+        ),
+        "instruccion": "Relaciona cada componente de la inteligencia emocional con su descripción según el texto.",
+        "pares": [
+            {
+                "termino": "Autoconciencia",
+                "definicion": "Capacidad de reconocer y comprender las propias emociones y su efecto sobre el comportamiento y las decisiones."
+            },
+            {
+                "termino": "Autorregulación",
+                "definicion": "Capacidad de controlar impulsos y emociones perturbadoras canalizándolas de forma constructiva sin suprimirlas."
+            },
+            {
+                "termino": "Empatía",
+                "definicion": "Capacidad de percibir y comprender las emociones ajenas adoptando la perspectiva del otro sin necesidad de compartir sus sentimientos."
+            },
+            {
+                "termino": "Habilidades sociales",
+                "definicion": "Capacidad de gestionar relaciones e influir positivamente en los demás mediante la comunicación, la negociación y la colaboración."
+            },
+            {
+                "termino": "Motivación intrínseca",
+                "definicion": "Impulso a perseguir metas por razones internas como la satisfacción o el propósito, más allá de recompensas externas."
+            },
         ]
     },
 ]

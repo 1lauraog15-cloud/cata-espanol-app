@@ -885,303 +885,250 @@ GR_LECTURA = [
     },
     # ── VERDADERO / FALSO ─────────────────────────────────────────
     {
-        "titulo": "La memoria no es un archivo",
+        "titulo": "El sueño como activo económico",
         "fuente": "Texto original · Nivel C1",
         "formato": "verdadero_falso",
         "texto": (
-            "Durante décadas, la metáfora dominante para explicar el funcionamiento de la memoria humana "
-            "fue la del archivo o la grabación: el cerebro registraría los eventos, los almacenaría y, "
-            "cuando fuera necesario, los reproduciría con fidelidad. Esta imagen, intuitiva y reconfortante, "
-            "ha resultado ser fundamentalmente errónea.\n\n"
-            "La neurociencia cognitiva ha demostrado que la memoria es un proceso reconstructivo, no "
-            "reproductivo. Cada vez que recordamos algo, no recuperamos un fichero intacto: reactivamos "
-            "fragmentos dispersos de información que el cerebro ensambla en tiempo real, rellenando las "
-            "lagunas con inferencias, expectativas y conocimientos previos. Como consecuencia, el acto "
-            "mismo de recordar puede alterar el recuerdo: cada evocación lo modifica ligeramente.\n\n"
-            "Este mecanismo tiene implicaciones prácticas relevantes. Los testimonios oculares, durante "
-            "mucho tiempo considerados pruebas sólidas en procesos judiciales, han sido revisados a la "
-            "luz de estos hallazgos. Estudios sistemáticos muestran que testigos honestos y seguros de "
-            "sí mismos pueden relatar versiones inexactas o incluso contradictorias de un mismo evento.\n\n"
-            "La memoria emocional merece mención aparte. Los recuerdos ligados a experiencias de alta "
-            "carga emocional suelen ser más vívidos y persistentes. Sin embargo, viveza e intensidad no "
-            "equivalen a exactitud: la emoción hace que el recuerdo sea más difícil de olvidar, pero no "
-            "garantiza que sea más fiel a lo ocurrido.\n\n"
-            "Comprender la naturaleza reconstructiva de la memoria no implica que esta sea inútil o "
-            "poco fiable en términos generales. Significa, más bien, que debemos tratarla como lo que "
-            "es: una herramienta adaptativa, flexible y orientada al futuro, no un espejo fiel del pasado."
+            "Durante décadas, la cultura del esfuerzo ha glorificado la privación de sueño como señal "
+            "de productividad y compromiso. Dormir poco se presentaba como virtud; quien dormía ocho "
+            "horas era sospechoso de falta de ambición. Esta narrativa, sin embargo, está siendo "
+            "desafiada por una cantidad creciente de evidencia científica que apunta en la dirección "
+            "contraria: dormir bien no es un lujo, sino una condición necesaria para el rendimiento "
+            "cognitivo, la salud física y, en última instancia, la productividad económica.\n\n"
+            "Los datos macroeconómicos son reveladores. Según un estudio de la consultora RAND, la "
+            "privación de sueño le cuesta a la economía estadounidense unos 411.000 millones de dólares "
+            "anuales en pérdida de productividad. Japón y Alemania registran pérdidas comparables en "
+            "proporción a su PIB. El trabajador que duerme menos de seis horas por noche tiene un "
+            "rendimiento cognitivo equivalente al de alguien que lleva dos días sin dormir, aunque "
+            "subjetivamente no lo perciba así.\n\n"
+            "Paradójicamente, son precisamente los entornos laborales más exigentes los que más "
+            "penalizan el descanso. En culturas corporativas donde el prestigio se mide por las horas "
+            "trabajadas, el empleado que reconoce necesitar descanso es visto como menos comprometido. "
+            "Esta dinámica genera un círculo vicioso: más presión, menos sueño, peor rendimiento, "
+            "más presión para compensar el rendimiento perdido.\n\n"
+            "Algunas empresas han comenzado a tomar medidas. Nike, Google y Ben & Jerry's, entre otras, "
+            "han instalado espacios de descanso en sus oficinas. Estudios internos en estas compañías "
+            "apuntan a mejoras en la concentración y la creatividad de los empleados que hacen uso de "
+            "ellos. Sin embargo, los expertos advierten que estas iniciativas, sin un cambio cultural "
+            "profundo, no pasan de ser gestos simbólicos.\n\n"
+            "La conclusión que emerge de la investigación acumulada es tan simple como incómoda: una "
+            "sociedad que duerme mal toma peores decisiones, enferma más y produce menos. Tratar el "
+            "sueño como un gasto de tiempo es, paradójicamente, la decisión más cara que podemos tomar."
         ),
         "preguntas": [
             {
-                "afirmacion": "La neurociencia ha confirmado que la memoria funciona como una grabación fiel de los eventos.",
-                "respuesta": "Falso",
-                "explicacion": "El texto afirma lo contrario: 'la memoria es un proceso reconstructivo, no reproductivo' y califica la metáfora del archivo de 'fundamentalmente errónea'."
+                "afirmacion": "Históricamente, dormir pocas horas se ha considerado un signo positivo en el ámbito laboral.",
+                "respuesta": "V",
+                "justificacion": "La cultura del esfuerzo ha glorificado la privación de sueño como señal de productividad y compromiso."
             },
             {
-                "afirmacion": "El acto de recordar algo puede modificar el propio recuerdo.",
-                "respuesta": "Verdadero",
-                "explicacion": "El texto lo dice explícitamente: 'el acto mismo de recordar puede alterar el recuerdo: cada evocación lo modifica ligeramente'."
+                "afirmacion": "Según el texto, los trabajadores que duermen poco son conscientes de que su rendimiento ha disminuido.",
+                "respuesta": "F",
+                "justificacion": "El trabajador que duerme menos de seis horas tiene un rendimiento cognitivo equivalente al de alguien que lleva dos días sin dormir, aunque subjetivamente no lo perciba así."
             },
             {
-                "afirmacion": "Según el texto, los recuerdos emocionalmente intensos son más precisos que los neutros.",
-                "respuesta": "Falso",
-                "explicacion": "El texto aclara que 'viveza e intensidad no equivalen a exactitud': la emoción hace el recuerdo más persistente, pero no más fiel a lo ocurrido."
+                "afirmacion": "Las empresas que han instalado espacios de descanso han resuelto el problema de la cultura del exceso de trabajo.",
+                "respuesta": "F",
+                "justificacion": "Los expertos advierten que estas iniciativas, sin un cambio cultural profundo, no pasan de ser gestos simbólicos."
             },
             {
-                "afirmacion": "El texto concluye que la memoria es una herramienta poco fiable que no debería tomarse como referencia.",
-                "respuesta": "Falso",
-                "explicacion": "El texto matiza: comprender su naturaleza reconstructiva 'no implica que sea inútil o poco fiable en términos generales', sino que debe tratarse como 'una herramienta adaptativa'."
+                "afirmacion": "El texto sugiere que ignorar la importancia del sueño tiene consecuencias económicas negativas.",
+                "respuesta": "V",
+                "justificacion": "Tratar el sueño como un gasto de tiempo es, paradójicamente, la decisión más cara que podemos tomar."
             },
         ]
     },
     {
-        "titulo": "La soledad en las ciudades",
+        "titulo": "El flamenco: el arte más universal de España",
         "fuente": "Texto original · Nivel C1",
         "formato": "verdadero_falso",
         "texto": (
-            "La ciudad moderna fue concebida, entre otras cosas, como espacio de encuentro: mercados, "
-            "plazas, cafés, transportes colectivos. Sin embargo, los datos de las últimas encuestas "
-            "sociológicas dibujan un panorama paradójico: cuanto más densa es la ciudad, mayor puede "
-            "ser la sensación de aislamiento de sus habitantes.\n\n"
-            "Este fenómeno, que los investigadores denominan 'soledad urbana', no debe confundirse con "
-            "el aislamiento físico. Una persona puede estar rodeada de miles de personas y sentirse "
-            "profundamente sola. Lo que define la soledad, en este contexto, no es la ausencia de "
-            "presencias, sino la ausencia de vínculos significativos.\n\n"
-            "Contra la intuición popular, los estudios muestran que los jóvenes adultos —entre 18 y "
-            "35 años— son el grupo demográfico que reporta mayores niveles de soledad en entornos "
-            "urbanos, por encima de los mayores de 65 años. La hiperconectividad digital puede "
-            "contribuir a esta paradoja: muchas interacciones en redes sociales generan la ilusión "
-            "de compañía sin satisfacer la necesidad de conexión real.\n\n"
-            "El diseño urbano no es ajeno a este problema. Ciudades que priorizan el espacio privado "
-            "sobre el público, con pocas zonas de encuentro espontáneo, producen entornos que "
-            "dificultan la formación de lazos comunitarios. Algunas administraciones han comenzado "
-            "a incorporar criterios de 'diseño para la cohesión social' en sus planes urbanísticos, "
-            "con resultados prometedores aunque todavía limitados.\n\n"
-            "Lo que está claro es que la soledad urbana no es un problema individual sino estructural, "
-            "y que abordarlo requiere tanto políticas públicas como una relectura de lo que significa "
-            "habitar juntos un mismo espacio."
+            "Pocas expresiones artísticas en el mundo pueden presumir de haber conquistado escenarios "
+            "tan distintos como un tablao de Sevilla, el Carnegie Hall de Nueva York o el Teatro Colón "
+            "de Buenos Aires. El flamenco lo ha hecho. Declarado Patrimonio Cultural Inmaterial de la "
+            "Humanidad por la UNESCO en 2010, este arte nacido en Andalucía sintetiza siglos de historia, "
+            "de encuentro entre culturas y de una capacidad humana extraordinaria para convertir la "
+            "emoción en belleza. Es música, danza, cante y una forma de estar en el mundo que no tiene "
+            "equivalente en ninguna otra tradición artística.\n\n"
+            "Lo que hace al flamenco verdaderamente singular es su profundidad emocional. El concepto "
+            "de duende —esa fuerza irracional y misteriosa que Federico García Lorca describió como "
+            "'el poder misterioso que todo el mundo siente y ningún filósofo explica'— define la "
+            "experiencia de presenciar una actuación flamenca auténtica. No se trata de técnica, aunque "
+            "la técnica sea imprescindible. Se trata de algo que va más allá: una comunicación directa "
+            "entre el artista y el público que prescinde de palabras y llega a lugares que la razón "
+            "no alcanza.\n\n"
+            "La segunda mitad del siglo XX elevó el flamenco a dimensiones que ningún otro arte popular "
+            "español ha conseguido igualar. Camarón de la Isla redefinió el cante flamenco con una voz "
+            "que combinaba una pureza técnica extraordinaria con una capacidad expresiva sin precedentes. "
+            "Paco de Lucía transformó la guitarra flamenca en un instrumento de alcance universal, "
+            "dialogando con músicos de jazz, clásico y música del mundo sin perder ni un gramo de "
+            "identidad. Juntos demostraron que el flamenco no era un arte del pasado, sino un lenguaje "
+            "vivo con capacidad infinita de evolución.\n\n"
+            "Hoy el flamenco sigue siendo uno de los grandes embajadores de la cultura española en el "
+            "mundo. Escuelas de flamenco en Japón, festivales dedicados en Alemania y compañías de "
+            "danza en Estados Unidos demuestran que este arte, nacido en los patios y ventas de "
+            "Andalucía, pertenece ya al patrimonio cultural de la humanidad entera."
         ),
         "preguntas": [
             {
-                "afirmacion": "El texto define la soledad urbana como la ausencia física de otras personas.",
-                "respuesta": "Falso",
-                "explicacion": "El texto distingue expresamente ambos conceptos: 'lo que define la soledad no es la ausencia de presencias, sino la ausencia de vínculos significativos'."
+                "afirmacion": "El flamenco fue reconocido como Patrimonio de la Humanidad por la UNESCO en la primera década del siglo XXI.",
+                "respuesta": "V",
+                "justificacion": "Declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO en 2010."
             },
             {
-                "afirmacion": "Los jóvenes adultos reportan niveles más altos de soledad urbana que las personas mayores de 65 años.",
-                "respuesta": "Verdadero",
-                "explicacion": "El texto lo afirma directamente: 'los jóvenes adultos —entre 18 y 35 años— son el grupo que reporta mayores niveles de soledad en entornos urbanos, por encima de los mayores de 65 años'."
+                "afirmacion": "Según el texto, el duende flamenco puede explicarse racionalmente a través de la filosofía.",
+                "respuesta": "F",
+                "justificacion": "Federico García Lorca lo describió como 'el poder misterioso que todo el mundo siente y ningún filósofo explica'."
             },
             {
-                "afirmacion": "Según el texto, las redes sociales resuelven eficazmente la necesidad de conexión de los jóvenes.",
-                "respuesta": "Falso",
-                "explicacion": "El texto afirma lo contrario: las interacciones digitales 'generan la ilusión de compañía sin satisfacer la necesidad de conexión real'."
+                "afirmacion": "El texto afirma que Paco de Lucía mantuvo la identidad flamenca a pesar de dialogar con otras músicas.",
+                "respuesta": "V",
+                "justificacion": "Dialogando con músicos de jazz, clásico y música del mundo sin perder ni un gramo de identidad."
             },
             {
-                "afirmacion": "El texto considera la soledad urbana un problema de naturaleza estructural, no solo individual.",
-                "respuesta": "Verdadero",
-                "explicacion": "La conclusión es explícita: 'la soledad urbana no es un problema individual sino estructural, y abordarlo requiere políticas públicas'."
+                "afirmacion": "Según el texto, el interés por el flamenco se limita actualmente a España y Latinoamérica.",
+                "respuesta": "F",
+                "justificacion": "Escuelas de flamenco en Japón, festivales dedicados en Alemania y compañías de danza en Estados Unidos demuestran que este arte pertenece ya al patrimonio cultural de la humanidad entera."
             },
         ]
     },
     {
-        "titulo": "El sesgo de confirmación",
+        "titulo": "El fin de la atención profunda",
         "fuente": "Texto original · Nivel C1",
         "formato": "verdadero_falso",
         "texto": (
-            "Entre los numerosos sesgos cognitivos que los psicólogos han catalogado en las últimas "
-            "décadas, el sesgo de confirmación ocupa un lugar central. Su mecanismo es sencillo: "
-            "tendemos a buscar, interpretar y recordar la información de manera que confirme lo que "
-            "ya creemos, ignorando o minimizando los datos que contradicen nuestras convicciones.\n\n"
-            "Este sesgo no discrimina por nivel educativo ni inteligencia. Personas con alta formación "
-            "académica y profesionales expertos lo manifiestan con la misma frecuencia que el resto "
-            "de la población. De hecho, algunos estudios sugieren que una mayor capacidad intelectual "
-            "puede hacer que el sesgo sea más sofisticado: los argumentos para defender la posición "
-            "previa son más elaborados, no más objetivos.\n\n"
-            "El entorno digital ha potenciado sus efectos. Los algoritmos de las plataformas de "
-            "contenido aprenden rápidamente las preferencias del usuario y le ofrecen información "
-            "coherente con sus puntos de vista, creando las llamadas 'burbujas de filtro'. El "
-            "resultado es que muchos usuarios consumen exclusivamente contenidos que refuerzan "
-            "sus creencias existentes, sin exposición significativa a perspectivas alternativas.\n\n"
-            "¿Puede contrarrestarse? La respuesta es matizada. Ser consciente del sesgo reduce su "
-            "influencia, pero no la elimina. El método científico ha sido diseñado, en parte, "
-            "precisamente para combatirlo: la obligación de buscar activamente evidencias que "
-            "puedan falsificar una hipótesis es el contrapeso institucionalizado al sesgo de "
-            "confirmación natural del pensamiento humano.\n\n"
-            "En un contexto de polarización creciente, entender este mecanismo no es un ejercicio "
-            "académico: es una herramienta necesaria para cualquier forma de pensamiento crítico."
+            "Hay una habilidad que las universidades llevan siglos cultivando y que nadie ha declarado "
+            "oficialmente en peligro de extinción: la capacidad de leer un texto largo con atención "
+            "sostenida, de seguir un argumento complejo durante horas, de dejar que una idea madure "
+            "sin interrupciones. Los neurocientíficos la llaman 'atención profunda' y los datos sugieren "
+            "que está retrocediendo de forma preocupante, especialmente entre las generaciones que han "
+            "crecido en entornos digitales.\n\n"
+            "El investigador Nicholas Carr fue uno de los primeros en articular esta preocupación en su "
+            "libro Superficiales (2010), donde argumentaba que internet está reconfigurando literalmente "
+            "los circuitos neuronales asociados a la lectura lineal y la concentración sostenida. "
+            "La tesis generó debate, pero estudios posteriores han aportado evidencia en la misma "
+            "dirección: la capacidad de mantener la atención en una sola tarea durante períodos "
+            "prolongados ha disminuido significativamente en las últimas dos décadas.\n\n"
+            "Las implicaciones para la educación son profundas. Un sistema educativo diseñado para "
+            "transmitir conocimiento complejo a través de textos extensos y explicaciones prolongadas "
+            "choca con estudiantes cuyo umbral de atención se ha reducido considerablemente. Algunos "
+            "docentes responden fragmentando los contenidos, acortando los textos y multiplicando los "
+            "estímulos visuales. Otros argumentan que esta adaptación es en realidad una capitulación "
+            "que agrava el problema.\n\n"
+            "Lo que está en juego no es solo la capacidad de leer novelas o estudiar filosofía. "
+            "La atención profunda es la base del pensamiento crítico, de la deliberación democrática "
+            "y de cualquier forma de conocimiento que requiera tiempo y esfuerzo. Una sociedad que "
+            "pierde esta capacidad no pierde solo un hábito cultural — pierde una facultad cognitiva fundamental."
         ),
         "preguntas": [
             {
-                "afirmacion": "Según el texto, el sesgo de confirmación afecta más a personas con menor nivel educativo.",
-                "respuesta": "Falso",
-                "explicacion": "El texto afirma lo contrario: 'no discrimina por nivel educativo ni inteligencia' y añade que una mayor capacidad intelectual puede hacerlo 'más sofisticado'."
+                "afirmacion": "Nicholas Carr publicó su investigación sobre la atención y la lectura antes de 2015.",
+                "respuesta": "V",
+                "justificacion": "Nicholas Carr fue uno de los primeros en articular esta preocupación en su libro Superficiales (2010)."
             },
             {
-                "afirmacion": "Los algoritmos de las plataformas digitales pueden reforzar el sesgo de confirmación.",
-                "respuesta": "Verdadero",
-                "explicacion": "El texto lo explica: los algoritmos 'ofrecen información coherente con los puntos de vista del usuario', creando 'burbujas de filtro' que refuerzan creencias existentes."
+                "afirmacion": "Según el texto, todos los docentes están de acuerdo en cómo responder a la reducción de la atención.",
+                "respuesta": "F",
+                "justificacion": "Algunos docentes responden fragmentando los contenidos... Otros argumentan que esta adaptación es en realidad una capitulación que agrava el problema."
             },
             {
-                "afirmacion": "El texto afirma que ser consciente del sesgo de confirmación lo elimina completamente.",
-                "respuesta": "Falso",
-                "explicacion": "El texto es explícito: 'ser consciente del sesgo reduce su influencia, pero no la elimina'."
+                "afirmacion": "El texto considera que la pérdida de atención profunda solo afecta al rendimiento académico.",
+                "respuesta": "F",
+                "justificacion": "La atención profunda es la base del pensamiento crítico, de la deliberación democrática y de cualquier forma de conocimiento que requiera tiempo y esfuerzo."
             },
             {
-                "afirmacion": "El método científico incorpora mecanismos para contrarrestar el sesgo de confirmación.",
-                "respuesta": "Verdadero",
-                "explicacion": "El texto lo afirma: 'la obligación de buscar activamente evidencias que puedan falsificar una hipótesis es el contrapeso institucionalizado al sesgo de confirmación'."
+                "afirmacion": "Estudios posteriores al de Carr han confirmado su hipótesis sobre la atención.",
+                "respuesta": "V",
+                "justificacion": "Estudios posteriores han aportado evidencia en la misma dirección: la capacidad de mantener la atención en una sola tarea durante períodos prolongados ha disminuido significativamente."
             },
         ]
     },
     # ── EMPAREJAMIENTO ────────────────────────────────────────────
     {
-        "titulo": "La economía circular",
+        "titulo": "Cuatro perspectivas sobre la ciencia y la mente",
         "fuente": "Texto original · Nivel C1",
         "formato": "emparejamiento",
-        "texto": (
-            "El modelo económico predominante desde la revolución industrial puede describirse como "
-            "'lineal': se extraen recursos naturales, se fabrican productos, se usan y se desechan. "
-            "Este modelo, eficiente a corto plazo, genera una presión insostenible sobre los recursos "
-            "del planeta y produce cantidades crecientes de residuos.\n\n"
-            "La economía circular propone un enfoque radicalmente distinto: diseñar productos y "
-            "sistemas de forma que los materiales permanezcan en uso el mayor tiempo posible y, "
-            "al final de su vida útil, puedan reintegrarse en el ciclo productivo como nuevos "
-            "recursos. El residuo de un proceso se convierte, idealmente, en el insumo del siguiente.\n\n"
-            "Uno de los obstáculos más señalados es la obsolescencia programada: la práctica de "
-            "diseñar productos con una vida útil artificialmente corta para estimular la compra "
-            "recurrente. Este modelo, rentable para los fabricantes a corto plazo, es "
-            "incompatible con los principios de la circularidad.\n\n"
-            "El ecodiseño es una de las respuestas: incorporar criterios medioambientales desde "
-            "la fase de concepción del producto, facilitando su reparación, reutilización y "
-            "reciclaje. Otro concepto clave es la simbiosis industrial: acuerdos entre empresas "
-            "de distintos sectores por los que los residuos o subproductos de una se convierten "
-            "en materia prima de otra.\n\n"
-            "La transición hacia la circularidad no es solo tecnológica. Implica cambios en los "
-            "modelos de negocio, en los hábitos de consumo y en los marcos regulatorios, y exige "
-            "una coordinación que va más allá de la voluntad individual de empresas o consumidores."
-        ),
-        "instruccion": "Relaciona cada concepto con su descripción según el texto.",
-        "pares": [
+        "texto": {
+            "instruccion": "Lee los cuatro textos breves (A, B, C, D) y decide a cuál de ellos corresponde cada afirmación. Cada texto puede usarse más de una vez.",
+            "subtextos": {
+                "A": (
+                    "Durante décadas, el efecto placebo fue tratado como un ruido estadístico que había "
+                    "que eliminar de los ensayos clínicos. Hoy, sin embargo, los investigadores lo "
+                    "estudian como un fenómeno en sí mismo. Cuando un paciente recibe un tratamiento "
+                    "inerte creyendo que es real, en muchos casos experimenta mejoras objetivas y "
+                    "medibles. Lo sorprendente es que esto ocurre incluso cuando el paciente sabe que "
+                    "está tomando un placebo — el llamado 'placebo abierto'. El cerebro, parece, puede "
+                    "activar mecanismos curativos reales a través de la expectativa."
+                ),
+                "B": (
+                    "La idea de que el intestino es 'el segundo cerebro' ha pasado de ser una metáfora "
+                    "popular a una línea de investigación seria. Los estudios sobre el eje intestino-cerebro "
+                    "muestran que los billones de microorganismos que habitan en nuestro sistema digestivo "
+                    "producen neurotransmisores — incluida la serotonina — que influyen directamente en "
+                    "el estado de ánimo, la ansiedad y la cognición. Alterar el microbioma mediante dieta, "
+                    "probióticos o antibióticos puede tener efectos psicológicos mensurables, aunque los "
+                    "mecanismos exactos siguen siendo objeto de investigación."
+                ),
+                "C": (
+                    "La neurociencia moderna ha desmontado la metáfora del cerebro como ordenador. "
+                    "La memoria humana no almacena información de forma estática, como archivos en un "
+                    "disco duro, sino que la reconstruye activamente cada vez que recordamos. Este proceso "
+                    "de reconstrucción hace que los recuerdos sean maleables: pueden modificarse, "
+                    "contaminarse con información posterior e incluso crearse desde cero. Los estudios "
+                    "de Elizabeth Loftus sobre falsos recuerdos han demostrado que es posible implantar "
+                    "en personas memorias detalladas y emocionalmente vívidas de eventos que nunca ocurrieron."
+                ),
+                "D": (
+                    "Durante mucho tiempo se creyó que el dolor era simplemente la señal que el cuerpo "
+                    "enviaba al cerebro cuando había un daño tisular. La neurociencia contemporánea ha "
+                    "reemplazado esta visión por un modelo más complejo: el dolor es una construcción "
+                    "del cerebro, no una señal pasiva. El mismo estímulo puede producir dolor intenso "
+                    "o ningún dolor dependiendo del contexto, las expectativas y el estado emocional "
+                    "del individuo. Esta comprensión ha transformado los enfoques terapéuticos del dolor "
+                    "crónico, que ahora incluyen intervenciones psicológicas junto a las farmacológicas."
+                ),
+            }
+        },
+        "preguntas": [
             {
-                "termino": "Economía lineal",
-                "definicion": "Modelo basado en extraer, fabricar, usar y desechar sin recuperar los materiales."
+                "afirmacion": "Se menciona que un descubrimiento científico ha cambiado los tratamientos médicos utilizados en la práctica clínica.",
+                "respuesta": "D",
+                "explicacion": "Ha transformado los enfoques terapéuticos del dolor crónico, que ahora incluyen intervenciones psicológicas."
             },
             {
-                "termino": "Economía circular",
-                "definicion": "Sistema en el que los materiales permanecen en uso el mayor tiempo posible y se reintegran al ciclo productivo al final de su vida útil."
+                "afirmacion": "Se describe un fenómeno que funciona incluso cuando la persona es consciente de que está siendo sometida a él.",
+                "respuesta": "A",
+                "explicacion": "El placebo abierto funciona aunque el paciente sepa que está tomando un placebo."
             },
             {
-                "termino": "Obsolescencia programada",
-                "definicion": "Práctica de diseñar productos con vida útil reducida intencionalmente para fomentar nuevas compras."
+                "afirmacion": "Se explica que algo que se consideraba una metáfora ha resultado tener base científica real.",
+                "respuesta": "B",
+                "explicacion": "El segundo cerebro ha pasado de metáfora popular a línea de investigación seria."
             },
             {
-                "termino": "Ecodiseño",
-                "definicion": "Incorporación de criterios medioambientales en la concepción del producto para facilitar su reparación, reutilización y reciclaje."
+                "afirmacion": "Se señala que una función cognitiva básica no funciona como se creía popularmente.",
+                "respuesta": "C",
+                "explicacion": "La memoria no almacena, reconstruye — desmonta la metáfora del ordenador."
             },
             {
-                "termino": "Simbiosis industrial",
-                "definicion": "Acuerdos entre empresas por los que los residuos de una se convierten en materia prima de otra."
-            },
-        ]
-    },
-    {
-        "titulo": "Mecanismos del lenguaje persuasivo",
-        "fuente": "Texto original · Nivel C1",
-        "formato": "emparejamiento",
-        "texto": (
-            "El lenguaje no es nunca neutro. Incluso cuando se aspira a la objetividad, las elecciones "
-            "léxicas, la estructura de las frases y los recursos retóricos utilizados construyen una "
-            "perspectiva sobre la realidad. Conocer los mecanismos del lenguaje persuasivo no es solo "
-            "una habilidad de escritor: es una herramienta de lectura crítica indispensable.\n\n"
-            "La eufemización consiste en sustituir una expresión con connotaciones negativas por "
-            "otra más suave o neutra. Los eufemismos sirven para atenuar realidades incómodas: "
-            "un 'ajuste de plantilla' describe lo mismo que un 'despido masivo', pero activa "
-            "respuestas emocionales muy distintas en quien lo escucha.\n\n"
-            "El encuadre —o framing— se refiere a la forma en que se presenta la información: "
-            "los mismos datos pueden generar percepciones opuestas según cómo se enmarquen. "
-            "Decir que 'un tratamiento tiene un 90% de supervivencia' activa reacciones distintas "
-            "a decir que 'tiene un 10% de mortalidad', aunque ambas frases sean equivalentes.\n\n"
-            "La apelación a la autoridad es el recurso de citar a una fuente reconocida para "
-            "reforzar un argumento, independientemente de si esa autoridad es relevante en "
-            "el contexto específico del debate. Su contrapunto es el ad hominem: atacar la "
-            "credibilidad personal del interlocutor en lugar de refutar sus argumentos.\n\n"
-            "Finalmente, la falacia del hombre de paja consiste en distorsionar o simplificar "
-            "la posición del adversario para hacer más fácil su refutación, atacando una versión "
-            "caricaturizada en lugar del argumento real."
-        ),
-        "instruccion": "Relaciona cada recurso retórico con su descripción según el texto.",
-        "pares": [
-            {
-                "termino": "Eufemización",
-                "definicion": "Sustitución de una expresión de connotaciones negativas por otra más suave para atenuar realidades incómodas."
+                "afirmacion": "Se menciona la posibilidad de que experiencias que no ocurrieron sean recordadas como reales.",
+                "respuesta": "C",
+                "explicacion": "Es posible implantar memorias de eventos que nunca ocurrieron."
             },
             {
-                "termino": "Encuadre (framing)",
-                "definicion": "Presentación de la misma información de formas distintas para generar percepciones diferentes en el receptor."
+                "afirmacion": "Se indica que factores externos al daño físico influyen en cómo se percibe una sensación corporal.",
+                "respuesta": "D",
+                "explicacion": "El mismo estímulo produce dolor diferente según contexto y estado emocional."
             },
             {
-                "termino": "Apelación a la autoridad",
-                "definicion": "Uso de una fuente reconocida para reforzar un argumento, independientemente de su relevancia en el contexto."
+                "afirmacion": "Se describe una relación bidireccional entre dos sistemas del organismo.",
+                "respuesta": "B",
+                "explicacion": "El eje intestino-cerebro: el intestino influye en el cerebro."
             },
             {
-                "termino": "Ad hominem",
-                "definicion": "Ataque a la credibilidad personal del interlocutor en lugar de refutar sus argumentos."
-            },
-            {
-                "termino": "Falacia del hombre de paja",
-                "definicion": "Distorsión o simplificación de la posición del adversario para facilitar su refutación atacando una versión caricaturizada."
-            },
-        ]
-    },
-    {
-        "titulo": "La inteligencia emocional en el entorno profesional",
-        "fuente": "Texto original · Nivel C1",
-        "formato": "emparejamiento",
-        "texto": (
-            "Desde que Daniel Goleman popularizó el concepto en los años noventa, la inteligencia "
-            "emocional ha pasado de ser un término psicológico de nicho a convertirse en uno de "
-            "los criterios más valorados en los procesos de selección de personal. Sin embargo, "
-            "el concepto abarca componentes bien diferenciados que conviene distinguir.\n\n"
-            "La autoconciencia es la capacidad de reconocer y comprender las propias emociones "
-            "en el momento en que se producen, así como su efecto sobre el comportamiento y "
-            "las decisiones. Es la base sobre la que se construyen las demás competencias "
-            "emocionales: difícilmente puede gestionarse lo que no se reconoce.\n\n"
-            "La autorregulación se refiere a la capacidad de controlar los impulsos y emociones "
-            "perturbadoras de manera que no interfieran negativamente con la conducta. "
-            "No implica suprimir las emociones, sino canalizarlas de forma constructiva.\n\n"
-            "La empatía —frecuentemente confundida con la simpatía— es la capacidad de percibir "
-            "y comprender las emociones ajenas adoptando la perspectiva del otro sin necesidad "
-            "de compartir sus sentimientos. En entornos de trabajo, facilita la comunicación, "
-            "la resolución de conflictos y el liderazgo efectivo.\n\n"
-            "Las habilidades sociales designan la capacidad de gestionar relaciones e influir "
-            "en los demás de forma positiva: comunicar con claridad, negociar, colaborar y "
-            "construir redes de confianza. Son el componente más visible de la inteligencia "
-            "emocional, aunque dependen de los anteriores para ser genuinas.\n\n"
-            "Por último, la motivación intrínseca describe el impulso que lleva a las personas "
-            "a perseguir metas por razones internas —satisfacción, propósito, crecimiento— más "
-            "allá de recompensas externas como el salario o el reconocimiento."
-        ),
-        "instruccion": "Relaciona cada componente de la inteligencia emocional con su descripción según el texto.",
-        "pares": [
-            {
-                "termino": "Autoconciencia",
-                "definicion": "Capacidad de reconocer y comprender las propias emociones y su efecto sobre el comportamiento y las decisiones."
-            },
-            {
-                "termino": "Autorregulación",
-                "definicion": "Capacidad de controlar impulsos y emociones perturbadoras canalizándolas de forma constructiva sin suprimirlas."
-            },
-            {
-                "termino": "Empatía",
-                "definicion": "Capacidad de percibir y comprender las emociones ajenas adoptando la perspectiva del otro sin necesidad de compartir sus sentimientos."
-            },
-            {
-                "termino": "Habilidades sociales",
-                "definicion": "Capacidad de gestionar relaciones e influir positivamente en los demás mediante la comunicación, la negociación y la colaboración."
-            },
-            {
-                "termino": "Motivación intrínseca",
-                "definicion": "Impulso a perseguir metas por razones internas como la satisfacción o el propósito, más allá de recompensas externas."
+                "afirmacion": "Se sugiere que el cerebro puede generar efectos físicos reales a través de mecanismos mentales.",
+                "respuesta": "A",
+                "explicacion": "El cerebro activa mecanismos curativos reales a través de la expectativa."
             },
         ]
     },

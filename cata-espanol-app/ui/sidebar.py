@@ -63,6 +63,7 @@ def render_sidebar() -> Tuple[str, List[str], list, list]:
         st.markdown('<div class="nav-section">LÉXICO</div>', unsafe_allow_html=True)
         _nav("📗 Verbos + Preposición", "📗", "Verbos + Preposición")
         _nav("🔗 Conectores",           "🔗", "Conectores")
+        _nav("📝 Vocabulario",          "📝", "Vocabulario temático")
         st.markdown('<div class="nav-section">GRAMÁTICA</div>', unsafe_allow_html=True)
         _nav("🔀 Subjuntivo",           "🔀", "Subjuntivo")
         _nav("⚙️ Perífrasis",           "⚙️", "Perífrasis")

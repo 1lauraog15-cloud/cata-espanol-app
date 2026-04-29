@@ -7,6 +7,7 @@ from ui.sidebar import render_sidebar
 from ui.home import render_home
 from modules.verbos_module import render as render_verbos
 from modules.conectores_module import render as render_conectores
+from modules.vocabulario_module import render as render_vocabulario
 from modules.gramatica_module import (
     render_subjuntivo,
     render_perifrasis,
@@ -30,6 +31,7 @@ if modulo == "🎯 Diagnóstico":          render_diagnostico()
 if modulo == "🏠 Inicio":               render_home()
 if modulo == "📗 Verbos + Preposición": render_verbos(nivel_filter, base_items, weighted_items)
 if modulo == "🔗 Conectores":           render_conectores(nivel_filter)
+if modulo == "📝 Vocabulario":          render_vocabulario(nivel_filter)
 if modulo == "🔀 Subjuntivo":           render_subjuntivo(nivel_filter)
 if modulo == "⚙️ Perífrasis":           render_perifrasis(nivel_filter)
 if modulo == "🔵🔴 Ser vs Estar":       render_ser_estar(nivel_filter)
